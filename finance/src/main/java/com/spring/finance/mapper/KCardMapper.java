@@ -1,6 +1,5 @@
 package com.spring.finance.mapper;
 
-public interface CardMapper {
-
+public interface KCardMapper {
 	public String getCardInfo(String hash);
 }

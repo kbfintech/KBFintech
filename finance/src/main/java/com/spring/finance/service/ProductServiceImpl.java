@@ -15,7 +15,6 @@ import com.spring.finance.mapper.ProductMapper;
 import com.spring.finance.util.Criteria;
 import com.spring.finance.util.RequestAPI;
 
-import lombok.extern.log4j.Log4j;
 
 //https://eblo.tistory.com/62
 //https://m.blog.naver.com/PostView.nhn?blogId=compro85&logNo=130184997469&proxyReferer=https%3A%2F%2Fwww.google.com%2F
@@ -24,7 +23,6 @@ import lombok.extern.log4j.Log4j;
 //https://www.baeldung.com/jackson
 //https://myjamong.tistory.com/18
 @Service
-@Log4j
 public class ProductServiceImpl implements ProductService {
 
 	@Autowired

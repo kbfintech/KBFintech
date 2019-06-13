@@ -23,3 +23,5 @@
 <link href="${path }/resources/sb-admin/css/sb-admin.css" rel="stylesheet">
 <script src="${path }/resources/sb-admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
+<!-- card -->
+<link href="${path }/resources/card/css/basic.css" rel="stylesheet" type="text/css">
