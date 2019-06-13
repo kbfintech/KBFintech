@@ -1,7 +1,5 @@
 package com.spring.finance.domain;
 
-import java.util.List;
-
 import lombok.Data;
 
 @Data
@@ -14,8 +12,6 @@ public class ProductVO {
 	private String err_cd;
 	private String err_msg;
 
-	private List<ProductBaseInfoDTO> baseList;
-	private List<ProductOptionDTO> optionList;
 	
 	
 }

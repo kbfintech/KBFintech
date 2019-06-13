@@ -4,10 +4,11 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
+<body class="fontType">
 <!-- Navigation -->
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="${path }/">뱅크 샐러드</a>
+      <a class="navbar-brand" href="${path }/">KBFintech</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -21,7 +22,7 @@
             <a class="nav-link" href="${path }/product/question">상품 목록</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">플랜 작성</a>
+            <a class="nav-link" href="${path }/plan/planer">플랜 작성</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -42,3 +43,4 @@
       </div>
     </div>
   </nav>
+</body>

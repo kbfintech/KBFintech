@@ -24,4 +24,4 @@
 <script src="${path }/resources/sb-admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 <!-- card -->
-<link href="${path }/resources/card/css/basic.css" rel="stylesheet" type="text/css">
+<link href="${path }/resources/KBFintech/css/basic.css" rel="stylesheet" type="text/css">

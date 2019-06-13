@@ -16,6 +16,18 @@
 <script>
 $(document).ready(function(){
 	
+	$('.form-control').keypress(function (event) { 
+		
+		if (event.which && (event.which <= 47 || event.which >= 58) && event.which != 8) { 
+			event.preventDefault();
+			alert("숫자만 입력하세요.");
+		} 
+		
+		if(event.value.length > event.maxLength{
+			event.value = event.value.slice(0, event.maxLength);
+		}
+	});
+
 	$("#cardRegist").click(function(){
 		$.ajax({
 			url: "${path}/card/inquery",
@@ -51,17 +63,17 @@ $(document).ready(function(){
 <body class="fontType">
 	<div class="container">
 		<div class="row basic">
-			<img class="cent" id ="cardImg" src="${path }/resources/card/img/KBCard.PNG">
+			<img class="cent" id ="cardImg" src="${path }/resources/KBFintech/img/KBCard.PNG">
 		</div>
 		
 		<form id="regitForm" action="">
 			<div class="row basic">
 				<div class="form-group col-lg-4 col-md-4 col-xs-4">
-					<label for ="cardNum">카드번호</label>
+					<label for ="cardNum">카드번호(카드 앞면의 12자리)</label>
 				</div>
 				
 				<div class="col-lg-8 col-md-8 col-xs-8">
-					<input type="text" class="form-control" name="cardNum"/>
+					<input type="text" maxlength="12" class="form-control" name="cardNum"/>
 				</div>
 			</div>
 			
@@ -72,7 +84,7 @@ $(document).ready(function(){
 				
 				<div class="col-lg-8 col-md-8 col-xs-8">
 					
-					<input type="text" class="form-control" name="cardMonth"/>
+					<input type="text" maxlength="2" class="form-control" name="cardMonth"/>
 				</div>
 			</div>
 			
@@ -82,17 +94,17 @@ $(document).ready(function(){
 				</div>
 				
 				<div class="col-lg-8 col-md-8 col-xs-8">
-					<input type="text" class="form-control" name="cardYear"/>
+					<input type="text" maxlength="2" class="form-control" name="cardYear"/>
 				</div>
 			</div>
 			
 			<div class="row basic">
 				<div class="form-group col-lg-4 col-md-4 col-xs-4">
-					<label for ="cardCVC">cvc 번호</label>
+					<label for ="cardCVC">cvc 번호(카드 뒷면의 마지막 3자리)</label>
 				</div>
 				
 				<div class="col-lg-8 col-md-8 col-xs-8">
-					<input type="text" class="form-control" name="cardCVC"/>
+					<input type="text" maxlength="3" class="form-control" name="cardCVC"/>
 				</div>
 			</div>
 			

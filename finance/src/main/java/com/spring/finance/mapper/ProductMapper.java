@@ -6,6 +6,4 @@ import com.spring.finance.domain.ProductVO;
 
 public interface ProductMapper {
 
-	List<ProductVO> getProductList();
-
 }

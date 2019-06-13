@@ -1,6 +1,8 @@
 package com.spring.finance.mapper;
 
+import com.spring.finance.domain.CardVO;
+
 public interface CardMapper {
 
-	public String getCardInfo(String hash);
+	void regitCardInfo(CardVO CardVO);
 }
