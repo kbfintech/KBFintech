@@ -4,5 +4,21 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.spring.finance.mapper.PlanMapper">
+
+	<insert id="insertPlan" parameterType="String">
+		insert into plan (PL_ID, PL_PERIOD, M_ID) values(#{PL_PERIOD}, #{PL_PERIOD}, 'user01')
+	</insert>
+	
+	<insert id="insertPlanDetail" parameterType="com.spring.finance.domain.PlanVO">
+		insert into plan_detail (PLD_PRICE, PL_ID, B_CD) values(#{PLD_PRICE}, #{PL_ID}, #{B_CD})
+	</insert>
+	
+	<select id="planSearch" parameterType="String" resultType="com.spring.finance.domain.PlanVO">
+		select * from plan_detail where PL_ID = #{PL_ID} order by B_CD asc
+	</select>
+	
+	<select id="dateList" resultType="String">
+		select PL_ID from plan order by PL_ID asc
+	</select>
 	
 </mapper>

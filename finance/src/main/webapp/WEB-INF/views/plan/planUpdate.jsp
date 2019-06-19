@@ -143,7 +143,7 @@
 	}
 	
 	function save(){
-		alert("한도 설정이 완료되었습니다. 조회페이지로 이동합니다.");
+		alert("한도 설정이 완료되었습니다. 메인페이지로 이동합니다.");
 	}
 	function changeSelect(){
 		var yearCheck = $("#yearSelectBox option:checked").text();
@@ -179,7 +179,7 @@
 						</select>
 					</td>
 					<td colspan="3" align="left" width="90%">
-						<h1 class="title" id="titleDate">카드 한도 설정</h1>
+						<h1 class="title" id="titleDate">카드 한도 수정</h1>
 					</td>
 				</tr>
 				<tr>
