@@ -18,7 +18,6 @@
 var result = "<%=(String)request.getAttribute("result")%>"
 if(result != 'null') {
 	if(result == 'allNeed') {
-		alert("모두 등록해야합니다.");
 	}
 	
 	if(result == 'card') {
@@ -53,7 +52,6 @@ $(document).ready(function(){
 			timeout:3000,
 			cache:false,
 			success:function(data){
-				alert("success");
 				console.log(data);
 				console.log(data.resultCode);
 				if(data.resultCode == 1){
@@ -72,11 +70,10 @@ $(document).ready(function(){
 		});
 	});
 	
-	$('.form-control').keypress(function (event) { 
+	$('.length').keypress(function (event) { 
 		
 		if (event.which && (event.which <= 47 || event.which >= 58) && event.which != 8) { 
 			event.preventDefault();
-			alert("숫자만 입력하세요.");
 		} 
 		
 		if(event.value.length > event.maxlength){
@@ -96,7 +93,6 @@ $(document).ready(function(){
 			timeout:3000,
 			cache:false,
 			success:function(data){
-				alert("success");
 				console.log(data);
 				console.log(data.resultCode);
 				if(data.resultCode == 1){
@@ -131,7 +127,7 @@ $(document).ready(function(){
 				</div>
 				
 				<div class="col-lg-8 col-md-8 col-xs-8">
-					<input type="text" maxlength="14" class="form-control" name="accountNum"/>
+					<input type="text" maxlength="14" class="form-control length" name="accountNum"/>
 				</div>
 			</div>
 			
@@ -141,7 +137,7 @@ $(document).ready(function(){
 				</div>
 				
 				<div class="col-lg-8 col-md-8 col-xs-8">
-					<input type="text" maxlength="5" class="form-control" name="accountName"/>
+					<input type="text" maxlength="5" class="form-control length"  name="accountName"/>
 				</div>
 			</div>
 
@@ -167,7 +163,7 @@ $(document).ready(function(){
 				</div>
 				
 				<div class="col-lg-8 col-md-8 col-xs-8">
-					<input type="text" maxlength="16" class="form-control" name="cardNum"/>
+					<input type="text" maxlength="16" class="form-control length" name="cardNum"/>
 				</div>
 			</div>
 			
@@ -178,7 +174,7 @@ $(document).ready(function(){
 				
 				<div class="col-lg-8 col-md-8 col-xs-8">
 					
-					<input type="text" maxlength="2" class="form-control" name="cardMonth"/>
+					<input type="text" maxlength="2" class="form-control length" name="cardMonth"/>
 				</div>
 			</div>
 			
@@ -188,7 +184,7 @@ $(document).ready(function(){
 				</div>
 				
 				<div class="col-lg-8 col-md-8 col-xs-8">
-					<input type="text" maxlength="2" class="form-control" name="cardYear"/>
+					<input type="text" maxlength="2" class="form-control length" name="cardYear"/>
 				</div>
 			</div>
 			
@@ -198,7 +194,7 @@ $(document).ready(function(){
 				</div>
 				
 				<div class="col-lg-8 col-md-8 col-xs-8">
-					<input type="text" maxlength="3" class="form-control" name="cardCVC"/>
+					<input type="text" maxlength="3" class="form-control length" name="cardCVC"/>
 				</div>
 			</div>
 			
