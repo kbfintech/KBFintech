@@ -48,19 +48,14 @@ public class CardController {
 			session.setAttribute("M_ID", "ske02154");
 			session.setAttribute("PHONE", "01087414813");
 
-			System.out.println("ACCOUNT_NUMBER : " + ACCOUNT_NUMBER);
-//			System.out.println("C_HASH: " + C_HASH);
-
 			mv.setViewName("payRegister/register");
 			// 계좌가 등록 되어있지 않으면 카드도 등록해야 함.
 			if (ACCOUNT_NUMBER == null) {
-				System.out.println("hi");
 				mv.addObject("result", "allNeed");
 				return mv;
 			} else {
 				// 카드가 등록 되어있지 않으면
 				if (CMapper.isRegister("ske02154") == null) {
-					System.out.println("hihi");
 					mv.addObject("result", "card");
 					return mv;
 				} else {
@@ -91,7 +86,6 @@ public class CardController {
 		Map<String, String> m = new HashMap<String, String>();
 		String accountName = request.getParameter("accountName");
 		String accountNum = request.getParameter("accountNum");
-		System.out.println("accountNum: " + accountNum);
 		String phone = (String) session.getAttribute("PHONE");
 		String accountMoney = KAccountMapper.getAccountMoney(accountNum);
 
@@ -131,14 +125,8 @@ public class CardController {
 		map.put("K_MM", cardMonth);
 		map.put("K_YY", cardYear);
 		map.put("K_CVC", cardCVC);
-		System.out.println("before regist");
-		System.out.println("cardNum : " + cardNum);
-		System.out.println("cardMonth : " + cardMonth);
-		System.out.println("cardYear : " + cardYear);
-		System.out.println("cardCVC : " + cardCVC);
 
 		String K_HASH = KMapper.getCardHash(map);
-		System.out.println("K_HASH : " + K_HASH);
 		ModelAndView mv = new ModelAndView();
 		if (K_HASH.equals(shaResult)) {
 			// card 등록
@@ -152,7 +140,6 @@ public class CardController {
 			Map<String, String> map2 = new HashMap();
 			map2.put("K_ID", cardNum);
 			String CARD_TYPE = KMapper.getCardType(map2);
-			System.out.println("before regist2");
 			CardVO CardVO = new CardVO(cardNum, cardMonth, cardYear, cardCVC, selectComp, shaResult, M_ID,
 					Integer.parseInt(CARD_TYPE), ACCOUNT_NUMBER);
 			CMapper.regitCardInfo(CardVO);

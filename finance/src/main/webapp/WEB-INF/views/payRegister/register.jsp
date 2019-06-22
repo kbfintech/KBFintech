@@ -57,10 +57,10 @@ $(document).ready(function(){
 				console.log(data);
 				console.log(data.resultCode);
 				if(data.resultCode == 1){
-					alert("카드가 등록되었습니다.");
+					alert("계좌가 등록되었습니다.");
 					$('.account').hide();
 				}else if(data.resultCode == 0){
-					alert("카드 등록에 실패했습니다.");	
+					alert("계좌 등록에 실패했습니다.");	
 				}
 				
 				
