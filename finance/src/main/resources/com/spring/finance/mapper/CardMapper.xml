@@ -5,8 +5,12 @@
 
 <mapper namespace="com.spring.finance.mapper.CardMapper">
 	
+	<select id="isRegister" parameterType= "com.spring.finance.domain.CardVO" resultType="String">
+		SELECT C_HASH FROM M_CARD WHERE M_ID =#{M_ID}
+	</select>
+	
 	<insert id="regitCardInfo" parameterType="com.spring.finance.domain.CardVO">
-		INSERT INTO M_CARD(C_ID, C_MM, C_YY, C_CVC, C_COMPANY, C_HASH, M_ID) VALUES(#{C_ID}, #{C_MM}, #{C_YY}, #{C_CVC}, #{C_COMPANY}, #{C_HASH}, #{M_ID})
+		INSERT INTO M_CARD VALUES(#{C_ID}, #{C_MM}, #{C_YY}, #{C_CVC}, #{C_COMPANY}, #{C_HASH}, #{M_ID}, #{CARD_TYPE}, #{ACCOUNT_NUMBER})
 	</insert>
 	
 </mapper>

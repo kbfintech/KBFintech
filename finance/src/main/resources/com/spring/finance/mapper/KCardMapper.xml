@@ -5,8 +5,12 @@
 
 <mapper namespace="com.spring.finance.mapper.KCardMapper">
 	
-	<select id="getCardInfo" parameterType= "com.spring.finance.domain.KCardVO" resultType="String">
-		SELECT K_HASH FROM K_CARD WHERE K_ID =#{K_ID} AND K_MM =#{K_MM} AND K_YY = #{K_YY} AND K_CVC = #{K_CVC} AND K_COMPANY = #{K_COMPANY}
+	<select id="getCardType" parameterType= "java.util.HashMap" resultType="String">
+		SELECT CARD_TYPE FROM K_CARD WHERE K_ID =#{K_ID}
+	</select>
+	
+	<select id="getCardHash" parameterType= "java.util.HashMap" resultType="String">
+		SELECT K_HASH FROM K_CARD WHERE K_ID =#{K_ID} AND K_MM =#{K_MM} AND K_YY = #{K_YY} AND K_CVC = #{K_CVC}
 	</select>
 	
 	<insert id="regitCardInfo" parameterType= "com.spring.finance.domain.KCardVO">

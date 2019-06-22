@@ -5,10 +5,11 @@ import java.security.NoSuchAlgorithmException;
 
 public class SHA256 {
 
-//	public static void main(String[] args) {
-//		System.out.println(testSHA256("94206110953848940823042신한"));
-//	}
-	public String testSHA256(String str){
+	public static void main(String[] args) {
+		System.out.println(testSHA256("942061109538489408230421"));
+	}
+	
+	public static String testSHA256(String str){
 
 		String SHA = ""; 
 

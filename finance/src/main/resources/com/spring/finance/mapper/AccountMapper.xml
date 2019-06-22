@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.finance.mapper.AccountMapper">
+
+	
+	<select id="getAccountNum" parameterType="com.spring.finance.domain.AccountVO" resultType="String">
+		SELECT ACCOUNT_NUMBER FROM ACCOUNT WHERE M_ID = #{M_ID}
+	</select>
+	
+	<insert id="regitAccount" parameterType="com.spring.finance.domain.AccountVO">
+		INSERT INTO ACCOUNT(M_ID, M_NAME, ACCOUNT_NUMBER, PHONE, ACCOUNT_MONEY) VALUES(#{M_ID}, #{M_NAME}, #{ACCOUNT_NUMBER}, #{PHONE}, #{ACCOUNT_MONEY})
+	</insert>
+	
+</mapper>

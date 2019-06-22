@@ -13,26 +13,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
 </head>
+
+<script>
+var result = "<%=(String)request.getAttribute("result")%>"
+if(result != 'null') {
+	if(result == 'allNeed') {
+		alert("모두 등록해야합니다.");
+	}
+	
+	if(result == 'card') {
+		alert("카드를 등록해야합니다.");
+		$(document).ready(function(){
+			$('.account').hide();
+		});
+	}
+	
+	if(result == 'all') {
+		alert("모두 등록 되어있습니다.");
+		$(document).ready(function(){
+			$('.account').hide();
+			$('.cards').hide();
+			location.href="/";
+		});
+	}
+	
+}
+</script>
 <script>
 $(document).ready(function(){
-	
-	$('.form-control').keypress(function (event) { 
-		
-		if (event.which && (event.which <= 47 || event.which >= 58) && event.which != 8) { 
-			event.preventDefault();
-			alert("숫자만 입력하세요.");
-		} 
-		
-		if(event.value.length > event.maxLength{
-			event.value = event.value.slice(0, event.maxLength);
-		}
-	});
-
-	$("#cardRegist").click(function(){
+	$("#accountRegist").click(function(){
 		$.ajax({
-			url: "${path}/card/inquery",
+			url: "/account/inquery",
 			type: "post",
-			data: $('#regitForm').serialize(),
+			data: $('#accountRegitForm').serialize(),
 			// ModelAndView로 보내면 못 읽음
 			// map으로 보내야함.
 			// json으로 정해주면 data.key로 받을 수 있음.
@@ -45,6 +58,50 @@ $(document).ready(function(){
 				console.log(data.resultCode);
 				if(data.resultCode == 1){
 					alert("카드가 등록되었습니다.");
+					$('.account').hide();
+				}else if(data.resultCode == 0){
+					alert("카드 등록에 실패했습니다.");	
+				}
+				
+				
+			},
+			error:function(	xhr, status, error ){
+				alert("err");
+				console.log(err);
+			}
+		});
+	});
+	
+	$('.form-control').keypress(function (event) { 
+		
+		if (event.which && (event.which <= 47 || event.which >= 58) && event.which != 8) { 
+			event.preventDefault();
+			alert("숫자만 입력하세요.");
+		} 
+		
+		if(event.value.length > event.maxlength){
+			event.value = event.value.slice(0, event.maxLength);
+		}
+	});
+
+	$("#cardRegist").click(function(){
+		$.ajax({
+			url: "/card/inquery",
+			type: "post",
+			data: $('#cardRegitForm').serialize(),
+			// ModelAndView로 보내면 못 읽음
+			// map으로 보내야함.
+			// json으로 정해주면 data.key로 받을 수 있음.
+			dataType:"json",
+			timeout:3000,
+			cache:false,
+			success:function(data){
+				alert("success");
+				console.log(data);
+				console.log(data.resultCode);
+				if(data.resultCode == 1){
+					alert("카드가 등록되었습니다.");
+					location.href="/";
 				}else if(data.resultCode == 0){
 					alert("카드 등록에 실패했습니다.");	
 				}
@@ -61,19 +118,56 @@ $(document).ready(function(){
 </script>
 
 <body class="fontType">
-	<div class="container">
-		<div class="row basic">
-			<img class="cent" id ="cardImg" src="${path }/resources/KBFintech/img/KBCard.PNG">
+	<div class="container account">
+		<div class= "row basic">
+			<h1> 1) 계좌 등록</h1>
+			<img class="cent" id ="accountImg" src="${path }/resources/KBFintech/img/KBAccount.png">
 		</div>
 		
-		<form id="regitForm" action="">
+		<form id="accountRegitForm" action="">
 			<div class="row basic">
 				<div class="form-group col-lg-4 col-md-4 col-xs-4">
-					<label for ="cardNum">카드번호(카드 앞면의 12자리)</label>
+					<label for ="accountNum">계좌번호(14자리)</label>
 				</div>
 				
 				<div class="col-lg-8 col-md-8 col-xs-8">
-					<input type="text" maxlength="12" class="form-control" name="cardNum"/>
+					<input type="text" maxlength="14" class="form-control" name="accountNum"/>
+				</div>
+			</div>
+			
+			<div class="row basic">
+				<div class="form-group col-lg-4 col-md-4 col-xs-4">
+					<label for ="accountName">예금주</label>
+				</div>
+				
+				<div class="col-lg-8 col-md-8 col-xs-8">
+					<input type="text" maxlength="5" class="form-control" name="accountName"/>
+				</div>
+			</div>
+
+			<div class="row basic">
+				<div class="form-group col-lg-12 col-md-12 col-xs-12">
+					<input class="btn btnYellow" type="button" value="계좌 등록" name="accountRegist" id="accountRegist">
+				</div>
+			</div>
+			
+		</form>
+	</div>
+	
+	<div class="container cards">
+		<div class="row basic">
+			<h1> 2) 카드 등록</h1>
+			<img class="cent" id ="cardImg" src="${path }/resources/KBFintech/img/KBCard.PNG">
+		</div>
+		
+		<form id="cardRegitForm" action="">
+			<div class="row basic">
+				<div class="form-group col-lg-4 col-md-4 col-xs-4">
+					<label for ="cardNum">카드번호(카드 앞면의 16자리)</label>
+				</div>
+				
+				<div class="col-lg-8 col-md-8 col-xs-8">
+					<input type="text" maxlength="16" class="form-control" name="cardNum"/>
 				</div>
 			</div>
 			

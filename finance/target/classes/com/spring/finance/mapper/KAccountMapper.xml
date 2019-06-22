@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.finance.mapper.KAccountMapper">
+
+	<select id="getAccountMoney" parameterType="com.spring.finance.domain.KAccountVO" resultType="String">
+		SELECT ACCOUNT_MONEY FROM K_ACCOUNT WHERE ACCOUNT_NUMBER = #{ACCOUNT_NUMBER}
+	</select>
+	
+	<select id="isRegister" parameterType="com.spring.finance.domain.KAccountVO" resultType="String">
+		SELECT ACCOUNT_NUMBER FROM ACCOUNT WHERE M_ID = #{M_ID}
+	</select>
+	
+	<insert id="regitAccountInfo" parameterType="com.spring.finance.domain.KAccountVO">
+		INSERT INTO ACCOUNT(M_ID, M_NAME, ACCOUNT_NUMBER, PHONE, ACCOUNT_MONEY) VALUES(#{M_ID}, #{M_NAME}, #{ACCOUNT_NUMBER}, #{PHONE}, #{ACCOUNT_MONEY})
+	</insert>
+	
+</mapper>
