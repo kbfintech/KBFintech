@@ -4,5 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.spring.finance.mapper.PaymentMapper">
+
+	<insert id="insertPayment" parameterType="com.spring.finance.domain.PaymentVO">
+		INSERT INTO PAYMENT(PAY_DATE, PAY_PRICE, B_CD, B_TYPE, M_ID, C_ID, B_NAME) VALUES(#{PAY_DATE}, #{PAY_PRICE}, #{B_CD}, #{B_TYPE}, #{M_ID}, #{C_ID}, #{B_NAME})
+	</insert>
+	
+	<select id="getBusiness" parameterType="String" resultType="com.spring.finance.domain.BusinessVO">
+		select * from BUSINESS where B_CD = #{B_CD}
+	</select>
 	
 </mapper>

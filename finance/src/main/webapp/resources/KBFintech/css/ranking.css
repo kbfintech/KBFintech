@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+/* 가운데 정렬 */
+.boxRank {
+	align: center;
+	text-align: center;
+	margin-top: 3em;
+	margin-bottom: 3em;
+}
+
+.box {
+	margin-top: 3em;
+	margin-bottom: 3em;
+}
+
+.rankBox {
+	border: 2px solid black;
+	margin-left: 5em;
+	margin-right: 5em;
+}
+
+.rank_title {
+	padding-bottom: 0.05em;
+	text-align: center;
+}
+
+.detailBox {
+	border: 1px solid black;
+	margin-left: 3em;
+	margin-right: 3em;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	padding-left: 2rem;
+	padding-right: 2rem;
+	
+}
+
+.detailText {
+	margin-bottom: 0.5rem;
+	
+}

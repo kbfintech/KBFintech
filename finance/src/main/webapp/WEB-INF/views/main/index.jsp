@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>티끌모아건물주</title>
 <%@include file="../includes/header.jsp" %>
 <%@include file="../includes/menu.jsp" %>
 </head>
