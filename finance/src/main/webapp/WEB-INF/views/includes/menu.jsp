@@ -33,7 +33,7 @@
 						aria-haspopup="true" aria-expanded="false"> 내 정보 관리 </a>
 						<div class="dropdown-menu dropdown-menu-right"
 							aria-labelledby="navbarDropdownPortfolio">
-							<a class="dropdown-item" href="portfolio-1-col.html">회원 정보</a> <a
+							<a class="dropdown-item" href="${path }/member/memInfo">회원 정보</a> <a
 								class="dropdown-item" href="portfolio-2-col.html">카드 관리하기</a> <a
 								class="dropdown-item" href="portfolio-3-col.html">상품 관리하기</a> <a
 								class="dropdown-item" href="portfolio-4-col.html">포인트 관리하기</a> <a
