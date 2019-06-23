@@ -8,6 +8,30 @@
 	margin-bottom: 3em;
 }
 
+#rankTop {
+	width: 2em;
+	height: 2em;
+}
+
+.crown {
+	width: 1em;
+	height: 1em;
+}
+
+table {
+	width: 100%;
+}
+
+th, td {
+	text-align: center;
+	border: 1px solid black;
+}
+
+.rankTable {
+	text-align: center;
+	align: center;
+}
+
 .box {
 	margin-top: 3em;
 	margin-bottom: 3em;
