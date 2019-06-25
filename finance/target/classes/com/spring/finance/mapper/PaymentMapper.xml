@@ -5,12 +5,25 @@
 
 <mapper namespace="com.spring.finance.mapper.PaymentMapper">
 
-	<insert id="insertPayment" parameterType="com.spring.finance.domain.PaymentVO">
-		INSERT INTO PAYMENT(PAY_DATE, PAY_PRICE, B_CD, B_TYPE, M_ID, C_ID, B_NAME) VALUES(#{PAY_DATE}, #{PAY_PRICE}, #{B_CD}, #{B_TYPE}, #{M_ID}, #{C_ID}, #{B_NAME})
+	<insert id="insertPayment"
+		parameterType="com.spring.finance.domain.PaymentVO">
+		INSERT INTO PAYMENT(PAY_DATE, PAY_PRICE, B_CD, B_TYPE,
+		M_ID, C_ID, B_NAME) VALUES(#{PAY_DATE}, #{PAY_PRICE}, #{b_CD},
+		#{b_TYPE}, #{M_ID}, #{C_ID}, #{b_NAME})
 	</insert>
-	
-	<select id="getBusiness" parameterType="String" resultType="com.spring.finance.domain.BusinessVO">
-		select * from BUSINESS where B_CD = #{B_CD}
+
+	<select id="getBusiness" parameterType="String"
+		resultType="com.spring.finance.domain.BusinessVO">
+		select * from BUSINESS where B_CD = #{b_CD}
 	</select>
-	
+
+	<select id="getPaymentTotalAmount" parameterType="String"
+		resultType="String">
+		select PAY_TOTAL from PAYMENT_TOTAL where M_ID = #{M_ID}
+	</select>
+
+	<update id="updatePaymentTotal" parameterType="com.spring.finance.domain.PaymentVO">
+		update PAYMENT_TOTAL set PAY_TOTAL = #{PAY_TOTAL} where M_ID = #{M_ID}
+	</update>
+
 </mapper>

@@ -220,6 +220,6 @@ $(document).ready(function(){
 		
 		</form>
 	</div>
-
+	<%@include file="../includes/footer.jsp"%>
 </body>
 </html>

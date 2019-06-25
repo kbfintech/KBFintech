@@ -2,8 +2,8 @@
 
 /* 화면 내용 기본 틀 */
 .basic{
-	padding: 30px;
-	margin: 30px;
+	padding: 50px;
+	margin: 50px;
 	position: relatvie;
 }
 
@@ -30,3 +30,27 @@
 	font-family:"GyeonggiBatang";
 	font-size:20px;
 }
+
+.imgWrap{
+	position: relative;
+
+	background-size: cover;	
+}
+
+.logo{
+	position:relative;
+	width: 200px;
+	height: auto;
+}
+
+.logoText{
+	position:absolute;
+	top:95%;
+     left:40%;
+	transform: translate(-70%, -50%);
+     color: white;
+     z-index: 2;
+	text-align: center;
+}
+
+

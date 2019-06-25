@@ -6,10 +6,17 @@
 <!DOCTYPE html>
 <body class="fontType">
 	<!-- Navigation -->
-	<nav
-		class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+	<nav style="background-color:#FFCC33"
+		class="navbar fixed-top navbar-expand-lg navbar-light fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="${path }/">KBFintech</a>
+			<a class="navbar-brand" href="${path }/">
+				<div class="imgWrap">
+					<div class="logoText">
+      					<p style="font-size:30px;">월렛 버핏</p>
+      				</div> 
+      				<img class="logo" src="${path }/resources/KBFintech/img/w1.PNG">
+      			</div>
+			</a>
 			<button class="navbar-toggler navbar-toggler-right" type="button"
 				data-toggle="collapse" data-target="#navbarResponsive"
 				aria-controls="navbarResponsive" aria-expanded="false"

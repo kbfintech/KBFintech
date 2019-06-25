@@ -4,5 +4,33 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.spring.finance.mapper.RankMapper">
+
+	<select id="getProductRegisterList" resultType="String">
+		select M_ID from MEMBER where PR_REG_IDX = '1'
+	</select>
 	
+	<select id="getRankRealtime" resultType="com.spring.finance.domain.PaymentVO">
+		select * from PAYMENT_TOTAL order by PAY_TOTAL ASC
+	</select>
+	
+	<select id="getSuccess" parameterType="String" resultType="String">
+		select PL_SUCCESS from PLAN where M_ID = #{M_ID} and PL_ID = #{PL_ID}
+	</select>
+	
+	<select id="getRealtimeScore" parameterType="com.spring.finance.domain.PlanVO" resultType="Double">
+		select PAY_TOTAL from PAYMENT_TOTAL where M_ID = #{M_ID}
+	</select>
+	
+	<select id="getRankTotalID" resultType="String">
+		select M_ID from RANK_TOTAL
+	</select>
+	
+	<insert id="setFinalRank" parameterType="com.spring.finance.domain.RankVO">
+		insert into RANK_TOTAL (M_ID, TOTAL_SCORE) values(#{M_ID}, #{TOTAL_SCORE})
+	</insert>
+	
+	<update id="updateRankTotal" parameterType="com.spring.finance.domain.RankVO">
+		update RANK_TOTAL set TOTAL_SCORE = #{TOTAL_SCORE} where M_ID = #{M_ID}
+	</update>
+
 </mapper>
