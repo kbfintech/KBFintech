@@ -2,8 +2,6 @@ package com.spring.finance.controller;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Iterator;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,22 +15,25 @@ import com.spring.finance.domain.PaymentVO;
 import com.spring.finance.domain.PlanVO;
 import com.spring.finance.domain.RankVO;
 import com.spring.finance.mapper.RankMapper;
-//import com.spring.finance.schedule.RankScheduler;
 
 @Controller
 @Component
 public class RankingController {
+	
+	public class RankClass {
+		public String id;
+		public double score;
+	}
 
 	@Autowired
 	public SqlSession sqlsession;
-
-//	private static RankScheduler rs = RankScheduler.getInstance();
 	
-	private static HashMap<String, Double> hsRealtime = new HashMap<>();
+	private static ArrayList<RankClass> arrRealtime = new ArrayList<>();
+	private static ArrayList<RankClass> arrRankTotal = new ArrayList<>();
 
 	// 매월 매일 아무요일 0시 0분 0초에 실행
-	@Scheduled(cron = "0 0 0 * * ?")
-	public HashMap<String, Double> setRealtimeRank() {
+	@Scheduled(cron = "* * * * * ?")
+	public ArrayList<RankClass> setRealtimeRank() {
 		
 		RankMapper mapper = sqlsession.getMapper(RankMapper.class);
 
@@ -40,16 +41,21 @@ public class RankingController {
 		ArrayList<PaymentVO> pVOList = mapper.getRankRealtime();		
 		
 		int cnt = 0;
+		arrRealtime.clear();
 		for(int i = 0; i < pVOList.size(); i++) {
 			if(cnt > 5) break;
 			if(mList.contains(pVOList.get(i).getM_ID())) {
+				RankClass rc = new RankClass();
+				System.out.println("key_Realtime: " + pVOList.get(i).getM_ID() + " value_Realtime: " + pVOList.get(i).getPAY_TOTAL());
 				cnt += 1;
 				// 총점 100점에서 지출금액*0.001%만큼 차감
-				hsRealtime.put(pVOList.get(i).getM_ID(), 1000000 - (0.01 * pVOList.get(i).getPAY_TOTAL()));
+				rc.id = pVOList.get(i).getM_ID();
+				rc.score = 1000000 - (0.01 * pVOList.get(i).getPAY_TOTAL());
+				arrRealtime.add(rc);
 			}
 		}
 		
-		return hsRealtime;
+		return arrRealtime;
 
 	}
 
@@ -72,6 +78,7 @@ public class RankingController {
 			
 			RankVO rVO = new RankVO();
 			
+			// 연속 플랜 성공여부 검사
 			double pScore = 0d;
 			for(int j = 1; j <= month-1; j++) {
 				vo.setM_ID(mList.get(i));
@@ -82,9 +89,16 @@ public class RankingController {
 				
 				if(flag.equals("1")) {
 					pScore += 1;
+				} else if(flag.equals("0")) {
+					pScore = 0;
+					break;
 				}
 				
 			}
+			
+			// 이체금액구간별 가산점 검사
+			
+			
 			
 			rVO.setM_ID(mList.get(i));
 			rVO.setPLUS_SCORE(pScore);
@@ -113,28 +127,17 @@ public class RankingController {
 		
 //		hsRealtime = setRealtimeRank();
 	
-		HashMap<String, Double> hsTotal = new HashMap<>();
 
 		// 일일랭킹순위
-		int idx = 1;
-		Iterator<String> keySetR = hsRealtime.keySet().iterator();
-		while (keySetR.hasNext()) {
-			String key = keySetR.next();
-			model.addAttribute("mID_Realtime" + idx, key);
-			model.addAttribute("rankRealtime" + idx, hsRealtime.get(key));
-			idx += 1;
-			System.out.println("key_Realtime: " + key + " value_Realtime: " + hsRealtime.get(key));
+		for(int i = 0; i < arrRealtime.size(); i++) {
+			model.addAttribute("mID_Realtime" + (i+1), arrRealtime.get(i).id);
+			model.addAttribute("rankRealtime" + (i+1), arrRealtime.get(i).score);
 		}
 
 		// 최종랭킹순위
-		idx = 1;
-		Iterator<String> keySetT = hsTotal.keySet().iterator();
-		while (keySetT.hasNext()) {
-		    String key = keySetT.next();
-		    model.addAttribute("mID_Total"+idx, key);
-		    model.addAttribute("rankTotal"+idx, hsTotal.get(key));
-		    idx += 1;
-		    System.out.println("key_Total: " + key + " value_Total: " + hsTotal.get(key));
+		for(int i = 0; i < arrRankTotal.size(); i++) {
+			model.addAttribute("mID_Realtime" + (i+1), arrRankTotal.get(i).id);
+			model.addAttribute("rankRealtime" + (i+1), arrRankTotal.get(i).score);
 		}
 
 		return "/ranking/ranking";

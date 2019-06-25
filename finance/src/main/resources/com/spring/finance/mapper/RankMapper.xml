@@ -10,7 +10,7 @@
 	</select>
 	
 	<select id="getRankRealtime" resultType="com.spring.finance.domain.PaymentVO">
-		select * from PAYMENT_TOTAL order by PAY_TOTAL asc
+		select * from PAYMENT_TOTAL order by PAY_TOTAL ASC
 	</select>
 	
 	<select id="getSuccess" parameterType="String" resultType="String">
