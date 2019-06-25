@@ -32,7 +32,7 @@ public class RankingController {
 	private static ArrayList<RankClass> arrRankTotal = new ArrayList<>();
 
 	// 매월 매일 아무요일 0시 0분 0초에 실행
-	@Scheduled(cron = "* * * * * ?")
+	@Scheduled(cron = "0 0 0 * * ?")
 	public ArrayList<RankClass> setRealtimeRank() {
 		
 		RankMapper mapper = sqlsession.getMapper(RankMapper.class);
@@ -96,7 +96,9 @@ public class RankingController {
 				
 			}
 			
-			// 이체금액구간별 가산점 검사
+			// 이체금액구간별 가산점 검사 * 0.3
+			
+			// (실제 이채금액 / (총 한도금액 - 총 지출금액)) * 0.3
 			
 			
 			
@@ -104,7 +106,7 @@ public class RankingController {
 			rVO.setPLUS_SCORE(pScore);
 			
 			double realtime = mapper.getRealtimeScore(mList.get(i));
-			rVO.setREALTIME_SCORE(1000000 - (0.01 * realtime));
+			rVO.setREALTIME_SCORE((1000000 - (0.01 * realtime))*0.4);
 			rVO.setTOTAL_SCORE(rVO.getPLUS_SCORE()+rVO.getREALTIME_SCORE());
 			
 			ArrayList<String> mRankTotalList = mapper.getRankTotalID();
