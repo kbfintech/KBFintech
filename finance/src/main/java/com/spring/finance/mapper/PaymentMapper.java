@@ -9,4 +9,8 @@ public interface PaymentMapper {
 	
 	BusinessVO getBusiness(String B_CD);
 	
+	void updatePaymentTotal(PaymentVO pVo);
+	
+	String getPaymentTotalAmount(String M_ID);
+	
 }

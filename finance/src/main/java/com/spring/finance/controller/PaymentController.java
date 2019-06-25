@@ -82,6 +82,16 @@ public class PaymentController {
 		
 		System.out.println("Payment DB 저장성공!");
 		
+		// 총 결제금액 DB 업데이트
+		String total = mapper.getPaymentTotalAmount(pVO.getM_ID());
+		if(null==total || total=="") pVO.setPAY_TOTAL(0);
+		else pVO.setPAY_TOTAL(Double.parseDouble(total)+pVO.getPAY_PRICE());;
+		mapper.updatePaymentTotal(pVO);
+		
+//		System.out.println(pVO.getM_ID() + pVO.getPAY_TOTAL());
+		
+		System.out.println("Payment_Total DB 업데이트 성공!");
+		
 	}
 	
 }

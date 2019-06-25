@@ -10,7 +10,6 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
 
-	<!--  
-	<mybatis-spring:scan base-package="com.spring.finance.mapper" />-->
-	
+	<!-- <mybatis-spring:scan base-package="com.spring.finance.mapper" /> -->
+
 </beans>

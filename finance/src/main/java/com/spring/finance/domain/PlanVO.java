@@ -3,9 +3,16 @@ package com.spring.finance.domain;
 public class PlanVO {
 	
 	private String PL_ID;		// 플랜 아이디
+	private String M_ID;	// 회원 아이디
 	private String B_CD;	// 가맹점 코드
 	private int PLD_PRICE;	// 상한금액
 	
+	public String getM_ID() {
+		return M_ID;
+	}
+	public void setM_ID(String m_ID) {
+		M_ID = m_ID;
+	}
 	public String getPL_ID() {
 		return PL_ID;
 	}
