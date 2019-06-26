@@ -5,13 +5,12 @@ import lombok.Data;
 @Data
 public class ProductVO {
 
-	private String prdt_div;
-	private String total_count;
-	private String max_page_no;
-	private String now_page_no;
-	private String err_cd;
-	private String err_msg;
+	private String M_ID;
+	private String PRD_ID;
+	private String PRD_INFO;
+	private double PRD_TRANSFER;
+	private String PRD_NAME;
+	private String PRD_ACC;
+	private String PRD_REG_DT;
 
-	
-	
 }
