@@ -40,6 +40,13 @@ if(result != 'null') {
 </script>
 <script>
 $(document).ready(function(){
+	
+	var h = $(".navbar").height();
+	var top = $(".navbar").css('padding-top').split('px')[0]*1;
+	var bottom = $(".navbar").css('padding-bottom').split('px')[0]*1;
+	var result = h+top+bottom;
+	$(".container.account").css('margin-top', result);
+	
 	$("#accountRegist").click(function(){
 		$.ajax({
 			url: "/account/inquery",
