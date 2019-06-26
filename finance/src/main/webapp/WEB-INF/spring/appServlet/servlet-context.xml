@@ -51,7 +51,7 @@
 		<beans:property name="url"
 			value="jdbc:oracle:thin:@kbfintechdb.cm8p91g3n9b6.ap-northeast-2.rds.amazonaws.com:1521:orcl" />
 		<beans:property name="username" value="kbfintech" />
-		<beans:property name="password" value="kbfintech" />
+		<beans:property name="password" value="kbhackerton" />
 	</beans:bean>
 
 
