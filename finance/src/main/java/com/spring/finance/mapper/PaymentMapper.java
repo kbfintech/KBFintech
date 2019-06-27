@@ -11,6 +11,6 @@ public interface PaymentMapper {
 	
 	void updatePaymentTotal(PaymentVO pVo);
 	
-	String getPaymentTotalAmount(String M_ID);
+	String getPaymentTotalAmount(PaymentVO pVo);
 	
 }

@@ -5,15 +5,16 @@ import java.util.ArrayList;
 import com.spring.finance.domain.MemberVO;
 import com.spring.finance.domain.PaymentVO;
 import com.spring.finance.domain.PlanVO;
+import com.spring.finance.domain.RankTotalVO;
 import com.spring.finance.domain.RankVO;
 
 public interface RankMapper {
 	
 	ArrayList<String> getProductRegisterList();
 	
-	ArrayList<PaymentVO> getRankRealtime();
+	ArrayList<PaymentVO> getRankRealtime(String PAY_MONTH);
 	
-	double getRealtimeScore(String M_ID);
+	double getRealtimeScore(PlanVO pVo);
 	
 	void setFinalRank(RankVO rVo);
 	
@@ -21,6 +22,14 @@ public interface RankMapper {
 	
 	ArrayList<String> getRankTotalID();
 	
+	ArrayList<RankTotalVO> getRankTotal();
+	
 	void updateRankTotal(RankVO rVo);
+	
+	double getTransferAmount(PlanVO pVo);
+	
+	ArrayList<Double> getPlanTotal(PlanVO pVo);
+	
+	void updateMPoint(MemberVO mVo);
 
 }

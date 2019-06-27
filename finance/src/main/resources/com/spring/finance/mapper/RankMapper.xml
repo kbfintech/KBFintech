@@ -9,8 +9,8 @@
 		select M_ID from MEMBER where PR_REG_IDX = '1'
 	</select>
 	
-	<select id="getRankRealtime" resultType="com.spring.finance.domain.PaymentVO">
-		select * from PAYMENT_TOTAL order by PAY_TOTAL ASC
+	<select id="getRankRealtime" parameterType="String" resultType="com.spring.finance.domain.PaymentVO">
+		select * from PAYMENT_TOTAL where PAY_MONTH = #{PAY_MONTH}order by PAY_TOTAL ASC
 	</select>
 	
 	<select id="getSuccess" parameterType="String" resultType="String">
@@ -18,7 +18,7 @@
 	</select>
 	
 	<select id="getRealtimeScore" parameterType="com.spring.finance.domain.PlanVO" resultType="Double">
-		select PAY_TOTAL from PAYMENT_TOTAL where M_ID = #{M_ID}
+		select PAY_TOTAL from PAYMENT_TOTAL where M_ID = #{M_ID} and PAY_MONTH = #{PL_ID}
 	</select>
 	
 	<select id="getRankTotalID" resultType="String">
@@ -31,6 +31,22 @@
 	
 	<update id="updateRankTotal" parameterType="com.spring.finance.domain.RankVO">
 		update RANK_TOTAL set TOTAL_SCORE = #{TOTAL_SCORE} where M_ID = #{M_ID}
+	</update>
+	
+	<select id="getRankTotal" resultType="com.spring.finance.domain.RankTotalVO">
+		select * from RANK_TOTAL order by TOTAL_SCORE DESC
+	</select>
+	
+	<select id="getTransferAmount" parameterType="com.spring.finance.domain.PlanVO" resultType="Double">
+		select TRANSFER_MONEY from TRANSFER where M_ID = #{M_ID} and TRANSFER_DATE = #{PL_ID}
+	</select>
+	
+	<select id="getPlanTotal" parameterType="String" resultType="Double">
+		select PLD_PRICE from PLAN_DETAIL where M_ID = #{M_ID} and PL_ID = #{PL_ID}
+	</select>
+	
+	<update id="updateMPoint" parameterType="com.spring.finance.domain.MemberVO">
+		update MEMBER set M_POINT = #{M_POINT} where M_ID = #{M_ID}
 	</update>
 
 </mapper>

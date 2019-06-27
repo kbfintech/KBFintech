@@ -2,6 +2,7 @@ package com.spring.finance.controller;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -83,9 +84,13 @@ public class PaymentController {
 		System.out.println("Payment DB 저장성공!");
 		
 		// 총 결제금액 DB 업데이트
-		String total = mapper.getPaymentTotalAmount(pVO.getM_ID());
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		int month = Calendar.getInstance().get(Calendar.MONTH)+1;
+		String date = year+""+month;
+		pVO.setPAY_DATE(date);
+		String total = mapper.getPaymentTotalAmount(pVO);
 		if(null==total || total=="") pVO.setPAY_TOTAL(0);
-		else pVO.setPAY_TOTAL(Double.parseDouble(total)+pVO.getPAY_PRICE());;
+		else pVO.setPAY_TOTAL(Double.parseDouble(total)+pVO.getPAY_PRICE());
 		mapper.updatePaymentTotal(pVO);
 		
 //		System.out.println(pVO.getM_ID() + pVO.getPAY_TOTAL());

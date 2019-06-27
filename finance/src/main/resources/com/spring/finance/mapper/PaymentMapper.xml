@@ -19,11 +19,11 @@
 
 	<select id="getPaymentTotalAmount" parameterType="String"
 		resultType="String">
-		select PAY_TOTAL from PAYMENT_TOTAL where M_ID = #{M_ID}
+		select PAY_TOTAL from PAYMENT_TOTAL where M_ID = #{M_ID} and PAY_MONTH = #{PAY_DATE}
 	</select>
 
 	<update id="updatePaymentTotal" parameterType="com.spring.finance.domain.PaymentVO">
-		update PAYMENT_TOTAL set PAY_TOTAL = #{PAY_TOTAL} where M_ID = #{M_ID}
+		update PAYMENT_TOTAL set PAY_TOTAL = #{PAY_TOTAL} where M_ID = #{M_ID} and PAY_MONTH = #{PAY_DATE}
 	</update>
 
 </mapper>
