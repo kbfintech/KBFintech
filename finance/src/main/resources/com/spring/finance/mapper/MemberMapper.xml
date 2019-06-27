@@ -5,4 +5,16 @@
 
 <mapper namespace="com.spring.finance.mapper.MemberMapper">
 	
+	<insert id="insertMember" parameterType="com.spring.finance.domain.MemberVO">
+		insert into MEMBER (M_ID, M_PW, M_NAME, M_POINT, PHONE, EMAIL, PR_REG_IDX, OPENPAGE) values(#{M_ID}, #{M_PW}, #{M_NAME}, 0, #{PHONE}, #{EMAIL}, #{PR_REG_IDX}, #{OPENPAGE})
+	</insert> 
+	
+	<select id="selectUId" parameterType="String" resultType="String">
+		select M_ID from MEMBER where M_ID = #{M_ID}
+	</select>
+	
+	<select id="login" parameterType="com.spring.finance.domain.MemberVO" resultType="com.spring.finance.domain.MemberVO">
+		select * from MEMBER where M_ID = #{M_ID} and M_PW = #{M_PW}
+	</select>
+	
 </mapper>

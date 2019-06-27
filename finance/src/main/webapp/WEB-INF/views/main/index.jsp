@@ -9,11 +9,13 @@
 <%@include file="../includes/menu.jsp"%>
 <script>
 	$(document).ready(function() {
+		
 		var h = $(".navbar").height();
 		var top = $(".navbar").css('padding-top').split('px')[0] * 1;
 		var bottom = $(".navbar").css('padding-bottom').split('px')[0] * 1;
 		var result = h + top + bottom;
 		$("div.carousel-inner").css('margin-top', result);
+		
 	});
 </script>
 </head>
