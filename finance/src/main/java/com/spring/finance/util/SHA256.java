@@ -7,7 +7,7 @@ public class SHA256 {
 
 	public static void main(String[] args) {
 //		System.out.println(testSHA256("942061109538489408230421"));
-		System.out.println(testSHA256("111111111111111108230421"));
+		System.out.println(testSHA256("333333333333333308230421"));
 	}
 	
 	public static String testSHA256(String str){

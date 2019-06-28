@@ -399,6 +399,34 @@ public class PlanController {
       hmap.put("PL_ID", PL_ID);
       hmap.put("M_ID", M_ID);
       ArrayList<PlanVO> planList = mapper.planSearch(hmap);
+      if(planList.size() == 0) {
+    	  ArrayList<String> plidList = mapper.dateList(M_ID);
+    	  if(plidList.size() == 0) {
+    		  response.setContentType("text/html; charset=UTF-8");
+    	         PrintWriter out;
+    	         try {
+    	            out = response.getWriter();
+    	            out.println("<script>alert('설정된 한도가 존재하지 않습니다. 한도를 먼저 설정해주세요.'); location.href='/plan/planer'</script>");
+    	            out.flush();
+    	            out.close();
+    	         } catch (IOException e) {
+    	            e.printStackTrace();
+    	            System.out.println("결제 등록 필수로직 에러: "+e.getMessage());
+    	         }
+    	  }else {
+    		  PL_ID = plidList.get(0);
+    		  HashMap<String, String> hmap2 = new HashMap<String, String>();
+    		  hmap2.put("PL_ID", PL_ID);
+    		  hmap2.put("M_ID", M_ID);
+    		  planList = mapper.planSearch(hmap2);
+    		  year = Integer.parseInt(PL_ID.substring(0, 3));
+    		  if(PL_ID.length() == 5) {
+    			  month = Integer.parseInt(PL_ID.substring(4, 5));    			  
+    		  }else if(PL_ID.length() == 6) {    			  
+    			  month = Integer.parseInt(PL_ID.substring(4, 6));    			  
+    		  }
+    	  }
+      }
       //System.out.println(planList);
       int totalCount = 0;
       for(int i = 0; i<8; i++) {

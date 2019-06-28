@@ -38,7 +38,7 @@ public class RankingController {
 	private static ArrayList<RankClass> arrRankTotal = new ArrayList<>();
 
 	// 매월 매일 아무요일 0시 0분 0초에 실행
-	@Scheduled(cron = "* 16 4 * * ?")
+	@Scheduled(cron = "* 16 12 * * ?")
 	public ArrayList<RankClass> setRealtimeRank() {
 		
 		RankMapper mapper = sqlsession.getMapper(RankMapper.class);
