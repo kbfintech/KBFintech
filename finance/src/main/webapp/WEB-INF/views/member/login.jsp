@@ -11,7 +11,15 @@
 <script
 	src="<%=application.getContextPath()%>/resources/KBFintech/javascript/login.js"
 	type="text/javascript"></script>
-
+<script type="text/javascript">
+	$(window).load(function() {
+		// 로딩되기 시작할때
+		var success = "<c:out value='${success}'/>";
+		if (success != "") {
+			alert(success);
+		}
+	});
+</script>
 </head>
 <body>
 	<div class="container" style="margin-top: 8em; margin-bottom: 6em;">
