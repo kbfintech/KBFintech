@@ -35,6 +35,8 @@ import com.google.gson.JsonParser;
 import com.spring.finance.domain.AccountVO;
 import com.spring.finance.domain.KProductVO;
 import com.spring.finance.domain.ProductVO;
+import com.spring.finance.mapper.AccountMapper;
+import com.spring.finance.mapper.CardMapper;
 import com.spring.finance.mapper.ProductMapper;
 import com.spring.finance.util.LoginSessionTool;
 
@@ -56,139 +58,159 @@ public class ProductController {
 			HttpServletResponse response1) throws IOException {
 
 		String M_ID = (String) session.getAttribute("id");
-		ProductMapper mapper = sqlsession.getMapper(ProductMapper.class);
 
-		if (null == M_ID) {
-			response1.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response1.getWriter();
-			out.println("<script>alert('로그인을 먼저 해주시기 바랍니다.'); location.href='/member/login'</script>");
-			out.flush();
-			out.close();
-			return "/member/login";
-		}
+		// 카드와 계좌를 등록했을 때만 진입 가능하게
+		AccountMapper accountMapper = sqlsession.getMapper(AccountMapper.class);
+		CardMapper cardMapper = sqlsession.getMapper(CardMapper.class);
 
-		String prd_nm = mapper.getProduct(M_ID);
+		if (null != accountMapper.getAccountNum(M_ID) && null != cardMapper.isRegister(M_ID)) {
+			ProductMapper mapper = sqlsession.getMapper(ProductMapper.class);
 
-		if (prd_nm != null) {
-			model.addAttribute("prd_nm", prd_nm);
-			response1.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response1.getWriter();
-			out.println("<script>alert('이미 가입한 상품이 있습니다.'); location.href='/main/index'</script>");
-			out.flush();
-			out.close();
-			return "/main/index";
+			if (null == M_ID) {
+				response1.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response1.getWriter();
+				out.println("<script>alert('로그인을 먼저 해주시기 바랍니다.'); location.href='/member/login'</script>");
+				out.flush();
+				out.close();
+				return "/member/login";
+			}
+
+			String prd_nm = mapper.getProduct(M_ID);
+
+			if (prd_nm != null) {
+				model.addAttribute("prd_nm", prd_nm);
+				response1.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response1.getWriter();
+				out.println("<script>alert('이미 가입한 상품이 있습니다.'); location.href='/main/index'</script>");
+				out.flush();
+				out.close();
+				return "/main/index";
+			} else {
+
+				LoginSessionTool.checkSession(session, model, response1);
+				HttpHeaders headersS = new HttpHeaders();
+				HttpEntity<?> entityS = new HttpEntity<>(headersS);
+				UriComponentsBuilder builderS = UriComponentsBuilder.fromHttpUrl(urlSaving);
+				RestTemplate restTemplateS = new RestTemplate();
+				HttpEntity<String> responseS = restTemplateS.exchange(builderS.toUriString(), HttpMethod.GET, entityS,
+						String.class);
+
+				HttpHeaders headersD = new HttpHeaders();
+				HttpEntity<?> entityD = new HttpEntity<>(headersD);
+				UriComponentsBuilder builderD = UriComponentsBuilder.fromHttpUrl(urlDeposit);
+				RestTemplate restTemplateD = new RestTemplate();
+				HttpEntity<String> responseD = restTemplateD.exchange(builderD.toUriString(), HttpMethod.GET, entityD,
+						String.class);
+
+				JsonParser jsonParserS = new JsonParser();
+				JsonElement jsonElementS = jsonParserS.parse(responseS.getBody().toString());
+				JsonObject getBodyS = jsonElementS.getAsJsonObject();
+				JsonObject getResultS = getBodyS.get("result").getAsJsonObject();
+				JsonArray getBaseListS = getResultS.get("baseList").getAsJsonArray();
+
+				JsonParser jsonParserD = new JsonParser();
+				JsonElement jsonElementD = jsonParserD.parse(responseD.getBody().toString());
+				JsonObject getBodyD = jsonElementD.getAsJsonObject();
+				JsonObject getResultD = getBodyD.get("result").getAsJsonObject();
+				JsonArray getBaseListD = getResultD.get("baseList").getAsJsonArray();
+
+				// 예금
+				ArrayList<JsonObject> jsonArrKbD = new ArrayList<>();
+				for (int i = 0; i < getBaseListD.size(); i++) {
+					JsonObject jsonObject = getBaseListD.get(i).getAsJsonObject();
+					String bankName = jsonObject.get("kor_co_nm").getAsString();
+					if (bankName.equals("국민은행"))
+						jsonArrKbD.add(getBaseListD.get(i).getAsJsonObject());
+				}
+
+				ArrayList<KProductVO> productListD = new ArrayList<KProductVO>();
+				ArrayList<String[]> spcl_cndListD = new ArrayList<String[]>();
+				KProductVO kpD;
+
+				for (int i = 0; i < jsonArrKbD.size(); i++) {
+					kpD = new KProductVO();
+					kpD.setFin_prdt_cd(jsonArrKbD.get(i).get("fin_prdt_cd").toString().substring(1,
+							jsonArrKbD.get(i).get("fin_prdt_cd").toString().length() - 1));
+					kpD.setFin_prdt_nm(jsonArrKbD.get(i).get("fin_prdt_nm").toString().substring(1,
+							jsonArrKbD.get(i).get("fin_prdt_nm").toString().length() - 1));
+					kpD.setJoin_member(jsonArrKbD.get(i).get("join_member").toString().substring(1,
+							jsonArrKbD.get(i).get("join_member").toString().length() - 1));
+					kpD.setMtrt_int(jsonArrKbD.get(i).get("mtrt_int").toString().substring(1,
+							jsonArrKbD.get(i).get("mtrt_int").toString().length() - 1));
+					String spcl_cnd = jsonArrKbD.get(i).get("spcl_cnd").toString().substring(1,
+							jsonArrKbD.get(i).get("spcl_cnd").toString().length() - 1);
+
+					String[] newOne = spcl_cnd.split("[\\\\r\\\\n]+");
+					String[] newOne2 = new String[newOne.length - 1];
+					for (int x = 1; x < newOne.length; x++) {
+						newOne2[x - 1] = newOne[x];
+					}
+					kpD.setBest_rate(newOne[0]);
+					kpD.setSpcl_cnd(newOne2);
+
+					spcl_cndListD.add(newOne2);
+					productListD.add(kpD);
+				}
+				session.setAttribute("productListD", productListD);
+				model.addAttribute("productListD", productListD);
+
+				// 적금
+				ArrayList<JsonObject> jsonArrKbS = new ArrayList<>();
+				for (int i = 0; i < getBaseListS.size(); i++) {
+					JsonObject jsonObjectS = getBaseListS.get(i).getAsJsonObject();
+					String bankName = jsonObjectS.get("kor_co_nm").getAsString();
+					if (bankName.equals("국민은행"))
+						jsonArrKbS.add(getBaseListS.get(i).getAsJsonObject());
+				}
+
+				ArrayList<KProductVO> productListS = new ArrayList<KProductVO>();
+				ArrayList<String[]> spcl_cndListS = new ArrayList<String[]>();
+				KProductVO kpS;
+
+				for (int i = 0; i < jsonArrKbS.size(); i++) {
+					kpS = new KProductVO();
+					kpS.setFin_prdt_cd(jsonArrKbS.get(i).get("fin_prdt_cd").toString().substring(1,
+							jsonArrKbS.get(i).get("fin_prdt_cd").toString().length() - 1));
+					kpS.setFin_prdt_nm(jsonArrKbS.get(i).get("fin_prdt_nm").toString().substring(1,
+							jsonArrKbS.get(i).get("fin_prdt_nm").toString().length() - 1));
+					kpS.setJoin_member(jsonArrKbS.get(i).get("join_member").toString().substring(1,
+							jsonArrKbS.get(i).get("join_member").toString().length() - 1));
+					kpS.setMtrt_int(jsonArrKbS.get(i).get("mtrt_int").toString().substring(1,
+							jsonArrKbS.get(i).get("mtrt_int").toString().length() - 1));
+					String spcl_cnd = jsonArrKbS.get(i).get("spcl_cnd").toString().substring(1,
+							jsonArrKbS.get(i).get("spcl_cnd").toString().length() - 1);
+
+					String[] newOne = spcl_cnd.split("[\\\\r\\\\n]+");
+					String[] newOne2 = new String[newOne.length - 1];
+					for (int x = 1; x < newOne.length; x++) {
+						newOne2[x - 1] = newOne[x];
+					}
+					kpS.setBest_rate(newOne[0]);
+					kpS.setSpcl_cnd(newOne2);
+
+					spcl_cndListS.add(newOne2);
+					productListS.add(kpS);
+				}
+				session.setAttribute("productListS", productListS);
+				model.addAttribute("productListS", productListS);
+				model.addAttribute("prd_nm", prd_nm);
+				return "/product/list";
+
+			}
 		} else {
-
-			LoginSessionTool.checkSession(session, model, response1);
-			HttpHeaders headersS = new HttpHeaders();
-			HttpEntity<?> entityS = new HttpEntity<>(headersS);
-			UriComponentsBuilder builderS = UriComponentsBuilder.fromHttpUrl(urlSaving);
-			RestTemplate restTemplateS = new RestTemplate();
-			HttpEntity<String> responseS = restTemplateS.exchange(builderS.toUriString(), HttpMethod.GET, entityS,
-					String.class);
-
-			HttpHeaders headersD = new HttpHeaders();
-			HttpEntity<?> entityD = new HttpEntity<>(headersD);
-			UriComponentsBuilder builderD = UriComponentsBuilder.fromHttpUrl(urlDeposit);
-			RestTemplate restTemplateD = new RestTemplate();
-			HttpEntity<String> responseD = restTemplateD.exchange(builderD.toUriString(), HttpMethod.GET, entityD,
-					String.class);
-
-			JsonParser jsonParserS = new JsonParser();
-			JsonElement jsonElementS = jsonParserS.parse(responseS.getBody().toString());
-			JsonObject getBodyS = jsonElementS.getAsJsonObject();
-			JsonObject getResultS = getBodyS.get("result").getAsJsonObject();
-			JsonArray getBaseListS = getResultS.get("baseList").getAsJsonArray();
-
-			JsonParser jsonParserD = new JsonParser();
-			JsonElement jsonElementD = jsonParserD.parse(responseD.getBody().toString());
-			JsonObject getBodyD = jsonElementD.getAsJsonObject();
-			JsonObject getResultD = getBodyD.get("result").getAsJsonObject();
-			JsonArray getBaseListD = getResultD.get("baseList").getAsJsonArray();
-
-			// 예금
-			ArrayList<JsonObject> jsonArrKbD = new ArrayList<>();
-			for (int i = 0; i < getBaseListD.size(); i++) {
-				JsonObject jsonObject = getBaseListD.get(i).getAsJsonObject();
-				String bankName = jsonObject.get("kor_co_nm").getAsString();
-				if (bankName.equals("국민은행"))
-					jsonArrKbD.add(getBaseListD.get(i).getAsJsonObject());
+			if (null == accountMapper.getAccountNum(M_ID)) {
+				model.addAttribute("status", "account");
 			}
-
-			ArrayList<KProductVO> productListD = new ArrayList<KProductVO>();
-			ArrayList<String[]> spcl_cndListD = new ArrayList<String[]>();
-			KProductVO kpD;
-
-			for (int i = 0; i < jsonArrKbD.size(); i++) {
-				kpD = new KProductVO();
-				kpD.setFin_prdt_cd(jsonArrKbD.get(i).get("fin_prdt_cd").toString().substring(1,
-						jsonArrKbD.get(i).get("fin_prdt_cd").toString().length() - 1));
-				kpD.setFin_prdt_nm(jsonArrKbD.get(i).get("fin_prdt_nm").toString().substring(1,
-						jsonArrKbD.get(i).get("fin_prdt_nm").toString().length() - 1));
-				kpD.setJoin_member(jsonArrKbD.get(i).get("join_member").toString().substring(1,
-						jsonArrKbD.get(i).get("join_member").toString().length() - 1));
-				kpD.setMtrt_int(jsonArrKbD.get(i).get("mtrt_int").toString().substring(1,
-						jsonArrKbD.get(i).get("mtrt_int").toString().length() - 1));
-				String spcl_cnd = jsonArrKbD.get(i).get("spcl_cnd").toString().substring(1,
-						jsonArrKbD.get(i).get("spcl_cnd").toString().length() - 1);
-
-				String[] newOne = spcl_cnd.split("[\\\\r\\\\n]+");
-				String[] newOne2 = new String[newOne.length - 1];
-				for (int x = 1; x < newOne.length; x++) {
-					newOne2[x - 1] = newOne[x];
-				}
-				kpD.setBest_rate(newOne[0]);
-				kpD.setSpcl_cnd(newOne2);
-
-				spcl_cndListD.add(newOne2);
-				productListD.add(kpD);
+			if (null == cardMapper.isRegister(M_ID)) {
+				model.addAttribute("status", "card");
 			}
-			session.setAttribute("productListD", productListD);
-			model.addAttribute("productListD", productListD);
-
-			// 적금
-			ArrayList<JsonObject> jsonArrKbS = new ArrayList<>();
-			for (int i = 0; i < getBaseListS.size(); i++) {
-				JsonObject jsonObjectS = getBaseListS.get(i).getAsJsonObject();
-				String bankName = jsonObjectS.get("kor_co_nm").getAsString();
-				if (bankName.equals("국민은행"))
-					jsonArrKbS.add(getBaseListS.get(i).getAsJsonObject());
+			
+			if(null == accountMapper.getAccountNum(M_ID) && null == cardMapper.isRegister(M_ID)) {
+				model.addAttribute("status", "allRegist");
 			}
-
-			ArrayList<KProductVO> productListS = new ArrayList<KProductVO>();
-			ArrayList<String[]> spcl_cndListS = new ArrayList<String[]>();
-			KProductVO kpS;
-
-			for (int i = 0; i < jsonArrKbS.size(); i++) {
-				kpS = new KProductVO();
-				kpS.setFin_prdt_cd(jsonArrKbS.get(i).get("fin_prdt_cd").toString().substring(1,
-						jsonArrKbS.get(i).get("fin_prdt_cd").toString().length() - 1));
-				kpS.setFin_prdt_nm(jsonArrKbS.get(i).get("fin_prdt_nm").toString().substring(1,
-						jsonArrKbS.get(i).get("fin_prdt_nm").toString().length() - 1));
-				kpS.setJoin_member(jsonArrKbS.get(i).get("join_member").toString().substring(1,
-						jsonArrKbS.get(i).get("join_member").toString().length() - 1));
-				kpS.setMtrt_int(jsonArrKbS.get(i).get("mtrt_int").toString().substring(1,
-						jsonArrKbS.get(i).get("mtrt_int").toString().length() - 1));
-				String spcl_cnd = jsonArrKbS.get(i).get("spcl_cnd").toString().substring(1,
-						jsonArrKbS.get(i).get("spcl_cnd").toString().length() - 1);
-
-				String[] newOne = spcl_cnd.split("[\\\\r\\\\n]+");
-				String[] newOne2 = new String[newOne.length - 1];
-				for (int x = 1; x < newOne.length; x++) {
-					newOne2[x - 1] = newOne[x];
-				}
-				kpS.setBest_rate(newOne[0]);
-				kpS.setSpcl_cnd(newOne2);
-
-				spcl_cndListS.add(newOne2);
-				productListS.add(kpS);
-			}
-			session.setAttribute("productListS", productListS);
-			model.addAttribute("productListS", productListS);
-			model.addAttribute("prd_nm", prd_nm);
-			return "/product/list";
-
+			return "/payRegister/register";
 		}
+
 	}
 
 	@RequestMapping(value = "/info", method = RequestMethod.GET)

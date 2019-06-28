@@ -136,7 +136,7 @@ table.type09 td {
 			</tr>
 			<tr>
 				<td><h5 class="category-name" align="center">카드 관리</h5></td>
-				<td colspan="4"><a href="${path }/plan/planer"><img
+				<td colspan="4"><a href="${path }/payRegister"><img
 						class="plus" align="right"
 						src="<%=application.getContextPath()%>/resources/KBFintech/img/plus.png"></a>
 				</td>
@@ -176,7 +176,7 @@ table.type09 td {
 			<tr>
 			<tr>
 				<td><h5 class="category-name" align="center">가입 상품 관리</h5></td>
-				<td colspan="4"><a href="${path }/plan/planer"><img
+				<td colspan="4"><a href="${path }/product/list"><img
 						class="plus" align="right"
 						src="<%=application.getContextPath()%>/resources/KBFintech/img/plus.png"></a>
 				</td>

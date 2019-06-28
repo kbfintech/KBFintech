@@ -16,6 +16,32 @@
 
 <script>
 var result = "<%=(String)request.getAttribute("result")%>"
+var status = "<%=(String)request.getAttribute("status")%>"
+
+if(status != 'null'){
+	if(status == 'allRegist'){
+		alert("카드 및 계좌를 등록하고 한도를 설정하세요.");
+		$(document).ready(function(){
+			$("#accountUpdate").hide();
+			$('#cardUpdate').hide();
+		});
+	}
+	if(status == 'account'){
+		alert("계좌를 등록하고 한도를 설정하세요.");
+		$(document).ready(function(){
+			$('#cardRegist').hide();
+			$('#accountUpdate').hide();
+		});
+	}
+	if(status == 'card'){
+		alert("카드를 등록하고 한도를 설정하세요.");
+		$(document).ready(function(){
+			$('#accountRegist').hide();
+			$('#cardUpdate').hide();
+		});
+	}
+}
+
 if(result != 'null') {
 	if(result == 'allNeed') {
 		alert("모두 등록해야합니다.");

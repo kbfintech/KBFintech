@@ -15,4 +15,31 @@
 	<update id="updatePrdTransfer" parameterType="com.spring.finance.domain.TransferVO">
 		update product set PRD_TRANSFER = PRD_TRANSFER + #{TRANSFER_MONEY} where M_ID = #{M_ID}
 	</update>
+	
+	<select id="getAccount" parameterType="String"
+      resultType="com.spring.finance.domain.AccountVO">
+      SELECT *
+      FROM ACCOUNT
+      WHERE M_ID =#{M_ID}
+   </select>
+
+   <insert id="insertProduct" parameterType="com.spring.finance.domain.ProductVO">
+      INSERT INTO PRODUCT
+      VALUES (#{M_ID}, #{PRD_ID}, #{PRD_INFO}, #{PRD_TRANSFER}, #{PRD_NAME},#{PRD_ACC},#{PRD_REG_DT})
+   </insert>
+
+   <update id="updateAccount" parameterType="Map">
+      UPDATE ACCOUNT
+      SET ACCOUNT_MONEY = ACCOUNT_MONEY - #{MONEY_TSF}
+      WHERE M_NAME in 
+         (select m_name 
+          from member
+          where m_id = #{M_ID})
+   </update>
+
+   <update id="updatePoint" parameterType="String">
+      UPDATE MEMBER
+      SET M_POINT = M_POINT + 1000
+      WHERE M_ID = #{M_ID}
+   </update>
 </mapper>

@@ -179,7 +179,7 @@ public class MemberController {
 		String title = "월렛버핏 : 가입확인 메일입니다. 인증 후 가입완료해주시기 바랍니다.";
 		String content = "<h1 text-align: center>가입인증메일</h1><br><br>"
 				+ "<p text-align: center>하단 링크를 누르셔서 가입완료 하신 후 로그인 하셔서 서비스 이용하시기 바랍니다.</p><br><br><br>"
-				+ "<a href='http://localhost:8080/member/register_complete?id=" + mv.getM_ID()
+				+ "<a href='http://localhost:8082/member/register_complete?id=" + mv.getM_ID()
 				+ "' align: center>가입 완료</a>";
 
 		try {
@@ -236,6 +236,7 @@ public class MemberController {
 		LoginSessionTool.checkSession(session, model, response);
 
 		String M_ID = (String) session.getAttribute("id");
+		String phone = (String) session.getAttribute("phone");
 
 		if (null != M_ID && !M_ID.equals("")) {
 
@@ -247,7 +248,6 @@ public class MemberController {
 			List<String> pld_price = new ArrayList();
 			String[] s_price = { "", "", "", "", "", "", "", "", "" };
 			double[] s_price_cal = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
-			
 
 			MemberVO memberVO = new MemberVO();
 			CardVO cardVO = new CardVO();
@@ -277,17 +277,36 @@ public class MemberController {
 			memberVO = mapper.getMemberObject(M_ID);
 
 			// cardVO
-			cardVO = mapper.getMCard(M_ID);
-			if (cardVO.getC_ID() != null) {
-				cardNo = cardVO.getC_ID().substring(0, 4) + '-' + cardVO.getC_ID().substring(4, 8) // null exception
-						+ '-' + cardVO.getC_ID().substring(8, 12) + '-' + cardVO.getC_ID().substring(12, 16);
-				cardType = (cardVO.getCARD_TYPE() == 0) ? "체크" : "신용";
-				prd_transfer = formatter.format(productVO.getPRD_TRANSFER());
+//			cardVO = mapper.getMCard(M_ID);
+			if (null != mapper.getMCard(M_ID) && null != mapper.getAccount(phone)) {
+				if (null != mapper.getMCard(M_ID)) {
+					cardVO = mapper.getMCard(M_ID);
+					cardNo = cardVO.getC_ID().substring(0, 4) + '-' + cardVO.getC_ID().substring(4, 8) // null exception
+							+ '-' + cardVO.getC_ID().substring(8, 12) + '-' + cardVO.getC_ID().substring(12, 16);
+					cardType = (cardVO.getCARD_TYPE() == 0) ? "체크" : "신용";
+					prd_transfer = formatter.format(productVO.getPRD_TRANSFER());
 
-				switch (cardVO.getC_COMPANY()) {
-				case "1":
-				default:
-					cardCom = "국민";
+					switch (cardVO.getC_COMPANY()) {
+					case "1":
+					default:
+						cardCom = "국민";
+					}
+				}
+
+			} else {
+				if (null == mapper.getMCard(M_ID) && null == mapper.getAccount(phone)) {
+					// 카드와 계좌 둘 다 등록이 안되었을 경우
+					model.addAttribute("result", "allNeed");
+					return "/payRegister/register";
+				}
+				if (null == mapper.getMCard(M_ID)) {
+					model.addAttribute("result", "card");
+					return "/payRegister/register";
+				}
+
+				if (null == mapper.getAccount(phone)) {
+					model.addAttribute("result", "account");
+					return "/payRegister/register";
 				}
 			}
 
@@ -344,7 +363,7 @@ public class MemberController {
 					}
 					s_price[8] = formatter.format(s_price_cal[8]);
 				}
-				
+
 			}
 
 			model.addAttribute("memberVO", memberVO);

@@ -89,6 +89,13 @@
 		FROM M_CARD
 		WHERE M_ID =#{M_ID}
 	</select>
+	
+	<select id="getAccount" parameterType="String"
+		resultType="String">
+		SELECT ACCOUNT_NUMBER
+		FROM ACCOUNT
+		WHERE PHONE =#{phone}
+	</select>
 
 	<select id="getProduct" parameterType="String"
 		resultType="com.spring.finance.domain.ProductVO">
