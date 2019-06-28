@@ -1,41 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@include file="../includes/header.jsp"%>
+<%@include file="../includes/menu.jsp"%>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<%@include file="../includes/header.jsp"%>
-<%@include file="../includes/menu.jsp"%>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script>
+$(document).ready(function(){
+});
+</script>
 </head>
-<body>
+<body class="fontType">
 	<div class="container">
 		<h1 class="my-4" align="center">추천 결과를 확인하세요</h1>
 		<hr>
 		<div class="row">
-			<c:forEach var="baseInfo" items='${product.baseList}'>
+			<c:forEach var="baseInfo" items='${productList}'>
 				<div class="col-lg-2 col-md-2"></div>
 				<div class="card col-lg-8 col-md-8 panel panel-primary">
 					<div class="card-body">
 						<div class="row">
 							<div class="col-lg-9 col-md-9 panel-heading">
-								<h3 class="card-title panel-heading"><c:out value='${baseInfo.fin_prdt_nm}'/></h3>
-								<h4 class="card-subtitle panel-heading text-muted"><c:out value='${baseInfo.kor_co_nm}'/></h4>
-								<span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
+								<h3 class="card-title panel-heading" id="no">${baseInfo.fin_prdt_nm}</h3>
+								<h4 class="card-subtitle panel-heading text-muted">${baseInfo.best_rate}</h4>
+								<a href="/product/info?fin_prdt_cd=${baseInfo.fin_prdt_cd}"><button type="button" class="btn btn-outline-info"><h3>자세히 보기</h3></button></a>
 							</div>
 						</div>
-					</div>
-					<div class="panel-body" >
-						<ul class="list-group list-group-flush">
-							<li class="list-group-item"><h3>가입방법</h3><c:out value='${baseInfo.join_way}'/></li>
-							<li class="list-group-item"><h3>기본금리</h3><c:out value='${baseInfo.join_member}'/>%</li>
-							<li class="list-group-item"><h3>최대금리</h3><c:out value='${baseInfo.max_limit}'/>%</li>
-							<li class="list-group-item"><h3>만기지급금액(<c:out value='${baseInfo.dcls_strt_day}'/>)%</h3><c:out value='${baseInfo.dcls_strt_day}'/></li>
-							<li class="list-group-item"><h3>만기지급금액(<c:out value='${baseInfo.fin_co_subm_day}'/>)%</h3><c:out value='${baseInfo.fin_co_subm_day}'/></li>
-							<li class="list-group-item"><button type="button" class="btn btn-outline-info" href="${baseInfo.fin_prdt_cd}"><h3>자세히 보기</h3></button></li>
-						</ul>
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-2"></div>
@@ -106,5 +102,6 @@
 				});
 		});
 	</script>
+	<%@include file="../includes/footer.jsp"%>
 </body>
 </html>

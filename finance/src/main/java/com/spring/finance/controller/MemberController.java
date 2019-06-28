@@ -157,7 +157,7 @@ public class MemberController {
 		String title = "월렛버핏 : 가입확인 메일입니다. 인증 후 가입완료해주시기 바랍니다.";
 		String content = "<h1 text-align: center>가입인증메일</h1><br><br>"
 				+ "<p text-align: center>하단 링크를 누르셔서 가입완료 하신 후 로그인 하셔서 서비스 이용하시기 바랍니다.</p><br><br><br>"
-				+ "<a href='http://localhost:8080/finance/member/register_complete?id="+ mv.getM_ID() +"' align: center>가입 완료</a>";
+				+ "<a href='http://localhost:8082/member/register_complete?id="+ mv.getM_ID() +"' align: center>가입 완료</a>";
 
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
@@ -167,7 +167,7 @@ public class MemberController {
 			messageHelper.setFrom(fromEmail, "월렛버핏"); // 보내는사람 생략하거나 하면 정상작동을 안함
 			messageHelper.setTo(email); // 받는사람 이메일
 			messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
-			messageHelper.setText(content); // 메일 내용
+			messageHelper.setText(content, true); // 메일 내용
 
 			mailSender.send(message);
 		} catch (Exception e) {
@@ -177,7 +177,7 @@ public class MemberController {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.println(
-				"<script>alert('가입인증메일 발송이 완료되었습니다. 입력하신 메일에서 인증 완료 후 로그인 하시기 바랍니다.'); location.href='/finance/member/login'</script>");
+				"<script>alert('가입인증메일 발송이 완료되었습니다. 입력하신 메일에서 인증 완료 후 로그인 하시기 바랍니다.'); location.href='/member/login'</script>");
 		out.flush();
 		out.close();
 
@@ -185,7 +185,7 @@ public class MemberController {
 
 	}
 
-	@RequestMapping(value = "member/isValid")
+	@RequestMapping(value = "/member/isValid")
 	@ResponseBody
 	public String isValid(HttpServletRequest request) {
 
@@ -207,12 +207,12 @@ public class MemberController {
 
 	}
 
-	@RequestMapping("member/forget")
+	@RequestMapping("/member/forget")
 	public void forget() {
 		System.out.println("비밀번호 찾기 페이지");
 	}
 
-	@RequestMapping(value="member/register_complete", method=RequestMethod.GET)
+	@RequestMapping(value="/member/register_complete", method=RequestMethod.GET)
 	public String register_complete(@RequestParam String id, HttpSession session, Model model) {
 		
 		LoginSessionTool.checkOnlyNavBar(session, model);

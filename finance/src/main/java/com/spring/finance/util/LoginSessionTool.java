@@ -18,7 +18,7 @@ public class LoginSessionTool {
 			PrintWriter out;
 			try {
 				out = response.getWriter();
-				out.println("<script>alert('로그인을 먼저 해주시기 바랍니다.'); location.href='/finance/member/login'</script>");
+				out.println("<script>alert('로그인을 먼저 해주시기 바랍니다.'); location.href='/member/login'</script>");
 				out.flush();
 				out.close();
 			} catch (IOException e) {

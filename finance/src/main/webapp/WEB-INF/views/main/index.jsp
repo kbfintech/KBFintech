@@ -9,13 +9,11 @@
 <%@include file="../includes/menu.jsp"%>
 <script>
 	$(document).ready(function() {
-		
 		var h = $(".navbar").height();
 		var top = $(".navbar").css('padding-top').split('px')[0] * 1;
 		var bottom = $(".navbar").css('padding-bottom').split('px')[0] * 1;
 		var result = h + top + bottom;
 		$("div.carousel-inner").css('margin-top', result);
-		
 	});
 </script>
 </head>
@@ -34,7 +32,6 @@
 				<div class="carousel-item active"
 					style="background-image:url('${path }/resources/KBFintech/img/w3.png')">
 					<div class="carousel-caption d-none d-md-block">
-
 								<h1 class="w31">1) 계좌와 카드를</h1>
 								<h1 class="w32">등록하세요.</h1>
 					</div>
@@ -43,9 +40,7 @@
 				<div class="carousel-item"
 					style="background-image: url('${path }/resources/KBFintech/img/w4.png')">
 					<div class="carousel-caption d-none d-md-block">
-					
 								<h1 class="w41">2) 한도를 설정하세요.</h1>
-				
 					</div>
 				</div>
 				<!-- Slide Three - Set the background image for this slide in the line below -->
@@ -71,7 +66,6 @@
 
 	<!-- Page Content -->
 	<div class="container">
-
 		<h1 class="my-4">뱅크 샐러드에 오신것을 환영합니다.</h1>
 
 		<!-- 서비스 설명 -->
@@ -163,90 +157,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-4 col-sm-6 portfolio-item">
-				<div class="card h-100">
-					<a href="#"><img class="card-img-top"
-						src="http://placehold.it/700x400" alt=""></a>
-					<div class="card-body">
-						<h4 class="card-title">
-							<a href="#">Project Four</a>
-						</h4>
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-							adipiscing elit. Nam viverra euismod odio, gravida pellentesque
-							urna varius vitae.</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 col-sm-6 portfolio-item">
-				<div class="card h-100">
-					<a href="#"><img class="card-img-top"
-						src="http://placehold.it/700x400" alt=""></a>
-					<div class="card-body">
-						<h4 class="card-title">
-							<a href="#">Project Five</a>
-						</h4>
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-							adipiscing elit. Nam viverra euismod odio, gravida pellentesque
-							urna varius vitae.</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 col-sm-6 portfolio-item">
-				<div class="card h-100">
-					<a href="#"><img class="card-img-top"
-						src="http://placehold.it/700x400" alt=""></a>
-					<div class="card-body">
-						<h4 class="card-title">
-							<a href="#">Project Six</a>
-						</h4>
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-							adipisicing elit. Itaque earum nostrum suscipit ducimus nihil
-							provident, perferendis rem illo, voluptate atque, sit eius in
-							voluptates, nemo repellat fugiat excepturi! Nemo, esse.</p>
-					</div>
-				</div>
-			</div>
 		</div>
 		<!-- /.row -->
-
-		<!-- Features Section -->
-		<div class="row">
-			<div class="col-lg-6">
-				<h2>Modern Business Features</h2>
-				<p>The Modern Business template by Start Bootstrap includes:</p>
-				<ul>
-					<li><strong>Bootstrap v4</strong></li>
-					<li>jQuery</li>
-					<li>Font Awesome</li>
-					<li>Working contact form with validation</li>
-					<li>Unstyled page elements for easy customization</li>
-				</ul>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-					Corporis, omnis doloremque non cum id reprehenderit, quisquam totam
-					aspernatur tempora minima unde aliquid ea culpa sunt. Reiciendis
-					quia dolorum ducimus unde.</p>
-			</div>
-			<div class="col-lg-6">
-				<img class="img-fluid rounded" src="http://placehold.it/700x450"
-					alt="">
-			</div>
-		</div>
-		<!-- /.row -->
-
 		<hr>
-
-		<!-- Call to Action Section -->
-		<div class="row mb-4">
-			<div class="col-md-8">
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-					Molestias, expedita, saepe, vero rerum deleniti beatae veniam harum
-					neque nemo praesentium cum alias asperiores commodi.</p>
-			</div>
-			<div class="col-md-4">
-				<a class="btn btn-lg btn-secondary btn-block" href="#">Call to
-					Action</a>
-			</div>
-		</div>
 
 	</div>
 	<!-- /.container -->

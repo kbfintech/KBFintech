@@ -48,7 +48,7 @@
 					<li class="nav-item"><a class="nav-link"
 						href="${path }/payRegister">카드 등록</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="${path }/product/question">상품 목록</a></li>
+						href="${path }/product/list">상품 목록</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="${path }/plan/planer">플랜 작성</a></li>
 					<li class="nav-item"><a class="nav-link"

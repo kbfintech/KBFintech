@@ -11,16 +11,6 @@
 <%@include file="../includes/header.jsp"%>
 <%@include file="../includes/menu.jsp"%>
 
-<script>
-	$(document).ready(function() {
-		var h = $(".navbar").height();
-		var top = $(".navbar").css('padding-top').split('px')[0] * 1;
-		var bottom = $(".navbar").css('padding-bottom').split('px')[0] * 1;
-		var result = h + top + bottom;
-		$("맨위에 클래스 및 아이디 명").css('margin-top', result);
-	});
-</script>
-
 <script
 	src="<%=application.getContextPath()%>/resources/KBFintech/javascript/member_register.js"
 	type="text/javascript"></script>
@@ -102,5 +92,6 @@
 			</div>
 		</div>
 	</div>
+	<%@include file="../includes/footer.jsp"%>
 </body>
 </html>

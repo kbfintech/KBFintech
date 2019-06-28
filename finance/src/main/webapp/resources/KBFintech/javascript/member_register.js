@@ -53,7 +53,7 @@ function isUsableId() {
 		};
 
 		$.ajax({
-			url : "/finance/member/isValid",
+			url : "/member/isValid",
 			method : "post",
 			dataType : "json",
 			data : json,

@@ -20,10 +20,35 @@
 	<select id="getPaymentTotalAmount" parameterType="String"
 		resultType="String">
 		select PAY_TOTAL from PAYMENT_TOTAL where M_ID = #{M_ID}
+		and PAY_MONTH = #{PAY_DATE}
+	</select>
+	
+	<select id="getPaymentApproved" parameterType="com.spring.finance.domain.PaymentVO"
+		resultType="com.spring.finance.domain.PaymentVO">
+		select * from PAYMENT where M_ID = #{M_ID}
+		and PAY_DATE = #{PAY_DATE}
 	</select>
 
-	<update id="updatePaymentTotal" parameterType="com.spring.finance.domain.PaymentVO">
-		update PAYMENT_TOTAL set PAY_TOTAL = #{PAY_TOTAL} where M_ID = #{M_ID}
+	<update id="updatePaymentTotal"
+		parameterType="com.spring.finance.domain.PaymentVO">
+		update PAYMENT_TOTAL set PAY_TOTAL = #{PAY_TOTAL} where
+		M_ID = #{M_ID} and PAY_MONTH = #{PAY_DATE}
 	</update>
+
+	<update id="minusAccountMoney"
+		parameterType="com.spring.finance.domain.AccountVO">
+		update ACCOUNT set ACCOUNT_MONEY = #{ACCOUNT_MONEY}
+		where M_ID = #{M_ID}
+	</update>
+
+	<select id="getBalance" parameterType="String"
+		resultType="Double">
+		select ACCOUNT_MONEY from ACCOUNT where M_ID = #{M_ID}
+	</select>
+
+	<select id="getCardNum" parameterType="String"
+		resultType="String">
+		select C_ID from M_CARD where M_ID = #{M_ID}
+	</select>
 
 </mapper>
