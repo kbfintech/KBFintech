@@ -1,5 +1,7 @@
 package com.spring.finance.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +35,7 @@ public class CardController {
 
 	@RequestMapping(value = "/payRegister", method = RequestMethod.GET)
 	public ModelAndView pay(HttpSession session, Model model, HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws IOException {
 
 		ModelAndView mv = new ModelAndView();
 
@@ -41,11 +43,19 @@ public class CardController {
 
 		CardMapper CMapper = sqlSession.getMapper(CardMapper.class);
 
-		LoginSessionTool.checkSession(session, model, response);
-
 		try {
 
 			String M_ID = (String) session.getAttribute("id");
+			
+			if(null == M_ID) {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('로그인을 먼저 해주시기 바랍니다.'); location.href='/member/login'</script>");
+				out.flush();
+				out.close();
+				mv.setViewName("/member/login");
+				return mv;
+			}
 
 			// M_ID 받아와야 함.
 			String ACCOUNT_NUMBER = AccountMapper.getAccountNum(M_ID);

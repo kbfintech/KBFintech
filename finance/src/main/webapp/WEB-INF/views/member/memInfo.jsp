@@ -195,11 +195,6 @@ table.type09 td {
 								<th scope="row">상품명</th>
 								<td>${productVO.getPRD_NAME()}</td>
 							</tr>
-
-							<tr>
-								<th scope="row">연이율</th>
-								<td>??</td>
-							</tr>
 							<tr>
 								<th scope="row">계좌잔액</th>
 								<td>${prd_transfer}</td>

@@ -230,7 +230,7 @@ public class MemberController {
 
 	}
 
-	@RequestMapping("member/memInfo")
+	@RequestMapping("/member/memInfo")
 	public String memInfo(HttpSession session, HttpServletRequest request, Model model, HttpServletResponse response) {
 
 		LoginSessionTool.checkSession(session, model, response);
