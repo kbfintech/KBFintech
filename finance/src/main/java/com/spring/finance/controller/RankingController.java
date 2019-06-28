@@ -3,6 +3,9 @@ package com.spring.finance.controller;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,6 +20,7 @@ import com.spring.finance.domain.PlanVO;
 import com.spring.finance.domain.RankTotalVO;
 import com.spring.finance.domain.RankVO;
 import com.spring.finance.mapper.RankMapper;
+import com.spring.finance.util.LoginSessionTool;
 
 @Controller
 @Component
@@ -173,8 +177,10 @@ public class RankingController {
 	}
 
 	@GetMapping("/ranking/showRank")
-	public String showRank(Model model) {
+	public String showRank(HttpSession session, Model model, HttpServletResponse response) {
 		System.out.println("랭킹확인페이지");
+		
+		LoginSessionTool.checkSession(session, model, response);
 
 		// 일일랭킹순위
 		for(int i = 0; i < arrRealtime.size(); i++) {

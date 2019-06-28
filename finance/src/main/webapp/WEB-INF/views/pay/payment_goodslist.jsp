@@ -22,10 +22,6 @@
 	href="<%=application.getContextPath()%>/resources/KBFintech/css/payment.css"
 	rel="stylesheet" type="text/css" />
 
-<link
-	href="<%=application.getContextPath()%>/resources/KBFintech/css/basic.css"
-	rel="stylesheet" type="text/css" />
-
 <script
 	src="<%=application.getContextPath()%>/resources/KBFintech/jquery/jquery-3.4.1.min.js"
 	type="text/javascript"></script>

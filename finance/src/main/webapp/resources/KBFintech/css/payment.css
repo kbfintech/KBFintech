@@ -7,3 +7,23 @@
 .p_mInfo {
 	padding-top: 0.4em;
 }
+
+.titleHead {
+	font-size: 3em;
+	text-align: center;
+	margin-top: 5rem;
+	margin-left: 5rem;
+	margin-right: 5rem;
+}
+
+.receiptBox {
+	margin-left: 5rem;
+	margin-right: 5rem;
+	align: center;
+	text-align: center;
+}
+
+.complete {
+	text-align: left;
+	margin-left: 4rem;
+}

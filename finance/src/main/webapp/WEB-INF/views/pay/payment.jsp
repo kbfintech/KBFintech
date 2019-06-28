@@ -26,24 +26,13 @@
 
 				<div class="field-body">
 					<div class="field">
-						<p class="control">
-							<label>카드</label>
-							<!-- 						<div class="dropdown is-hoverable">
-							<div class="dropdown-trigger">
-								<button class="button" aria-controls="dropdown-menu">
-									<span>선택</span> <span class="icon is-small"> <i
-										class="fas fa-angle-down" aria-hidden="true"></i>
-									</span>
-								</button>
-							</div>
-							<div class="dropdown-menu" id="dropdown-menu" role="menu">
-								<div class="dropdown-content">
-									<a href="#" class="dropdown-item">카드</a> <a
-										class="dropdown-item">계좌</a>
-								</div>
-							</div>
-						</div> -->
-						</p>
+						<div class="control">
+							<label class="radio"> <input type="radio" name="card" value="1"
+								checked> 체크카드
+							</label> <label class="radio"> <input type="radio" name="card" value="0">
+								신용카드
+							</label>
+						</div>
 					</div>
 				</div>
 
@@ -91,7 +80,7 @@
 				<div class="field-body">
 					<div class="field">
 						<!-- DB에 저장된 정보 불러오기 -->
-						<p id="bCustomerName" class="label p_mInfo">이다혜</p>
+						<p id="bCustomerName" class="label p_mInfo">${name}</p>
 					</div>
 				</div>
 			</div>
@@ -103,7 +92,7 @@
 				<div class="field-body">
 					<div class="field">
 						<!-- DB에 저장된 정보 불러오기 -->
-						<p id="bPhoneNum" class="label p_mInfo">010-4110-2482</p>
+						<p id="bPhoneNum" class="label p_mInfo">${phonNum}</p>
 					</div>
 				</div>
 			</div>

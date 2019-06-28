@@ -9,6 +9,10 @@
 		SELECT C_HASH FROM M_CARD WHERE M_ID =#{M_ID}
 	</select>
 	
+	<select id="getCardNum" parameterType= "String" resultType="String">
+		SELECT C_ID FROM M_CARD WHERE M_ID =#{M_ID}
+	</select>
+	
 	<insert id="regitCardInfo" parameterType="com.spring.finance.domain.CardVO">
 		INSERT INTO M_CARD VALUES(#{C_ID}, #{C_MM}, #{C_YY}, #{C_CVC}, #{C_COMPANY}, #{C_HASH}, #{M_ID}, #{CARD_TYPE}, #{ACCOUNT_NUMBER})
 	</insert>

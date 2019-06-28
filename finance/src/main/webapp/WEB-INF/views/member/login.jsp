@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>로그인</title>
 <%@include file="../includes/header.jsp"%>
 <%@include file="../includes/menu.jsp"%>
 
@@ -35,9 +35,11 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="checkbox">
-							<label> <input type="checkbox" value="remember-me">
-								아이디 / 비밀번호 저장하기
+						<div id="checkIdPasswd" class="checkbox" align="center">
+							<label> <input id="checkId" type="checkbox"
+								value="saveId"> 아이디 저장
+							</label> <label> <input id="checkPass" type="checkbox"
+								value="savePassword"> 비밀번호 저장
 							</label>
 						</div>
 					</div>

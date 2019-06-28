@@ -13,5 +13,6 @@ public class MemberVO {
    private String PHONE;
    private String PR_REG_IDX;
    private int OPENPAGE;
+   private String REGISTER_YN;
    
 }

@@ -15,7 +15,7 @@ public class MainController {
 	public String main(HttpSession session, Model model) {
 		System.out.println("main");
 		
-		LoginSessionTool.checkSession(session, model);
+		LoginSessionTool.checkOnlyNavBar(session, model);
 		
 		return "/main/index";
 	}

@@ -10,4 +10,6 @@ public interface MemberMapper {
 	
 	MemberVO login(MemberVO mVo);
 	
+	void updateMember(String M_ID);
+	
 }
