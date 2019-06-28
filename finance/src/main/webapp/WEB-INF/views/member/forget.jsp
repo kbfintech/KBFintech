@@ -9,7 +9,7 @@
 <%@include file="../includes/menu.jsp" %>
 </head>
 <body>
-  <div class="container">
+  <div class="container" style="margin-top: 8em; margin-bottom: 6em;">
     <div class="card card-login mx-auto mt-5">
       <div class="card-header">비밀번호 초기화하기</div>
       <div class="card-body">
