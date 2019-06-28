@@ -5,16 +5,12 @@
 
 <mapper namespace="com.spring.finance.mapper.KAccountMapper">
 
-	<select id="getAccountMoney" parameterType="com.spring.finance.domain.KAccountVO" resultType="String">
+	<select id="getAccountMoney" parameterType="String" resultType="int">
 		SELECT ACCOUNT_MONEY FROM K_ACCOUNT WHERE ACCOUNT_NUMBER = #{ACCOUNT_NUMBER}
 	</select>
 	
-	<select id="isRegister" parameterType="com.spring.finance.domain.KAccountVO" resultType="String">
-		SELECT ACCOUNT_NUMBER FROM ACCOUNT WHERE M_ID = #{M_ID}
+	<select id="isRegister" parameterType="String" resultType="String">
+		SELECT ACCOUNT_NUMBER FROM K_ACCOUNT WHERE PHONE = #{phone}
 	</select>
-	
-	<insert id="regitAccountInfo" parameterType="com.spring.finance.domain.KAccountVO">
-		INSERT INTO ACCOUNT(M_ID, M_NAME, ACCOUNT_NUMBER, PHONE, ACCOUNT_MONEY) VALUES(#{M_ID}, #{M_NAME}, #{ACCOUNT_NUMBER}, #{PHONE}, #{ACCOUNT_MONEY})
-	</insert>
 	
 </mapper>

@@ -5,6 +5,9 @@
 
 <mapper namespace="com.spring.finance.mapper.AccountMapper">
 
+	<select id="getAccountMoney" parameterType="com.spring.finance.domain.AccountVO" resultType="String">
+		SELECT ACCOUNT_MONEY FROM ACCOUNT WHERE M_ID = #{M_ID}
+	</select>
 	
 	<select id="getAccountNum" parameterType="com.spring.finance.domain.AccountVO" resultType="String">
 		SELECT ACCOUNT_NUMBER FROM ACCOUNT WHERE M_ID = #{M_ID}
@@ -14,4 +17,7 @@
 		INSERT INTO ACCOUNT(M_ID, M_NAME, ACCOUNT_NUMBER, PHONE, ACCOUNT_MONEY) VALUES(#{M_ID}, #{M_NAME}, #{ACCOUNT_NUMBER}, #{PHONE}, #{ACCOUNT_MONEY})
 	</insert>
 	
+	<update id="updateAccount" parameterType="com.spring.finance.domain.AccountVO">
+		UPDATE ACCOUNT SET M_NAME = #{M_NAME}, ACCOUNT_NUMBER = #{ACCOUNT_NUMBER}, PHONE = #{PHONE}, ACCOUNT_MONEY = #{ACCOUNT_MONEY} WHERE M_ID = #{M_ID}
+	</update>
 </mapper>

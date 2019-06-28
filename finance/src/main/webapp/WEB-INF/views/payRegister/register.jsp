@@ -18,21 +18,34 @@
 var result = "<%=(String)request.getAttribute("result")%>"
 if(result != 'null') {
 	if(result == 'allNeed') {
+		alert("모두 등록해야합니다.");
+		$(document).ready(function(){
+			$("#accountUpdate").hide();
+			$('#cardUpdate').hide();
+		});
+	}
+	
+	if(result == 'account') {
+		alert("계좌를 등록해야합니다.");
+		$(document).ready(function(){
+			$('#cardRegist').hide();
+			$('#accountUpdate').hide();
+		});
 	}
 	
 	if(result == 'card') {
 		alert("카드를 등록해야합니다.");
 		$(document).ready(function(){
-			$('.account').hide();
+			$('#accountRegist').hide();
+			$('#cardUpdate').hide();
 		});
 	}
 	
 	if(result == 'all') {
 		alert("모두 등록 되어있습니다.");
 		$(document).ready(function(){
-			$('.account').hide();
-			$('.cards').hide();
-			location.href="/";
+			$('#accountRegist').hide();
+			$('#cardRegist').hide();
 		});
 	}
 	
@@ -46,6 +59,66 @@ $(document).ready(function(){
 	var bottom = $(".navbar").css('padding-bottom').split('px')[0]*1;
 	var result = h+top+bottom;
 	$(".container.account").css('margin-top', result);
+	
+	$("#accountUpdate").click(function(){
+		$.ajax({
+			url: "/account/update",
+			type: "post",
+			data: $('#accountRegitForm').serialize(),
+			// ModelAndView로 보내면 못 읽음
+			// map으로 보내야함.
+			// json으로 정해주면 data.key로 받을 수 있음.
+			dataType:"json",
+			timeout:3000,
+			cache:false,
+			success:function(data){
+				console.log(data);
+				console.log(data.resultCode);
+				if(data.resultCode == 1){
+					alert("계좌가 수정되었습니다.");
+				}else if(data.resultCode == 0){
+					alert("계좌 수정에 실패했습니다.");	
+				}
+				
+				
+			},
+			error:function(	xhr, status, error ){
+				alert("err");
+				console.log(err);
+			}
+		});
+	});
+	
+	
+	$("#cardUpdate").click(function(){
+		$.ajax({
+			url: "/card/update",
+			type: "post",
+			data: $('#cardRegitForm').serialize(),
+			// ModelAndView로 보내면 못 읽음
+			// map으로 보내야함.
+			// json으로 정해주면 data.key로 받을 수 있음.
+			dataType:"json",
+			timeout:3000,
+			cache:false,
+			success:function(data){
+				console.log(data);
+				console.log(data.resultCode);
+				if(data.resultCode == 1){
+					alert("카드가 수정되었습니다.");
+				}else if(data.resultCode == 0){
+					alert("카드 수정에 실패했습니다.");	
+				}
+				
+				
+			},
+			error:function(	xhr, status, error ){
+				alert("err");
+				console.log(err);
+			}
+		});
+	});
+	
 	
 	$("#accountRegist").click(function(){
 		$.ajax({
@@ -63,7 +136,6 @@ $(document).ready(function(){
 				console.log(data.resultCode);
 				if(data.resultCode == 1){
 					alert("계좌가 등록되었습니다.");
-					$('.account').hide();
 				}else if(data.resultCode == 0){
 					alert("계좌 등록에 실패했습니다.");	
 				}
@@ -104,7 +176,6 @@ $(document).ready(function(){
 				console.log(data.resultCode);
 				if(data.resultCode == 1){
 					alert("카드가 등록되었습니다.");
-					location.href="/";
 				}else if(data.resultCode == 0){
 					alert("카드 등록에 실패했습니다.");	
 				}
@@ -151,6 +222,7 @@ $(document).ready(function(){
 			<div class="row basic">
 				<div class="form-group col-lg-12 col-md-12 col-xs-12">
 					<input class="btn btnYellow" type="button" value="계좌 등록" name="accountRegist" id="accountRegist">
+					<input class="btn btnYellow" type="button" value="계좌 수정" name="accountUpdate" id="accountUpdate">
 				</div>
 			</div>
 			
@@ -222,6 +294,7 @@ $(document).ready(function(){
 			<div class="row basic">
 				<div class="form-group col-lg-12 col-md-12 col-xs-12">
 					<input class="btn btnYellow" type="button" value="카드 등록" name="cardRegist" id="cardRegist">
+					<input class="btn btnYellow" type="button" value="카드 수정" name="cardUpdate" id="cardUpdate">
 				</div>
 			</div>
 		
