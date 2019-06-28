@@ -15,6 +15,6 @@ public interface AccountMapper {
 
 	int getAccountMoney(String m_ID);
 
-	void updateAccount(TransferVO transfer);
+	void updateTransferAccount(TransferVO transfer);
 	
 }

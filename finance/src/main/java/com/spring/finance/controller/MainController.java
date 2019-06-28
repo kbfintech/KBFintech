@@ -234,7 +234,7 @@ public class MainController {
 									  // 상품페이지에 해당 상품의 이체 총 금액에 더하는 코드
 									  mapperP.updatePrdTransfer(transfer);
 									  // 계좌에서 이체한 금액만큼 뺀다.
-									  accmapper.updateAccount(transfer);
+									  accmapper.updateTransferAccount(transfer);
 									  // 이체 금액별 포인트 지급
 									  MemberVO member = new MemberVO();
 									  member.setM_ID(M_ID);
@@ -328,7 +328,7 @@ public class MainController {
 		mapper_P.updatePrdTransfer(transfer);
 		// 계좌에서 이체한 금액만큼 뺀다.
 		AccountMapper mapper_A = sqlsession.getMapper(AccountMapper.class);
-		mapper_A.updateAccount(transfer);
+		mapper_A.updateTransferAccount(transfer);
 		// 이체 금액별 포인트 지급
 		MemberMapper mapper_M = sqlsession.getMapper(MemberMapper.class);
 		MemberVO member = new MemberVO();
