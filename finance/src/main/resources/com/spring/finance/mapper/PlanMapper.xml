@@ -5,20 +5,95 @@
 
 <mapper namespace="com.spring.finance.mapper.PlanMapper">
 
-	<insert id="insertPlan" parameterType="String">
-		insert into plan (PL_ID, PL_PERIOD, M_ID) values(#{PL_PERIOD}, #{PL_PERIOD}, 'user01')
+	<insert id="insertPlan" parameterType="java.util.HashMap">
+		insert into plan (PL_ID, PL_PERIOD, M_ID) values(#{PL_ID}, #{PL_ID}, #{M_ID})
 	</insert>
 	
 	<insert id="insertPlanDetail" parameterType="com.spring.finance.domain.PlanVO">
-		insert into plan_detail (PLD_PRICE, PL_ID, B_CD) values(#{PLD_PRICE}, #{PL_ID}, #{B_CD})
+		insert into plan_detail (PLD_PRICE, PL_ID, B_CD, M_ID) values(#{PLD_PRICE}, #{PL_ID}, #{B_CD}, #{M_ID})
 	</insert>
 	
-	<select id="planSearch" parameterType="String" resultType="com.spring.finance.domain.PlanVO">
-		select * from plan_detail where PL_ID = #{PL_ID} order by B_CD asc
+	<select id="planSearch" parameterType="java.util.HashMap" resultType="com.spring.finance.domain.PlanVO">
+		select * from plan_detail where PL_ID = #{PL_ID} and M_ID = #{M_ID} order by B_CD asc
 	</select>
 	
-	<select id="dateList" resultType="String">
-		select PL_ID from plan order by PL_ID asc
+	<select id="dateList" parameterType="String" resultType="String">
+		select PL_ID from plan where M_ID = #{M_ID} order by PL_ID asc
 	</select>
 	
+	<select id="getBusinessCD" resultType="String">
+		select B_CD from business 
+	</select>
+	
+	<update id="updatePlanDetail" parameterType="com.spring.finance.domain.PlanVO">
+		update plan_detail set PLD_PRICE = #{PLD_PRICE} where PL_ID = #{PL_ID} and B_CD = #{B_CD} and M_ID = #{M_ID}
+	</update>
+	
+	<update id="updatePlan" parameterType="java.util.HashMap">
+		update plan set PL_UPDATE = 1 where PL_ID = #{PL_ID} and M_ID = #{M_ID}
+	</update>
+	
+	<select id="selectPaymentList" parameterType="String" resultType="com.spring.finance.domain.PaymentVO">
+		select * from PAYMENT where M_ID = #{M_ID} order by P_IDX asc
+	</select>
+	
+	<select id="getB_CD" resultType="com.spring.finance.domain.BusinessVO">
+		select * from business
+	</select>
+	
+	<update id="updatePaymentBCD" parameterType="com.spring.finance.domain.PaymentVO">
+		update payment set B_CD = #{b_CD} where P_IDX = #{p_IDX} and M_ID = #{M_ID}
+	</update>
+
+	<update id="updatePaymentBTYPE" parameterType="com.spring.finance.domain.PaymentVO">
+		update payment set B_TYPE = #{b_TYPE} where P_IDX = #{p_IDX} and M_ID = #{M_ID}
+	</update>
+	
+	<select id="getPlanPrice" parameterType="java.util.HashMap" resultType="int">
+		select PLD_PRICE from plan_detail where PL_ID = #{PL_ID} and M_ID = #{M_ID}
+	</select>
+	
+	<update id="updatePlanSuccess" parameterType="java.util.HashMap">
+		update plan set PL_SUCCESS = 1 where PL_ID = #{PL_ID} and M_ID = #{M_ID}
+	</update>
+	
+	<select id="getPaymentTotal" parameterType="java.util.HashMap" resultType="String">
+		select PAY_MONTH from payment_total where M_ID = #{M_ID} and PAY_MONTH = #{PL_ID}
+	</select>
+	
+	<insert id="insertPaymentTotal" parameterType="com.spring.finance.domain.PaymentTotalVO">
+		insert into payment_total(M_ID, PAY_TOTAL, PAY_MONTH) values(#{M_ID}, #{PAY_TOTAL}, #{PAY_MONTH})
+	</insert>
+	
+	<update id="updatePaymentTotal" parameterType="com.spring.finance.domain.PaymentTotalVO">
+		update payment_total set PAY_TOTAL = #{PAY_TOTAL} where M_ID = #{M_ID} and PAY_MONTH = #{PAY_MONTH}
+	</update>
+	
+	<select id="getPaymentTotalPrice" parameterType="java.util.HashMap" resultType="int">
+		select PAY_TOTAL from payment_total where M_ID = #{M_ID} and PAY_MONTH = #{PL_ID}
+	</select>
+	
+	<update id="updatePlanFail" parameterType="java.util.HashMap">
+		update plan set PL_SUCCESS = 0 where PL_ID = #{PL_ID} and M_ID = #{M_ID}
+	</update>
+	
+	<insert id="insertTransfer" parameterType="com.spring.finance.domain.TransferVO">
+		insert into transfer(M_ID, TRANSFER_DATE, TRANSFER_MONEY) values(#{M_ID}, #{TRANSFER_DATE}, #{TRANSFER_MONEY})
+	</insert>
+	
+	<select id="getPlan" parameterType="java.util.HashMap" resultType="String">
+		select PL_PERIOD from PLAN where M_ID = #{M_ID} and PL_ID = #{PL_ID}
+	</select>
+	
+	<select id="getPlanSuccess" parameterType="java.util.HashMap" resultType="int">
+		select PL_SUCCESS from PLAN where M_ID = #{M_ID} and PL_ID = #{PL_ID}
+	</select>
 </mapper>
+
+
+
+
+
+
+
+

@@ -4,5 +4,15 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.spring.finance.mapper.ProductMapper">
+	<select id="getPrdID" parameterType="String" resultType="String">
+		select PRD_ID from product where M_ID = #{M_ID}
+	</select>
 	
+	<select id="getProduct" parameterType="String" resultType="String">
+		select PRD_NAME from product where M_ID = #{M_ID}
+	</select>
+	
+	<update id="updatePrdTransfer" parameterType="com.spring.finance.domain.TransferVO">
+		update product set PRD_TRANSFER = PRD_TRANSFER + #{TRANSFER_MONEY} where M_ID = #{M_ID}
+	</update>
 </mapper>

@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>payment_test</title>
+<title>결제시연페이지_버핏마켓</title>
 
 <!-- iamport.payment.js -->
 <script type="text/javascript"

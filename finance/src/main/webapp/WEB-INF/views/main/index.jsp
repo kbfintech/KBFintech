@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>티끌모아건물주</title>
+<title>당신의 계획적인 소비를 도와줄 월렛버핏!지금 사용해보세요.</title>
 <%@include file="../includes/header.jsp"%>
 <%@include file="../includes/menu.jsp"%>
 <script>

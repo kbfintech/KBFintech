@@ -46,11 +46,18 @@
 				<ul class="navbar-nav ml-auto">
 
 					<li class="nav-item"><a class="nav-link"
-						href="${path }/payRegister">카드 등록</a></li>
+						href="${path }/payRegister">결제 등록</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="${path }/product/list">상품 목록</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="${path }/plan/planer">플랜 작성</a></li>
+					<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              		플랜 관리
+           			 </a>
+            		<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+             			 <a class="dropdown-item" href="${path }/plan/planer">한도 설정</a>
+             			 <a class="dropdown-item" href="${path }/plan/usingPayment">한도 조회</a>
+            		</div>
+					</li>
 					<li class="nav-item"><a class="nav-link"
 						href="${path }/ranking/showRank">랭킹 확인하기</a></li>
 					<li class="nav-item dropdown"><a
@@ -60,7 +67,7 @@
 						<div class="dropdown-menu dropdown-menu-right"
 							aria-labelledby="navbarDropdownPortfolio">
 							<a class="dropdown-item" href="${path }/member/memInfo">회원 정보</a>
-							<a class="dropdown-item" href="portfolio-item.html">플랜 관리하기</a>
+							<a class="dropdown-item" href="${path }/plan/paymentListCheck">결제내역 확인</a>
 						</div></li>
 					<li class="nav-item">
 						<div id="divLogin">

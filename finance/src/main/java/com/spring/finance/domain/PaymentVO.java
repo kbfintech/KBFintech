@@ -2,6 +2,7 @@ package com.spring.finance.domain;
 
 public class PaymentVO {
 	
+	private int p_IDX;	// 결제 번호
 	private String PAY_DATE; // 결제일
 	private double PAY_PRICE; // 결제금액
 	private double PAY_TOTAL; // 총 결제금액
@@ -11,6 +12,12 @@ public class PaymentVO {
 	private String C_ID; // 카드번호
 	private String b_CD; // 가맹점코드
 	
+	public int getP_IDX() {
+		return p_IDX;
+	}
+	public void setP_IDX(int p_IDX) {
+		this.p_IDX = p_IDX;
+	}
 	public String getPAY_DATE() {
 		return PAY_DATE;
 	}
