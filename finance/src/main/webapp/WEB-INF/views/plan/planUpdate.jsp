@@ -63,6 +63,9 @@
 		<div class="row " style="margin-top: 100px;">
 			<div class="form-group col-lg-12 col-md-12 col-xs-12" align="center">
 				<h1>${plyear}년 ${plmonth}월 카드 한도 수정</h1>
+				한도 초과 시 결제 제한
+				<input type="radio" name="limit" value="0" <c:if test="${limitCheck == 0 }">checked="checked"</c:if>/>NO
+				<input type="radio" name="limit" value="1" <c:if test="${limitCheck == 1 }">checked="checked"</c:if>/>YES
 			</div>
 		</div>
 			<div class="row">

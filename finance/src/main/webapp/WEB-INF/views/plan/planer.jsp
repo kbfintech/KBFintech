@@ -97,6 +97,9 @@
 							<c:if test="${i == month}">selected="selected"</c:if>>${i}</option>
 					</c:forEach>
 				</select> <h1>카드 한도 설정</h1>
+				한도 초과 시 결제 제한
+				<input type="radio" name="limit" value="0" checked="checked"/>NO
+				<input type="radio" name="limit" value="1"/>YES
 			</div>
 		</div>
 

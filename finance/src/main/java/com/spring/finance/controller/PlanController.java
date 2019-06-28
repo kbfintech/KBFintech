@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.spring.finance.domain.BusinessVO;
+import com.spring.finance.domain.LimitVO;
 import com.spring.finance.domain.PaymentList;
 import com.spring.finance.domain.PaymentTotalVO;
 import com.spring.finance.domain.PaymentVO;
@@ -76,6 +77,7 @@ public class PlanController {
       String M_ID = (String) session.getAttribute("id");
       String year = request.getParameter("year");
       String month = request.getParameter("month");
+      int limitCheck = Integer.parseInt(request.getParameter("limit"));
       
       // 설정하려는 년도와 달을 가져와서 디비에 저장
       PlanMapper mapper = sqlsession.getMapper(PlanMapper.class);
@@ -84,6 +86,9 @@ public class PlanController {
       hmap.put("PL_ID", PL_ID);
       hmap.put("M_ID", M_ID);
       mapper.insertPlan(hmap);
+      if(limitCheck == 1) {
+    	  mapper.updateLimitCheck(hmap);
+      }
       System.out.println("Plan 테이블에 Plan 저장 성공");
       ArrayList<String> B_CD = mapper.getBusinessCD();
       
@@ -194,8 +199,10 @@ public class PlanController {
          totalCount += planList.get(i).getPLD_PRICE();
          planList.get(i).setB_CD(B_CD.get(i));         
       }
+      int limitCheck = mapper.getPlanLimitCheck(hmap);
       model.addAttribute("totalCount", totalCount);
       model.addAttribute("planList", planList);
+      model.addAttribute("limitCheck", limitCheck);
       model.addAttribute("plyear", request.getParameter("year"));
       model.addAttribute("plmonth", request.getParameter("month"));      
       return "/plan/planUpdate";
@@ -209,6 +216,7 @@ public class PlanController {
       String M_ID = (String) session.getAttribute("id");
       String year = request.getParameter("year");
       String month = request.getParameter("month");
+      int limitCheck = Integer.parseInt(request.getParameter("limit"));
       String PL_ID = year + month;
       HashMap<String, String> hmap = new HashMap<String, String>();
       hmap.put("PL_ID", PL_ID);
@@ -225,7 +233,11 @@ public class PlanController {
       }
       mapper.updatePlan(hmap);
       mapper.updatePlanFail(hmap);
-      
+      LimitVO limitVO = new LimitVO();
+      limitVO.setM_ID(M_ID);
+      limitVO.setPL_ID(PL_ID);
+      limitVO.setLIMITCHECK(limitCheck);
+      mapper.updateChangeLimit(limitVO);
       // 수정 후 수정된 한도를 조회하는 페이지로 이동
       model.addAttribute("year", year);
       model.addAttribute("month", month);
@@ -427,6 +439,12 @@ public class PlanController {
     		  }
     	  }
       }
+      if(planList.size() == 0) {
+    	  ArrayList<String> plidList = mapper.dateList(M_ID);
+    	  if(plidList.size() == 0) {
+    		  return "/plan/planer";
+    	  }
+      }
       //System.out.println(planList);
       int totalCount = 0;
       for(int i = 0; i<8; i++) {
@@ -526,7 +544,8 @@ public class PlanController {
       }else {
          mapper.insertPaymentTotal(totalVO);            
       }
-      
+      int limit = mapper.getPlanLimitCheck(hmap2);
+      model.addAttribute("limit", limit);
       model.addAttribute("totalCount", totalCount);
       model.addAttribute("useTotalCount", useTotalCount);
       model.addAttribute("planList", planList);

@@ -88,6 +88,18 @@
 	<select id="getPlanSuccess" parameterType="java.util.HashMap" resultType="int">
 		select PL_SUCCESS from PLAN where M_ID = #{M_ID} and PL_ID = #{PL_ID}
 	</select>
+	
+	<update id="updateLimitCheck" parameterType="java.util.HashMap">
+		update PLAN set LIMITCHECK = 1 where M_ID = #{M_ID} and PL_ID = #{PL_ID}
+	</update>
+	
+	<select id="getPlanLimitCheck" parameterType="java.util.HashMap" resultType="int">
+		select LIMITCHECK from PLAN where M_ID = #{M_ID} and PL_ID = #{PL_ID}
+	</select>
+	
+	<update id="updateChangeLimit" parameterType="com.spring.finance.domain.LimitVO">
+		update PLAN set LIMITCHECK = #{LIMITCHECK} where M_ID = #{M_ID} and PL_ID = #{PL_ID}
+	</update>
 </mapper>
 
 

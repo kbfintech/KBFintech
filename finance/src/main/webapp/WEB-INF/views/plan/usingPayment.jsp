@@ -104,6 +104,9 @@
 						<option value="${month}" <c:if test="${searchmonth == month}">selected="selected"</c:if>>${month}</option>
 					</c:forEach>
 				</select> 월 <h3>설정 한도 VS <label style="color: red;">사용 금액</label></h3>
+				한도 제한 설정 : 
+				<c:if test="${limit == 0}">NO</c:if>
+				<c:if test="${limit == 1}">YES</c:if>
 			</div>
 		</div>
 

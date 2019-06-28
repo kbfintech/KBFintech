@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.spring.finance.domain.BusinessVO;
+import com.spring.finance.domain.LimitVO;
 import com.spring.finance.domain.PaymentTotalVO;
 import com.spring.finance.domain.PaymentVO;
 import com.spring.finance.domain.PlanVO;
@@ -53,6 +54,12 @@ public interface PlanMapper {
 	String getPlan(HashMap<String, String> hmap);
 
 	int getPlanSuccess(HashMap<String, String> hmap);
+
+	void updateLimitCheck(HashMap<String, String> hmap);
+
+	int getPlanLimitCheck(HashMap<String, String> hmap);
+
+	void updateChangeLimit(LimitVO limitVO);
 
 	
 }

@@ -31,9 +31,8 @@ public class PlanVO {
 	public void setPLD_PRICE(int pLD_PRICE) {
 		PLD_PRICE = pLD_PRICE;
 	}
-	
 	@Override
 	public String toString() {
-		return "PlanVO [PL_ID=" + PL_ID + ", B_CD=" + B_CD + ", PLD_PRICE=" + PLD_PRICE + "]";
+		return "PlanVO [PL_ID=" + PL_ID + ", M_ID=" + M_ID + ", B_CD=" + B_CD + ", PLD_PRICE=" + PLD_PRICE + "]";
 	}
 }
