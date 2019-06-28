@@ -10,6 +10,11 @@
 <title>당신의 계획적인 소비를 도와줄 월렛버핏!지금 사용해보세요.</title>
 <%@include file="../includes/header.jsp"%>
 <%@include file="../includes/menu.jsp"%>
+<style type="text/css">
+a:link { color: #96B1F2; text-decoration: none;}
+a:visited { color: #96B1F2; text-decoration: none;}
+a:hover { color: #96B1F2; text-decoration: none;}
+</style>
 <script>
 	$(document).ready(function() {
 		var h = $(".navbar").height();
@@ -66,7 +71,7 @@
 			</a>
 		</div>
 	</header>
-
+	<hr>
 	<!-- Page Content -->
 	<div class="container">
 		<h1 class="my-4">월렛 버핏에 오신것을 환영합니다.</h1>
@@ -75,37 +80,43 @@
 		<div class="row">
 			<div class="col-lg-4 mb-4">
 				<div class="card h-100">
-					<h4 class="card-header">한도설정(플래너)</h4>
+					<h4 class="card-header" style="background-color: #96B1F2; color: #fff">한도설정(플래너)</h4>
 					<div class="card-body">
-						<p class="card-text">플래너를 사용하면 계획적인 지출을 할 수 있습니다. 플래너를 수정할 수는 있으나, 수정할 경우 전월 랭킹과 일일 랭킹에서 제외됩니다. 즉, KB국민은행의 예*적금 가입 대상자 중 플래너를 수정하지 않고 계획적인 지출을 하신 분에게 포인트를 지급합니다.
+						<p class="card-text">
+						매달 플래너 설정을 통해 계획적인 지출이 가능합니다. 
+						플래너 수정 시, 이체 포인트를 제공받지 못하고 전월 랭킹과 일일 랭킹에서 제외됩니다.
+						즉, KB국민은행의 예*적금 가입 대상자 중 플래너를 수정하지 않고 계획적인 지출을 하신 분에게 포인트가 지급됩니다.
 						KB 국민은행의 예*적금 상품을 가입하지 않으신 분도 플래너 기능은 사용하실 수 있습니다. </p>
 					</div>
-					<div class="card-footer">
-						<a href="${path }/plan/planer" class="btn btn-primary">플랜 더 보기</a>
+				</div>
+			</div>
+			<div class="col-lg-4 mb-4">
+				<div class="card h-100">
+					<h4 class="card-header" style="background-color: #96B1F2; color: #fff">포인트</h4>
+					<div class="card-body">
+						<p class="card-text">
+						1. 초기 상품 가입 시 포인트 지급 : 1000P<br/>
+							조건 - 원금 만 원 이상 이체 시<br/>
+						2. 가입 상품이 있을 때 해당 달의 한도 설정 달성 후 이체 포인트 지급 : 1000P<br/>
+							조건 - 한도 수정 X, 만 원 이상 이체 시<br/>
+						3. 전월 랭킹이나 일일 랭킹 순위 중 3위까지 랭킹 포인트 지급<br/>
+						</p>
 					</div>
 				</div>
 			</div>
 			<div class="col-lg-4 mb-4">
 				<div class="card h-100">
-					<h4 class="card-header">포인트</h4>
+					<h4 class="card-header" style="background-color: #96B1F2; color: #fff">랭킹</h4>
 					<div class="card-body">
-						<p class="card-text">수백만가지 경우의 수를 계산하는 추천 알고리즘이 나를 위한 맞춤 상품을
-							찾아드립니다.</p>
-					</div>
-					<div class="card-footer">
-						<a href="#" class="btn btn-primary">더 보기</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 mb-4">
-				<div class="card h-100">
-					<h4 class="card-header">랭킹</h4>
-					<div class="card-body">
-						<p class="card-text">뱅크샐러드의 추천에는 광고도, 홍보도 없습니다. 오직 객관적인 데이터만을
-							활용합니다.</p>
-					</div>
-					<div class="card-footer">
-						<a href="#" class="btn btn-primary">더 보기</a>
+						<p class="card-text">
+						- 일일 랭킹순위는 매일 오전 12시에 갱신됩니다.<br/>
+						- 일일 랭킹순위와 최종 랭킹순위는 차이가 있을 수 있습니다.<br/>
+						- N달 연속 성공 시, 가산점 N점 (최대 12점)<br/>
+						- 전 달 대비 이체금액 증가 시 가산점 부여<br/>
+						- 사용자별 총점 N점에서 지출금액별 차감(최대 N점)<br/>
+						- 최종순위점수: 일일 랭킹순위점수 * 0.4 + (이체금액 / (총 한도금액 - 지출금액)) * 0.4 + 이체금액구간별 점수*0.2<br/>
+						- 이체구간별 점수: 1~9만원(10) / 10~49만원(20) / 50~99만원(30) / 100만원~(40)<br/>
+						</p>
 					</div>
 				</div>
 			</div>
@@ -113,53 +124,51 @@
 		<!-- /.row -->
 
 		<!-- Portfolio Section -->
-		<h2>Portfolio Heading</h2>
+		<div class="row">
+			<div class="col-lg-6 col-md-6 col-xs-6" align="left">
+				<h2>KB국민은행 예·적금 상품</h2>		
+			</div>
+			<div class="col-lg-6 col-md-6 col-xs-6" align="right">
+				<h2><a href="${path }/product/list">상품 페이지로 이동</a></h2>
+			</div>
+		</div>
 
 		<div class="row">
+		<c:forEach var="product" items="${productListS}" begin="0" end="2" varStatus="status">
 			<div class="col-lg-4 col-sm-6 portfolio-item">
 				<div class="card h-100">
-					<a href="#"><img class="card-img-top"
-						src="http://placehold.it/700x400" alt=""></a>
+					<c:if test="${status.index eq 0}">
+						<a href="${path }/product/info?fin_prdt_cd=${product.fin_prdt_cd}"><img class="card-img-top"
+							src="${path }/resources/KBFintech/img/kb1.PNG" alt=""></a>					
+					</c:if>
+					<c:if test="${status.index eq 1}">
+						<a href="${path }/product/info?fin_prdt_cd=${product.fin_prdt_cd}"><img class="card-img-top"
+							src="${path }/resources/KBFintech/img/kb2.PNG" alt=""></a>					
+					</c:if>
+					<c:if test="${status.index eq 2}">
+						<a href="${path }/product/info?fin_prdt_cd=${product.fin_prdt_cd}"><img class="card-img-top"
+							src="${path }/resources/KBFintech/img/kb3.PNG" alt=""></a>					
+					</c:if>
 					<div class="card-body">
 						<h4 class="card-title">
-							<a href="#">Project One</a>
+							<a href="${path }/product/info?fin_prdt_cd=${product.fin_prdt_cd}">${product.fin_prdt_nm}</a>
 						</h4>
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-							adipisicing elit. Amet numquam aspernatur eum quasi sapiente
-							nesciunt? Voluptatibus sit, repellat sequi itaque deserunt,
-							dolores in, nesciunt, illum tempora ex quae? Nihil, dolorem!</p>
+						<p class="card-text">
+						${product.best_rate}<br/>
+						<c:forEach var="spcl_cnd" items="${product.spcl_cnd}">
+						${spcl_cnd}<br/>
+						</c:forEach><br/>
+						<label style="font-weight: bold;">가입 대상 :</label><br/>
+						${product.join_member}<br/><br/>
+						<label style="font-weight: bold;">만기 후 이자율 :</label><br/>
+						<c:forEach var="mtrt_int" items="${newTwo}">
+						${mtrt_int}<br/>
+						</c:forEach>
+						</p>
 					</div>
 				</div>
-			</div>
-			<div class="col-lg-4 col-sm-6 portfolio-item">
-				<div class="card h-100">
-					<a href="#"><img class="card-img-top"
-						src="http://placehold.it/700x400" alt=""></a>
-					<div class="card-body">
-						<h4 class="card-title">
-							<a href="#">Project Two</a>
-						</h4>
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-							adipiscing elit. Nam viverra euismod odio, gravida pellentesque
-							urna varius vitae.</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 col-sm-6 portfolio-item">
-				<div class="card h-100">
-					<a href="#"><img class="card-img-top"
-						src="http://placehold.it/700x400" alt=""></a>
-					<div class="card-body">
-						<h4 class="card-title">
-							<a href="#">Project Three</a>
-						</h4>
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-							adipisicing elit. Quos quisquam, error quod sed cumque, odio
-							distinctio velit nostrum temporibus necessitatibus et facere
-							atque iure perspiciatis mollitia recusandae vero vel quam!</p>
-					</div>
-				</div>
-			</div>
+			</div>		
+		</c:forEach>
 		</div>
 		<!-- /.row -->
 		<hr>

@@ -168,12 +168,7 @@
 			
 			<div class="row">
 				<div class="form-group col-lg-12 col-md-12 col-xs-12">
-					<h5 align="center">1. 한도 수정 시 한도 달성에 따른 포인트 지급 대상에서 제외됩니다.</h5>
-				</div>
-			</div>
-			<div class="row">
-				<div class="form-group col-lg-12 col-md-12 col-xs-12">
-					<h5 align="center">2. 한도 수정 시 랭킹 순위에 따른 추가 포인트 지급 대상에서 제외됩니다.</h5>
+					<h5 align="center">1. 한도 수정 시 이체 포인트와 랭킹 포인트 지급 대상에서 제외됩니다.</h5>
 				</div>
 			</div>
 			

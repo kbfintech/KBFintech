@@ -6,16 +6,28 @@ import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.spring.finance.domain.AccountVO;
+import com.spring.finance.domain.KProductVO;
 import com.spring.finance.domain.MemberVO;
 import com.spring.finance.domain.PaymentList;
 import com.spring.finance.domain.PaymentVO;
@@ -33,10 +45,13 @@ public class MainController {
 	@Autowired
 	public SqlSession sqlsession;
 	
+	// 적금
+	String urlSaving = "http://finlife.fss.or.kr/finlifeapi/savingProductsSearch.json?auth=863bf4eefd43f0892c8195120d849da0&topFinGrpNo=020000&pageNo=1";
+	
 	//public String M_ID = "luok377";
 
 	@GetMapping("/")
-	public String main(HttpSession session, Model model) {
+	public String main(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response1) {
 		String M_ID = (String) session.getAttribute("id");
 		System.out.println("main");
 		LoginSessionTool.checkOnlyNavBar(session, model);
@@ -122,6 +137,54 @@ public class MainController {
 				break;
 			}
 		}
+		HttpHeaders headersS = new HttpHeaders();
+		HttpEntity<?> entityS = new HttpEntity<>(headersS);
+		UriComponentsBuilder builderS = UriComponentsBuilder.fromHttpUrl(urlSaving);
+		RestTemplate restTemplateS = new RestTemplate();
+		HttpEntity<String> responseS = restTemplateS.exchange(builderS.toUriString(), HttpMethod.GET, entityS,
+				String.class);
+		
+		JsonParser jsonParserS = new JsonParser();
+		JsonElement jsonElementS = jsonParserS.parse(responseS.getBody().toString());
+		JsonObject getBodyS = jsonElementS.getAsJsonObject();
+		JsonObject getResultS = getBodyS.get("result").getAsJsonObject();
+		JsonArray getBaseListS = getResultS.get("baseList").getAsJsonArray();
+		// 적금
+		ArrayList<JsonObject> jsonArrKbS = new ArrayList<>();
+		for (int i = 0; i < getBaseListS.size(); i++) {
+			JsonObject jsonObjectS = getBaseListS.get(i).getAsJsonObject();
+			String bankName = jsonObjectS.get("kor_co_nm").getAsString();
+			if (bankName.equals("국민은행"))
+				jsonArrKbS.add(getBaseListS.get(i).getAsJsonObject());
+		}
+		ArrayList<KProductVO> productListS = new ArrayList<KProductVO>();
+		ArrayList<String[]> spcl_cndListS = new ArrayList<String[]>();
+		KProductVO kpS;
+		for (int i = 0; i < jsonArrKbS.size(); i++) {
+			kpS = new KProductVO();
+			kpS.setFin_prdt_cd(jsonArrKbS.get(i).get("fin_prdt_cd").toString().substring(1,
+					jsonArrKbS.get(i).get("fin_prdt_cd").toString().length() - 1));
+			kpS.setFin_prdt_nm(jsonArrKbS.get(i).get("fin_prdt_nm").toString().substring(1,
+					jsonArrKbS.get(i).get("fin_prdt_nm").toString().length() - 1));
+			kpS.setJoin_member(jsonArrKbS.get(i).get("join_member").toString().substring(1,
+					jsonArrKbS.get(i).get("join_member").toString().length() - 1));
+			kpS.setMtrt_int(jsonArrKbS.get(i).get("mtrt_int").toString().substring(1,
+					jsonArrKbS.get(i).get("mtrt_int").toString().length() - 1));
+			String spcl_cnd = jsonArrKbS.get(i).get("spcl_cnd").toString().substring(1,
+					jsonArrKbS.get(i).get("spcl_cnd").toString().length() - 1);
+			String[] newOne = spcl_cnd.split("[\\\\r\\\\n]+");
+			String[] newOne2 = new String[newOne.length - 1];
+			for (int x = 1; x < newOne.length; x++) {
+				newOne2[x - 1] = newOne[x];
+			}
+			kpS.setBest_rate(newOne[0]);
+			kpS.setSpcl_cnd(newOne2);
+			spcl_cndListS.add(newOne2);
+			productListS.add(kpS);
+			String[] newTwo = kpS.getMtrt_int().split("[\\\\r\\\\n]+");
+			model.addAttribute("newTwo", newTwo);
+		}
+		model.addAttribute("productListS", productListS);
 		return "/main/index";
 	}
 
@@ -238,14 +301,8 @@ public class MainController {
 									  // 이체 금액별 포인트 지급
 									  MemberVO member = new MemberVO();
 									  member.setM_ID(M_ID);
-									  if(prd_transfer >= 10000 && prd_transfer <= 90000) {
+									  if(prd_transfer >= 10000) {
 										  member.setM_POINT(1000);
-									  }else if(prd_transfer >= 100000 && prd_transfer <= 490000) {
-										  member.setM_POINT(2000);
-									  }else if(prd_transfer >= 500000 && prd_transfer <= 990000) {
-										  member.setM_POINT(3000);
-									  }else if(prd_transfer >= 1000000) {
-										  member.setM_POINT(4000);			
 									  }
 									  mapperM.updatePoint(member);
 									  mapperM.updateOpenPage(M_ID);
@@ -333,14 +390,8 @@ public class MainController {
 		MemberMapper mapper_M = sqlsession.getMapper(MemberMapper.class);
 		MemberVO member = new MemberVO();
 		member.setM_ID(M_ID);
-		if(prd_transfer >= 10000 && prd_transfer <= 90000) {
+		if(prd_transfer >= 10000) {
 			member.setM_POINT(1000);
-		}else if(prd_transfer >= 100000 && prd_transfer <= 490000) {
-			member.setM_POINT(2000);
-		}else if(prd_transfer >= 500000 && prd_transfer <= 990000) {
-			member.setM_POINT(3000);
-		}else if(prd_transfer >= 1000000) {
-			member.setM_POINT(4000);			
 		}
 		mapper_M.updatePoint(member);
 		mapper_M.updateOpenPage(M_ID);
@@ -350,7 +401,7 @@ public class MainController {
 	@GetMapping("main/index")
 	public String index(HttpSession session, Model model) {
 		System.out.println("index.jsp 실행");
-
+		
 		LoginSessionTool.checkOnlyNavBar(session, model);
 		
 		return "/main/index";

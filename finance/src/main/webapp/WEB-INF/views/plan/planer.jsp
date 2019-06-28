@@ -185,17 +185,17 @@
 			</div>
 			<div class="row">
 				<div class="form-group col-lg-12 col-md-12 col-xs-12">
-					<h5 align="center">1. 설정한 한도 금액과 같거나, 적게 사용한 사용자에 한하여 포인트가 지급됩니다.</h5>
+					<h5 align="center">1. 사용 금액이 한도를 넘어설 경우 결제가 제한됩니다.</h5>
 				</div>
 			</div>
 			<div class="row">
 				<div class="form-group col-lg-12 col-md-12 col-xs-12">
-					<h5 align="center">2. 사용자들의 한도 설정과 사용 금액의 비율과 이체 금액을 비교해 순위를 매겨 랭킹 3등까지 추가로 포인트가 지급됩니다.</h5>
+					<h5 align="center">2. 정해진 한도 내에 금액을 사용한 후 만 원 이상 이체를 할 경우 포인트가 지급됩니다.</h5>
 				</div>
 			</div>
 			<div class="row">
 				<div class="form-group col-lg-12 col-md-12 col-xs-12">
-					<h5 align="center">3. 정해진 한도를 수정하면 목표를 달성해도 포인트를 지급받지 못하고, 랭킹에서 제외됩니다.</h5>
+					<h5 align="center">3. 한도를 수정 할 경우 이체 포인트와 랭킹 포인트 지급 대상에서 제외됩니다.</h5>
 				</div>
 			</div>
 			
