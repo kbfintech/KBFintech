@@ -21,22 +21,49 @@ $(document).ready(function(){
 		<h1 class="my-4" align="center">추천 결과를 확인하세요</h1>
 		<hr>
 		<div class="row">
-			<c:forEach var="baseInfo" items='${productList}'>
-				<div class="col-lg-2 col-md-2"></div>
-				<div class="card col-lg-8 col-md-8 panel panel-primary">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-lg-9 col-md-9 panel-heading">
-								<h3 class="card-title panel-heading" id="no">${baseInfo.fin_prdt_nm}</h3>
-								<h4 class="card-subtitle panel-heading text-muted">${baseInfo.best_rate}</h4>
-								<a href="/product/info?fin_prdt_cd=${baseInfo.fin_prdt_cd}"><button type="button" class="btn btn-outline-info"><h3>자세히 보기</h3></button></a>
+			<div class = "col-lg-6 col-md-6 col-xs-6">
+				<div class="row">
+					<h1>적금 상품</h1>
+					<c:forEach var="baseInfo" items='${productListS}'>
+					<div class="col-lg-2 col-md-2"></div>
+					<div class="card col-lg-9 col-md-9 panel panel-primary">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-lg-9 col-md-9 panel-heading">
+									<h3 class="card-title panel-heading" id="no">${baseInfo.fin_prdt_nm}</h3>
+									<h4 class="card-subtitle panel-heading text-muted">${baseInfo.best_rate}</h4>
+									<a href="/product/info?fin_prdt_cd=${baseInfo.fin_prdt_cd}"><button type="button" class="btn btn-outline-info"><h3>자세히 보기</h3></button></a>
+								</div>
 							</div>
 						</div>
 					</div>
+					</c:forEach>
+					<div class="col-lg-1 col-md-1"></div>
 				</div>
-				<div class="col-lg-2 col-md-2"></div>
-			</c:forEach>
+			</div>
+			
+			<div class = "col-lg-6 col-md-6 col-xs-6">
+				<div class="row">
+					<h1>예금 상품</h1>
+					<c:forEach var="baseInfo" items='${productListD}'>
+					<div class="col-lg-2 col-md-2"></div>
+					<div class="card col-lg-9 col-md-9 panel panel-primary">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-lg-9 col-md-9 panel-heading">
+									<h3 class="card-title panel-heading" id="no">${baseInfo.fin_prdt_nm}</h3>
+									<h4 class="card-subtitle panel-heading text-muted">${baseInfo.best_rate}</h4>
+									<a href="/product/info?fin_prdt_cd=${baseInfo.fin_prdt_cd}"><button type="button" class="btn btn-outline-info"><h3>자세히 보기</h3></button></a>
+								</div>
+							</div>
+						</div>
+					</div>
+					</c:forEach>
+					<div class="col-lg-1 col-md-1"></div>
+				</div>
+			</div>
 		</div>
+		
 		<hr>
 		<!-- Pagination -->
 		<ul class="pagination justify-content-center">

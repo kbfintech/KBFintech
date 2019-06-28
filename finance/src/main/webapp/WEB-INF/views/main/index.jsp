@@ -66,7 +66,7 @@
 
 	<!-- Page Content -->
 	<div class="container">
-		<h1 class="my-4">뱅크 샐러드에 오신것을 환영합니다.</h1>
+		<h1 class="my-4">월렛 버핏에 오신것을 환영합니다.</h1>
 
 		<!-- 서비스 설명 -->
 		<div class="row">
