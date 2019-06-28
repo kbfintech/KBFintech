@@ -1,4 +1,4 @@
-package com.spring.finance.controller;
+	package com.spring.finance.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -75,29 +75,28 @@ public class MemberController {
 
 //			response.sendRedirect(returnUrl);
 		} else {
-			
+
 			returnUrl = "/member/login";
 			// 로그인 실패(가입인증메일 미인증 계정의 경우)
-			if(mv.getREGISTER_YN().equals("0")) {
-				
-				
+			if (mv.getREGISTER_YN().equals("0")) {
+
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
 				out.println(
-						"<script>alert('가입인증이 되지않은 계정입니다. 입력하신 이메일에서 가입인증 완료해주시기 바랍니다.'); location.href='/finance/member/login'</script>");
+						"<script>alert('가입인증이 되지않은 계정입니다. 입력하신 이메일에서 가입인증 완료해주시기 바랍니다.'); location.href='/member/login'</script>");
 				out.flush();
 				out.close();
-				
+
 			} else {
 				// 로그인 실패(디비에 계정이 없는 경우)
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
 				out.println(
-						"<script>alert('로그인에 실패하셨습니다. 아이디와 비밀번호를 다시 확인해주세요.'); location.href='/finance/member/login'</script>");
+						"<script>alert('로그인에 실패하셨습니다. 아이디와 비밀번호를 다시 확인해주세요.'); location.href='/member/login'</script>");
 				out.flush();
 				out.close();
 			}
-			
+
 		}
 
 		return returnUrl;
@@ -111,7 +110,7 @@ public class MemberController {
 		session.invalidate();
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		out.println("<script>alert('로그아웃되셨습니다.'); location.href='/finance'</script>");
+		out.println("<script>alert('로그아웃되셨습니다.'); location.href='/'</script>");
 		out.flush();
 		out.close();
 
@@ -157,7 +156,8 @@ public class MemberController {
 		String title = "월렛버핏 : 가입확인 메일입니다. 인증 후 가입완료해주시기 바랍니다.";
 		String content = "<h1 text-align: center>가입인증메일</h1><br><br>"
 				+ "<p text-align: center>하단 링크를 누르셔서 가입완료 하신 후 로그인 하셔서 서비스 이용하시기 바랍니다.</p><br><br><br>"
-				+ "<a href='http://localhost:8082/member/register_complete?id="+ mv.getM_ID() +"' align: center>가입 완료</a>";
+				+ "<a href='http://localhost:8080/member/register_complete?id=" + mv.getM_ID()
+				+ "' align: center>가입 완료</a>";
 
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
@@ -207,22 +207,69 @@ public class MemberController {
 
 	}
 
-	@RequestMapping("/member/forget")
-	public void forget() {
-		System.out.println("비밀번호 찾기 페이지");
-	}
-
-	@RequestMapping(value="/member/register_complete", method=RequestMethod.GET)
-	public String register_complete(@RequestParam String id, HttpSession session, Model model) {
+	@RequestMapping("member/forget")
+	public String forget(HttpSession session, HttpServletRequest request, Model model) {
 		
 		LoginSessionTool.checkOnlyNavBar(session, model);
 		
+		String error = "";
+		try {
+			error = request.getParameter("Emailerror");
+		} catch (Exception e) {
+		}
+		model.addAttribute("error", error);
+		return "/member/forget";
+		
+	}
+
+	@RequestMapping("member/passwordSearch")
+	public String passwordSearch(HttpServletRequest request, Model model) {
+
+		String inputEmail = request.getParameter("inputEmail");
+		String M_ID = request.getParameter("mid");
+		MemberMapper mapper = sqlsession.getMapper(MemberMapper.class);
+		String email = mapper.getEmail(M_ID);
+		if (inputEmail.equals(email)) {
+			String setfrom = "pranne1224@gmail.com";
+			String tomail = request.getParameter("inputEmail"); // 받는 사람 이메일
+			String title = "월렛버핏 : " + M_ID + "님의 비밀번호 확인 메일입니다. 비밀번호 확인 후 로그인해주세요."; // 제목
+			String content = "비밀번호 : " + mapper.getPassword(M_ID); // 내용
+
+			try {
+				MimeMessage message = mailSender.createMimeMessage();
+				MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+				// SimpleMailMessage message = new SimpleMailMessage();
+
+				messageHelper.setFrom(setfrom); // 보내는사람 생략하거나 하면 정상작동을 안함
+				messageHelper.setTo(tomail); // 받는사람 이메일
+				messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
+				messageHelper.setText(content); // 메일 내용
+
+				mailSender.send(message);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		} else {
+			String error = "해당 이메일이 존재하지 않습니다. 아이디와 이메일을 다시 확인하세요.";
+			model.addAttribute("Emailerror", error);
+			return "redirect:/member/forget";
+		}
+		String success = "이메일이 성공적으로 보내졌습니다. 이메일 확인 후 다시 로그인하세요.";
+		model.addAttribute("success", success);
+		return "redirect:/member/login";
+	}
+
+	@RequestMapping(value = "/member/register_complete", method = RequestMethod.GET)
+	public String register_complete(@RequestParam String id, HttpSession session, Model model) {
+
+		LoginSessionTool.checkOnlyNavBar(session, model);
+
 		System.out.println("가입인증완료페이지");
 
 		// 가입인증여부 플래그 업데이트
 		MemberMapper mapper = sqlsession.getMapper(MemberMapper.class);
 		mapper.updateMember(id);
-		
+
 		return "/member/register_complete";
 
 	}

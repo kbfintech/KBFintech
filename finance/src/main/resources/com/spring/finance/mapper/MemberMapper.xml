@@ -4,7 +4,38 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.spring.finance.mapper.MemberMapper">
+	<select id="getMember" parameterType="String" resultType="String">
+		select M_NAME from member where M_ID = #{M_ID}
+	</select>
 	
+	<select id="getMemberNotTransfer" resultType="String">
+		select M_ID from member where OPENPAGE = 0
+	</select>
+	
+	<select id="getOpenPage" parameterType="String" resultType="int">
+		select openpage from member where M_ID = #{M_ID}
+	</select>
+	
+	<select id="getMemberList" resultType="String">
+		select M_ID from member
+	</select>
+	
+	<update id="setOpenPageInit" parameterType="String">
+		update member set openpage = 0 where M_ID = #{M_ID}
+	</update>
+	
+	<update id="updateOpenPage" parameterType="String">
+		update member set OPENPAGE = 1 where M_ID = #{M_ID}
+	</update>
+	
+	<update id="updatePoint" parameterType="com.spring.finance.domain.MemberVO">
+		update member set M_POINT = M_POINT + #{M_POINT} where M_ID = #{M_ID}
+	</update>
+	
+	<select id="getPrRedIdx" parameterType="String" resultType="int">
+		select PR_REG_IDX from member where M_ID = #{M_ID}
+	</select>
+
 	<insert id="insertMember" parameterType="com.spring.finance.domain.MemberVO">
 		insert into MEMBER (M_ID, M_PW, M_NAME, M_POINT, PHONE, EMAIL, PR_REG_IDX, OPENPAGE, REGISTER_YN) values(#{M_ID}, #{M_PW}, #{M_NAME}, 0, #{PHONE}, #{EMAIL}, #{PR_REG_IDX}, #{OPENPAGE}, #{REGISTER_YN})
 	</insert> 
@@ -17,6 +48,13 @@
 		select * from MEMBER where M_ID = #{M_ID} and M_PW = #{M_PW}
 	</select>
 	
+	<select id="getEmail" parameterType="String" resultType="String">
+		select email from member where M_ID = #{M_ID}
+	</select>
+	
+	<select id="getPassword" parameterType="String" resultType="String">
+		select M_PW from member where M_ID = #{M_ID}
+	</select>
 	<update id="updateMember" parameterType="String">
 		update MEMBER set REGISTER_YN = '1' where M_ID = #{M_ID}
 	</update>

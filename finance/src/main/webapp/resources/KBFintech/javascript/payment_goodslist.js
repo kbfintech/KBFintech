@@ -5,7 +5,7 @@ function loadGoods(idx) {
 	var gPrice = document.getElementsByClassName("title is-5 gPrice")[idx].innerHTML;
 
 	$.ajax({
-		url: "/finance/payment",
+		url: "/payment",
 		method: "get",
 		async: false,
 		success: function(data) {

@@ -8,257 +8,207 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>한도 설정</title>
 <%@include file="../includes/header.jsp"%>
 <%@include file="../includes/menu.jsp"%>
 <style type="text/css">
-.plan-form {
-	width: 70%;
-	height: calc(1.0em + 0.65rem + 2px);
-	padding: 0.375rem 0.75rem;
-	font-size: 1rem;
-	font-weight: 400;
-	text-align: right;
-	line-height: 1.5;
-	color: #495057;
-	background-color: #fff;
-	background-clip: padding-box;
-	border: 1px solid #4C4C4C;
-	border-radius: 0.25rem;
-	-webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow
-		0.15s ease-in-out;
-	transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s
-		ease-in-out;
-	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
-		-webkit-box-shadow 0.15s ease-in-out;
-	margin-top: 0.5rem !important;
-}
-
-.title {
-	width: 26.5%;
-	height: calc(1.5em + 0.65rem + 2px);
-	margin: auto; 
-	padding: 0.075rem 0.85rem;
-	font-size: 2rem;
-	font-weight: 400;
-	line-height: 1.5;
-	color: #fff;
-	background-color: #343a40;
-	background-clip: padding-box;
-	border: 1px solid #4C4C4C;
-	border-radius: 1.5rem;
-	-webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow
-		0.15s ease-in-out;
-	transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s
-		ease-in-out;
-	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
-		-webkit-box-shadow 0.15s ease-in-out;
-	margin-top: 1.5rem !important;
-	margin-bottom: 1.5rem !important;
-	margin-left: 11.5rem !important;
-}
-
-.save {
-	width: 10%;
-	height: calc(1.5em + 0.65rem + 2px);
-	margin: auto;
-	padding: 0.075rem 0.85rem;
-	font-size: 1rem;
-	font-weight: 400;
-	line-height: 1.5;
-	color: #fff;
-	background-color: #343a40;
-	background-clip: padding-box;
-	border: 1px solid #4C4C4C;
-	border-radius: 1.5rem;
-	-webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow
-		0.15s ease-in-out;
-	transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s
-		ease-in-out;
-	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
-		-webkit-box-shadow 0.15s ease-in-out;
-	margin-top: 1.5rem !important;
-}
-
-.category-name {
-	font-weight: bold;
-	margin-top: 1.0rem !important;
-}
-
 .total-count {
-	width: 20%;
-	height: calc(1.0em + 0.65rem + 2px);
-	padding: 0.375rem 0.75rem;
-	font-size: 1rem;
-	font-weight: 400;
-	text-align: right;
-	line-height: 1.5;
-	color: #495057;
-	background-color: #fff;
-	background-clip: padding-box;
-	border: 1px solid #4C4C4C;
-	border-radius: 0.25rem;
-	-webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow
-		0.15s ease-in-out;
-	transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s
-		ease-in-out;
-	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
-		-webkit-box-shadow 0.15s ease-in-out;
-	margin-top: 1.5rem !important;
-}
-
-.note {
-	border: 1px solid #4C4C4C;
-}
-
-.note-td {
-	border-left: 1px solid #4C4C4C;
-	border-right: 1px solid #4C4C4C;
-}
-
-.won {
-	font-weight: bold; margin-top : 1.0rem !important;
-	margin-right: 2.8rem !important;
-	margin-top: 1.0rem !important;
-}
-
-.footer {
-	margin-bottom: 2.0rem !important;
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
 }
 </style>
 <script type="text/javascript">
 	function total() {
 		var sum = 0;
 		for (i = 0; i < 8; i++) {
-			var account = document.getElementsByClassName('plan-form')[i].value;
+			var account = document.getElementsByClassName('form-control')[i].value;
 			account *= 1;
 			sum += account;
 		}
 		sum += "";
 		document.getElementsByClassName('total-count')[0].value = sum;
 	}
-	
-	function save(){
+
+	function save() {
+		var yearCheck = $("#yearSelectBox option:checked").text();
+		var monthCheck = $("#monthSelectBox option:checked").text();
+		var pldate = yearCheck + monthCheck;
+		var list1 = new Array();
+
+		<c:forEach items="${dateList}" var="item1">
+		list1.push("${item1}");
+		</c:forEach>
+
+		for (var i = 0; i < list1.length; i++) {
+			if (list1[i].indexOf(pldate) != -1) {
+				alert("이미 한도를 설정한 날짜입니다.");
+				for (i = 0; i < 8; i++) {
+					document.getElementsByClassName('form-control')[i].value = "";
+				}
+				return false;
+			}
+		}
 		alert("한도 설정이 완료되었습니다. 조회페이지로 이동합니다.");
 	}
-	function changeSelect(){
+	function changeSelect() {
 		var yearCheck = $("#yearSelectBox option:checked").text();
-		if(yearCheck > 2019){
-			$(".yearChange").removeAttr("disabled");			
-		}else{
+		if (yearCheck > 2019) {
+			$(".yearChange").removeAttr("disabled");
+		} else {
 			$(".yearChange").attr("disabled", true);
 		}
 	}
 </script>
 </head>
-<body>
+<body class="fontType">
 	<jsp:useBean id="date" class="java.util.Date" />
 	<fmt:formatDate value="${date}" type="DATE" pattern="YYYY" var="year"/>
 	<fmt:formatDate value="${date}" type="DATE" pattern="M" var="month"/>
-	<div>
+	
+	<div class="container">
 		<form action="${path}/plan/planerOK" method="get">
-			<table width="80%" align="center">
-				<tr>
-					<td colspan="1" width="10%" align="right">
-						<select name="year" onchange="changeSelect();" id="yearSelectBox">
-						    <c:forEach var="i" begin="${year}" end="${2119}">
-							    <option value="${i}" <c:if test="${i == yearCheck}">selected="selected"</c:if>>${i}</option>						    
-						    </c:forEach>
-						</select>
-						<select name="month">
-							    <c:forEach var="i" begin="${1}" end="${month-1}">
-								    <option value="${i}" disabled="disabled" class="yearChange">${i}</option>						    
-							    </c:forEach>								
-						    <c:forEach var="i" begin="${month}" end="${12}">
-							    <option value="${i}" <c:if test="${i == month}">selected="selected"</c:if>>${i}</option>						    
-						    </c:forEach>
-						</select>
-					</td>
-					<td colspan="3" align="left" width="90%">
-						<h1 class="title" id="titleDate">카드 한도 설정</h1>
-					</td>
-				</tr>
-				<tr>
-					<td width="25%" align="center"><h5 class="category-name">카페</h5></td>
-					<td width="25%" align="center"><h5 class="category-name">편의점</h5></td>
-					<td width="25%" align="center"><h5 class="category-name">오프라인쇼핑</h5></td>
-					<td width="25%" align="center"><h5 class="category-name">온라인쇼핑</h5></td>
-				</tr>
-				<tr align="center">
-					<td width="25%" align="center"><input type="text" name="cafe"
-						size="100%" class="plan-form" placeholder="0" onkeyup="total();" /></td>
-					<td width="25%" align="center"><input type="text"
-						name="convenience" size="100%" class="plan-form" placeholder="0"
-						onkeyup="total();" /></td>
-					<td width="25%" align="center"><input type="text"
-						name="offlineshopping" size="100%" class="plan-form" placeholder="0"
-						onkeyup="total();" /></td>
-					<td width="25%" align="center"><input type="text"
-						name="onlineshopping" size="100%" class="plan-form" placeholder="0"
-						onkeyup="total();" /></td>
-				</tr>
-				<tr>
-					<td width="25%" align="center"><h5 class="category-name">외식</h5></td>
-					<td width="25%" align="center"><h5 class="category-name">교통비</h5></td>
-					<td width="25%" align="center"><h5 class="category-name">문화생활</h5></td>
-					<td width="25%" align="center"><h5 class="category-name">기타</h5></td>
-				</tr>
-				<tr align="center">
-					<td width="25%" align="center"><input type="text" name="eat"
-						size="100%" class="plan-form" placeholder="0" onkeyup="total();" /></td>
-					<td width="25%" align="center"><input type="text"
-						name="traffic" size="100%" class="plan-form" placeholder="0"
-						onkeyup="total();" /></td>
-					<td width="25%" align="center"><input type="text"
-						name="cultural" size="100%" class="plan-form" placeholder="0"
-						onkeyup="total();" /></td>
-					<td width="25%" align="center"><input type="text" name="other"
-						size="100%" class="plan-form" placeholder="0" onkeyup="total();" /></td>
-				</tr>
-				<tr align="right">
-					<td width="80%" colspan="4"><h3 class="won">
-							Total : <input type="text" name="other" size="100%"
-								class="total-count" placeholder="0" /> 원
-						</h3></td>
-				</tr>
-				<tr>
-					<td colspan="4" align="center"><input type="submit" value="저장"
-						class="save" onclick="save();"/></td>
-				</tr>
-			</table>
+		<div class="row" style="margin-top: 100px;">
+			<div class="form-group col-lg-12 col-md-12 col-xs-12" align="center">
+				<select name="year" onchange="changeSelect();" id="yearSelectBox">
+					<c:forEach var="i" begin="${year}" end="${2119}">
+						<option value="${i}"
+							<c:if test="${i == yearCheck}">selected="selected"</c:if>>${i}</option>
+					</c:forEach>
+				</select> <select name="month" id="monthSelectBox">
+					<c:forEach var="i" begin="${1}" end="${month-1}">
+						<option value="${i}" disabled="disabled" class="yearChange">${i}</option>
+					</c:forEach>
+					<c:forEach var="i" begin="${month}" end="${12}">
+						<option value="${i}"
+							<c:if test="${i == month}">selected="selected"</c:if>>${i}</option>
+					</c:forEach>
+				</select> <h1>카드 한도 설정</h1>
+			</div>
+		</div>
+
+			<div class="row">
+				<div class="form-group col-lg-2 col-md-2 col-xs-2" align="center">
+					<label for ="cafe">카페</label>
+				</div>
+				<div class="col-lg-4 col-md-4 col-xs-4">
+					<input type="text" style="text-align: right;" maxlength="12" name="cafe" class="form-control" placeholder="0" onkeyup="total();" />
+				</div>
+				<div class="form-group col-lg-2 col-md-2 col-xs-2" align="center">
+					<label for ="convenience">편의점</label>
+				</div>
+				
+				<div class="col-lg-4 col-md-4 col-xs-4">
+					<input type="text" style="text-align: right;" maxlength="12" name="convenience" class="form-control" placeholder="0" onkeyup="total();" />
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group col-lg-2 col-md-2 col-xs-2" align="center">
+					<label for ="offlineshopping">오프라인 쇼핑</label>
+				</div>
+				
+				<div class="col-lg-4 col-md-4 col-xs-4">
+					<input type="text" style="text-align: right;" maxlength="12" name="offlineshopping" class="form-control" placeholder="0" onkeyup="total();" />
+				</div>
+				<div class="form-group col-lg-2 col-md-2 col-xs-2" align="center">
+					<label for ="onlineshopping">온라인 쇼핑</label>
+				</div>
+				
+				<div class="col-lg-4 col-md-4 col-xs-4">
+					<input type="text" style="text-align: right;" maxlength="12" name="onlineshopping" class="form-control" placeholder="0" onkeyup="total();" />
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group col-lg-2 col-md-2 col-xs-2" align="center">
+					<label for ="eat">외식</label>
+				</div>
+				
+				<div class="col-lg-4 col-md-4 col-xs-4">
+					<input type="text" style="text-align: right;" maxlength="12" name="eat" class="form-control" placeholder="0" onkeyup="total();" />
+				</div>
+				<div class="form-group col-lg-2 col-md-2 col-xs-2" align="center">
+					<label for ="trip">여행</label>
+				</div>
+				
+				<div class="col-lg-4 col-md-4 col-xs-4">
+				<input type="text" style="text-align: right;" maxlength="12" name="trip" class="form-control" placeholder="0" onkeyup="total();" />
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group col-lg-2 col-md-2 col-xs-2" align="center">
+					<label for ="cultural">문화생활</label>
+				</div>
+				
+				<div class="col-lg-4 col-md-4 col-xs-4">
+				<input type="text" style="text-align: right;" maxlength="12" name="cultural" class="form-control" placeholder="0" onkeyup="total();" />
+				</div>
+				<div class="form-group col-lg-2 col-md-2 col-xs-2" align="center">
+					<label for ="other">기타</label>
+				</div>
+				
+				<div class="col-lg-4 col-md-4 col-xs-4">
+					<input type="text" style="text-align: right;" maxlength="12" name="other" class="form-control" placeholder="0" onkeyup="total();" />
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group col-lg-6 col-md-6 col-xs-6" align="center">
+				</div>
+				<div class="form-group col-lg-2 col-md-2 col-xs-2" align="center">
+					<h3><label for ="other">Total</label></h3>
+				</div>
+				<div class="form-group col-lg-4 col-md-4 col-xs-4">
+					<input type="text" style="text-align: right;" name="totalCount" class="total-count" disabled="disabled" placeholder="0" />
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group col-lg-12 col-md-12 col-xs-12">
+					<h5 align="center">-NOTICE-</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-lg-12 col-md-12 col-xs-12">
+					<h5 align="center">1. 설정한 한도 금액과 같거나, 적게 사용한 사용자에 한하여 포인트가 지급됩니다.</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-lg-12 col-md-12 col-xs-12">
+					<h5 align="center">2. 사용자들의 한도 설정과 사용 금액의 비율과 이체 금액을 비교해 순위를 매겨 랭킹 3등까지 추가로 포인트가 지급됩니다.</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-lg-12 col-md-12 col-xs-12">
+					<h5 align="center">3. 정해진 한도를 수정하면 목표를 달성해도 포인트를 지급받지 못하고, 랭킹에서 제외됩니다.</h5>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group col-lg-12 col-md-12 col-xs-12">
+					<input type="submit" value="저장" maxlength="12" class="btn btnYellow" onclick="return save();"/>
+				</div>
+			</div>
+		
 		</form>
 	</div>
-
-	<p class="footer"></p>
-	<hr class="note" />
-
-	<div>
-		<table width="80%" align="center">
-			<tr align="center" width="100%">
-				<td colspan="4"><h4 class="my-4">- NOTE -</h4></td>
-			</tr>
-			<tr>
-				<td width="100%" align="center"><h5 class="category-name">1.
-						설정한 한도 금액만큼 사용하거나, 적게 사용한 사용자에 한하여 포인트가 지급됩니다.</h5></td>
-			</tr>
-			<tr>
-				<td width="100%" align="center"><h5 class="category-name">2.
-						사용자들끼리 랭킹을 매겨 설정한 한도 금액과 사용한 금액의 차이가 큰 사용자 3명에게 추가로 포인트가 지급됩니다.</h5></td>
-			</tr>
-			<tr>
-				<td width="100%" align="center"><h5 class="category-name">3.
-						정해진 한도를 수정하면 목표를 달성해도 포인트를 지급받지 못하고, 랭킹에서 제외됩니다.</h5></td>
-			</tr>
-		</table>
-	</div>
-
-	<p class="footer"></p>
-
 	<%@include file="../includes/footer.jsp"%>
+</body>
 </body>
 </html>
 

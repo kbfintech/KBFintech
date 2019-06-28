@@ -65,7 +65,7 @@ function requestPay(price) {
 		buyer_tel : bPhoneNum,
 		buyer_addr : '',
 		buyer_postcode : '',
-		m_redirect_url : 'https://localhost:8080/finance/payments/complete'
+		m_redirect_url : 'https://localhost:8080/payments/complete'
 	}, function(rsp) {
 		if (rsp.success) { // 성공시
 			var msg = '결제가 완료되었습니다.';
@@ -75,14 +75,14 @@ function requestPay(price) {
 			msg += '카드 승인번호: ' + rsp.apply_num + ", ";
 			msg += '영수증url: ' + rsp.receipt_url;
 			$.ajax({
-				url:"/finance/payment/complete",
+				url:"/payment/complete",
 				async:"false",
 				method:"get",
 				dataType:"json",
 				data: json,
 			});
 			alert('결제가 완료되었습니다.');
-			location.href='/finance/payment/finished';
+			location.href='/payment/finished';
 		} else { // 실패시
 			var msg = '결제에 실패하였습니다.';
 			msg += '에러내용 : ' + rsp.error_msg;

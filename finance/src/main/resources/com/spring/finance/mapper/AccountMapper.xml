@@ -14,4 +14,15 @@
 		INSERT INTO ACCOUNT(M_ID, M_NAME, ACCOUNT_NUMBER, PHONE, ACCOUNT_MONEY) VALUES(#{M_ID}, #{M_NAME}, #{ACCOUNT_NUMBER}, #{PHONE}, #{ACCOUNT_MONEY})
 	</insert>
 	
+	<select id="getAccount" parameterType="String" resultType="com.spring.finance.domain.AccountVO">
+		select * from ACCOUNT where M_ID = #{M_ID}
+	</select>
+		
+	<select id="getAccountMoney" parameterType="String" resultType="int">
+		select ACCOUNT_MONEY from ACCOUNT where M_ID = #{M_ID}
+	</select>
+	
+	<update id="updateAccount" parameterType="com.spring.finance.domain.TransferVO">
+		update account set ACCOUNT_MONEY = ACCOUNT_MONEY - #{TRANSFER_MONEY} where M_ID = #{M_ID}
+	</update>
 </mapper>
