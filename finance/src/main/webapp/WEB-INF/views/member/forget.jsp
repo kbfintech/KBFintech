@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>비밀번호찾기</title>
 <%@include file="../includes/header.jsp" %>
 <%@include file="../includes/menu.jsp" %>
 </head>
@@ -33,5 +33,6 @@
       </div>
     </div>
   </div>
+  <%@include file="../includes/footer.jsp"%>
 </body>
 </html>

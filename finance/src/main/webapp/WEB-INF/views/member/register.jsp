@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원가입</title>
 <%@include file="../includes/header.jsp"%>
 <%@include file="../includes/menu.jsp"%>
 
@@ -17,7 +17,7 @@
 
 </head>
 <body>
-	<div class="container">
+	<div class="container" style="margin-top: 8em; margin-bottom: 8em;">
 		<div class="card card-register mx-auto mt-5">
 			<div class="card-header">회원 가입</div>
 			<div class="card-body">

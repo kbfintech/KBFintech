@@ -13,20 +13,12 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-
-		var h = $(".navbar").height();
-		var top = $(".navbar").css('padding-top').split('px')[0] * 1;
-		var bottom = $(".navbar").css('padding-bottom').split('px')[0] * 1;
-		var result = h + top + bottom;
-		$("맨위에 클래스 및 아이디 명").css('margin-top', result);
-
 		var date = new Date();
 		var year = date.getFullYear();
 		var month = date.getMonth() + 1;
 
 		$('#curMonth').html("[" + month + "월 일일랭킹순위]");
 		$('#preMonth').html("[" + date.getMonth() + "월 최종랭킹순위]");
-
 	});
 </script>
 
