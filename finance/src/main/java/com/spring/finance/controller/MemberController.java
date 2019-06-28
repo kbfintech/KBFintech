@@ -1,7 +1,16 @@
-	package com.spring.finance.controller;
+package com.spring.finance.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +28,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.spring.finance.domain.CardVO;
 import com.spring.finance.domain.MemberVO;
+import com.spring.finance.domain.PaymentVO;
+import com.spring.finance.domain.PlanVO;
+import com.spring.finance.domain.ProductVO;
 import com.spring.finance.mapper.MemberMapper;
 import com.spring.finance.util.LoginSessionTool;
 
@@ -33,21 +46,21 @@ public class MemberController {
 	private JavaMailSender mailSender;
 
 	@RequestMapping("/member/login")
-	public String login(HttpSession session, Model model, HttpServletRequest request ,HttpServletResponse response) {
+	public String login(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("로그인페이지");
 
 		LoginSessionTool.checkOnlyNavBar(session, model);
-		
+
 		String success = "";
-		
+
 		try {
 			success = request.getParameter("success");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
+
 		model.addAttribute("success", success);
-		
+
 		return "/member/login";
 	}
 
@@ -217,11 +230,147 @@ public class MemberController {
 
 	}
 
+	@RequestMapping("member/memInfo")
+	public String memInfo(HttpSession session, HttpServletRequest request, Model model, HttpServletResponse response) {
+
+		LoginSessionTool.checkSession(session, model, response);
+
+		String M_ID = (String) session.getAttribute("id");
+
+		if (null != M_ID && !M_ID.equals("")) {
+
+			Map<String, Object> param = new HashMap<String, Object>();
+
+			NumberFormat formatter = new DecimalFormat("###,###,###");
+			SimpleDateFormat formatter2 = new SimpleDateFormat("yyyyM");
+			SimpleDateFormat formatter3 = new SimpleDateFormat("yyyyMM");
+			List<String> pld_price = new ArrayList();
+			String[] s_price = { "", "", "", "", "", "", "", "", "" };
+			double[] s_price_cal = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+			
+
+			MemberVO memberVO = new MemberVO();
+			CardVO cardVO = new CardVO();
+			ProductVO productVO = new ProductVO();
+			String dt_temp = "";
+			String pl_id = "";
+			String cardNo = "", cardCom = "", cardType = "";
+			String prd_transfer = "";
+			int pld_sum = 0;
+			List<PlanVO> planVO;
+			List<PaymentVO> paymentVO;
+
+			MemberMapper mapper = sqlsession.getMapper(MemberMapper.class);
+
+			param.put("M_ID", M_ID);
+			dt_temp = formatter.format(Calendar.getInstance().get(Calendar.MONTH) + 1);
+			if (dt_temp.length() == 1) {
+				param.put("PL_PERIOD", formatter2.format(new Date())); // 20196
+			} else {
+				param.put("PL_PERIOD", formatter3.format(new Date())); // 201910
+			}
+			pl_id = (String) param.get("PL_PERIOD");
+			param.put("PL_ID", pl_id); // 20196
+			param.put("P_DATE", pl_id.substring(0, 4) + "-" + pl_id.substring(4, 5)); // 2019-6
+
+			// memberVO
+			memberVO = mapper.getMemberObject(M_ID);
+
+			// cardVO
+			cardVO = mapper.getMCard(M_ID);
+			if (cardVO.getC_ID() != null) {
+				cardNo = cardVO.getC_ID().substring(0, 4) + '-' + cardVO.getC_ID().substring(4, 8) // null exception
+						+ '-' + cardVO.getC_ID().substring(8, 12) + '-' + cardVO.getC_ID().substring(12, 16);
+				cardType = (cardVO.getCARD_TYPE() == 0) ? "체크" : "신용";
+				prd_transfer = formatter.format(productVO.getPRD_TRANSFER());
+
+				switch (cardVO.getC_COMPANY()) {
+				case "1":
+				default:
+					cardCom = "국민";
+				}
+			}
+
+			// productVO
+			productVO = mapper.getProduct(M_ID);
+
+			planVO = mapper.getPlan(param);
+			paymentVO = mapper.getPayment(param);
+
+			if (paymentVO.size() != 0 && null != paymentVO) {
+
+				for (int i = 0; i < paymentVO.size(); i++) {
+					switch (paymentVO.get(i).getB_CD()) {
+					case "552100":
+						s_price_cal[0] = s_price_cal[0] + paymentVO.get(i).getPAY_PRICE();
+						break;
+					case "552101":
+						s_price_cal[1] = s_price_cal[1] + paymentVO.get(i).getPAY_PRICE();
+						break;
+					case "552102":
+						s_price_cal[2] = s_price_cal[2] + paymentVO.get(i).getPAY_PRICE();
+						break;
+					case "552103":
+						s_price_cal[3] = s_price_cal[3] + paymentVO.get(i).getPAY_PRICE();
+						break;
+					case "552104":
+						s_price_cal[4] = s_price_cal[4] + paymentVO.get(i).getPAY_PRICE();
+						break;
+					case "552105":
+						s_price_cal[5] = s_price_cal[5] + paymentVO.get(i).getPAY_PRICE();
+						break;
+					case "552106":
+						s_price_cal[6] = s_price_cal[6] + paymentVO.get(i).getPAY_PRICE();
+						break;
+					case "552107":
+						s_price_cal[7] = s_price_cal[7] + paymentVO.get(i).getPAY_PRICE();
+						break;
+					}
+
+				}
+			}
+
+			if (planVO.size() != 0 && !planVO.isEmpty()) {
+				for (int i = 0; i < planVO.size(); i++) {
+
+					pld_price.add(formatter.format(planVO.get(i).getPLD_PRICE()));
+					pld_sum += planVO.get(i).getPLD_PRICE();
+				}
+
+				if (s_price_cal.length != 0) {
+					for (int i = 0; i < s_price_cal.length - 1; i++) {
+						s_price[i] = formatter.format(s_price_cal[i]);
+						s_price_cal[8] += s_price_cal[i];
+					}
+					s_price[8] = formatter.format(s_price_cal[8]);
+				}
+				
+			}
+
+			model.addAttribute("memberVO", memberVO);
+			model.addAttribute("cardVO", cardVO);
+			model.addAttribute("productVO", productVO);
+			model.addAttribute("prd_transfer", prd_transfer);
+			model.addAttribute("cardNo", cardNo);
+			model.addAttribute("cardCom", cardCom);
+			model.addAttribute("cardType", cardType);
+			model.addAttribute("planVO", planVO);
+			model.addAttribute("pld_price", pld_price);
+			model.addAttribute("pld_sum", formatter.format(pld_sum));
+			model.addAttribute("s_price", s_price);
+			model.addAttribute("paymentVO", paymentVO);
+
+		}
+
+		return "/member/memInfo";
+
+	}
+
 	@RequestMapping("member/forget")
 	public String forget(HttpSession session, HttpServletRequest request, Model model) {
-		
+
 		LoginSessionTool.checkOnlyNavBar(session, model);
-		
+
 		String error = "";
 		try {
 			error = request.getParameter("Emailerror");
@@ -229,7 +378,7 @@ public class MemberController {
 		}
 		model.addAttribute("error", error);
 		return "/member/forget";
-		
+
 	}
 
 	@RequestMapping("member/passwordSearch")

@@ -28,5 +28,9 @@ public class CardVO {
 		CARD_TYPE = cARD_TYPE;
 		ACCOUNT_NUMBER = aCCOUNT_NUMBER;
 	}
+	
+	public CardVO() {
+		
+	}
 
 }
