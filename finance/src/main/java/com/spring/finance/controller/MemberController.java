@@ -33,11 +33,21 @@ public class MemberController {
 	private JavaMailSender mailSender;
 
 	@RequestMapping("/member/login")
-	public String login(HttpSession session, Model model, HttpServletResponse response) {
+	public String login(HttpSession session, Model model, HttpServletRequest request ,HttpServletResponse response) {
 		System.out.println("로그인페이지");
 
 		LoginSessionTool.checkOnlyNavBar(session, model);
-
+		
+		String success = "";
+		
+		try {
+			success = request.getParameter("success");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		model.addAttribute("success", success);
+		
 		return "/member/login";
 	}
 
