@@ -21,4 +21,8 @@
 		UPDATE M_CARD SET C_ID = #{C_ID}, C_MM = #{C_MM}, C_YY = #{C_YY}, C_CVC = #{C_CVC}, C_COMPANY = #{C_COMPANY}, C_HASH = #{C_HASH}, CARD_TYPE = #{CARD_TYPE}, ACCOUNT_NUMBER = #{ACCOUNT_NUMBER} WHERE M_ID = #{M_ID}
 	</update>
 	
+	<update id="updateCardAccount" parameterType="java.util.HashMap">
+		UPDATE M_CARD SET ACCOUNT_NUMBER = #{ACCOUNT_NUMBER} WHERE M_ID = #{M_ID}
+	</update>
+	
 </mapper>

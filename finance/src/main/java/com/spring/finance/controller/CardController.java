@@ -244,6 +244,7 @@ public class CardController {
 
 		KAccountMapper KAccountMapper = sqlSession.getMapper(KAccountMapper.class);
 		AccountMapper AccountMapper = sqlSession.getMapper(AccountMapper.class);
+		CardMapper CardMapper = sqlSession.getMapper(CardMapper.class);
 
 		Map<String, String> m = new HashMap<String, String>();
 		String accountName = request.getParameter("accountName");
@@ -256,8 +257,15 @@ public class CardController {
 
 		AccountVO accountVO = new AccountVO(M_ID, accountName, accountNum, phone, accountMoney);
 
+		HashMap<String, String> hmap = new HashMap();
+		
 		if (null != KAccount_num ) {
 			AccountMapper.updateAccount(accountVO);
+			// m_card의 account_number도 같이 변경
+			hmap.put("M_ID", M_ID);
+			hmap.put("ACCOUNT_NUMBER", accountNum);
+			CardMapper.updateCardAccount(hmap);
+			
 			m.put("resultCode", "1");
 		} else {
 			m.put("resultCode", "0");
