@@ -100,6 +100,10 @@
 	<update id="updateChangeLimit" parameterType="com.spring.finance.domain.LimitVO">
 		update PLAN set LIMITCHECK = #{LIMITCHECK} where M_ID = #{M_ID} and PL_ID = #{PL_ID}
 	</update>
+	
+	<select id="getPlanDetail" parameterType="java.util.HashMap" resultType="com.spring.finance.domain.PlanVO" >
+      select * from PLAN_DETAIL where M_ID = #{M_ID} and PL_ID = #{PL_ID}
+   </select>
 </mapper>
 
 

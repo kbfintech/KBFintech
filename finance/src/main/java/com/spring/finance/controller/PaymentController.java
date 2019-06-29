@@ -1,8 +1,10 @@
 package com.spring.finance.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,12 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.finance.domain.AccountVO;
 import com.spring.finance.domain.BusinessVO;
-import com.spring.finance.domain.CardVO;
-import com.spring.finance.domain.MemberVO;
+import com.spring.finance.domain.PaymentList;
 import com.spring.finance.domain.PaymentVO;
-import com.spring.finance.mapper.CardMapper;
-import com.spring.finance.mapper.MemberMapper;
+import com.spring.finance.domain.PlanVO;
 import com.spring.finance.mapper.PaymentMapper;
+import com.spring.finance.mapper.PlanMapper;
 
 @Controller
 public class PaymentController {
@@ -40,15 +41,117 @@ public class PaymentController {
 	}
 	
 	@GetMapping("/payment")
-	public String pay(HttpSession session, Model model) throws Exception {
-		System.out.println("결제시연페이지");
-		
-		
-		model.addAttribute("name", (String)session.getAttribute("name"));
-		model.addAttribute("phonNum", (String)session.getAttribute("phone"));
-		
-		return "/pay/payment";
-	}
+	   public String pay(HttpSession session, Model model) throws Exception {
+	      System.out.println("결제시연페이지");
+	      String M_ID = (String)session.getAttribute("id");
+	      System.out.println(M_ID);
+	      PlanMapper mapper = sqlsession.getMapper(PlanMapper.class);
+	      ArrayList<PlanVO> limitList = new ArrayList<PlanVO>();
+	      Date date = new Date();
+	      int year = date.getYear() + 1900;
+	      int month = date.getMonth() + 1;
+	      String PL_ID = String.valueOf(year) + String.valueOf(month);
+	      HashMap<String, String> hmap = new HashMap<String, String>();
+	      hmap.put("M_ID", M_ID);
+	      hmap.put("PL_ID", PL_ID);
+	      limitList = mapper.getPlanDetail(hmap);
+	      int limitCheck = mapper.getPlanLimitCheck(hmap);
+	         
+	      PaymentList paymentList = new PaymentList();
+	       paymentList.setPaymentList(mapper.selectPaymentList(M_ID));
+	       ArrayList<PaymentVO> list = new ArrayList<PaymentVO>();
+	       for(int i=0; i<paymentList.getPaymentList().size(); i++) {
+	          if(paymentList.getPaymentList().get(i).getPAY_DATE().length() == 8) {
+	             String delete = paymentList.getPaymentList().get(i).getPAY_DATE().substring(6, 8);
+	             String newdate = paymentList.getPaymentList().get(i).getPAY_DATE().replace(delete, "");
+	             String finaldate = newdate.replace("-", "");
+	             if(finaldate.equals(PL_ID)) {
+	                list.add(paymentList.getPaymentList().get(i));
+	             }
+	          }else if(paymentList.getPaymentList().get(i).getPAY_DATE().length() == 9) {
+	             String delete = paymentList.getPaymentList().get(i).getPAY_DATE().substring(6, 9);
+	             String newdate = paymentList.getPaymentList().get(i).getPAY_DATE().replace(delete, "");
+	             String finaldate = newdate.replace("-", "");
+	             if(finaldate.equals(PL_ID)) {
+	                list.add(paymentList.getPaymentList().get(i));
+	             }
+	          }
+	       }
+	         
+	       ArrayList<String> B_CD = new ArrayList<String>();
+	       ArrayList<BusinessVO> businessList = mapper.getB_CD();
+	       for(int i=0; i< businessList.size(); i++) {
+	             B_CD.add(businessList.get(i).getB_CD());
+	       }
+	         
+	       ArrayList<Integer> usePriceList = new ArrayList<Integer>();
+	       int cafe = 0;
+	       int convenience = 0;
+	       int offlineshopping = 0;
+	       int onlineshopping = 0;
+	       int eat = 0;
+	       int trip = 0;
+	       int cultural = 0;
+	       int other = 0;
+	       int useTotalCount = 0;
+	         
+	       for(int i=0; i<list.size(); i++) {
+	          switch(list.get(i).getB_CD()) {
+	          case "552100": 
+	             cafe += list.get(i).getPAY_PRICE();
+	             break;
+	          case "552101": 
+	             convenience += list.get(i).getPAY_PRICE();
+	             break;
+	          case "552102": 
+	             offlineshopping += list.get(i).getPAY_PRICE();
+	             break;
+	          case "552103": 
+	             onlineshopping += list.get(i).getPAY_PRICE();
+	             break;
+	          case "552104":
+	             eat += list.get(i).getPAY_PRICE();
+	             break;
+	          case "552105": 
+	             trip += list.get(i).getPAY_PRICE();
+	             break;
+	          case "552106": 
+	             cultural += list.get(i).getPAY_PRICE();
+	             break;
+	          case "552107": 
+	             other += list.get(i).getPAY_PRICE();
+	             break;
+	          }
+	          useTotalCount += list.get(i).getPAY_PRICE();
+	       }
+	       
+	       usePriceList.add(cafe);
+	       usePriceList.add(convenience);
+	       usePriceList.add(offlineshopping);
+	       usePriceList.add(onlineshopping);
+	       usePriceList.add(eat);
+	       usePriceList.add(trip);
+	       usePriceList.add(cultural);
+	       usePriceList.add(other);
+	       
+	       
+	      if(null != limitList) {
+	            ArrayList<String> codeList = new ArrayList<String>();         
+	            ArrayList<Integer> priceList = new ArrayList<Integer>();         
+	            for(int i=0; i < limitList.size(); i++) {
+	               codeList.add(limitList.get(i).getB_CD());
+	               priceList.add(limitList.get(i).getPLD_PRICE());
+	            }
+	            model.addAttribute("usePriceList", usePriceList);
+	            model.addAttribute("codeList", codeList);
+	            model.addAttribute("priceList", priceList);
+	            model.addAttribute("limitCheck", limitCheck);
+	         }
+	      model.addAttribute("name", (String)session.getAttribute("name"));
+	      model.addAttribute("phonNum", (String)session.getAttribute("phone"));
+	      
+	      return "/pay/payment";
+	   }
 	
 	@GetMapping("/payment/finished")
 	public String payComplete(HttpSession session, Model model) throws Exception {

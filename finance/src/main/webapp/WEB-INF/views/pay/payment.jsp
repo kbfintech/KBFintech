@@ -10,6 +10,51 @@
 <!-- iamport.payment.js -->
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	
+<script type="text/javascript">
+   function verifyAmount(){
+      var list1 = new Array();
+      var list2 = new Array();
+      var list3 = new Array();
+      var limitCheck = "<c:out value='${limitCheck}'/>";
+      //alert(limitCheck);
+      
+      <c:forEach items="${codeList}" var="item1">
+      list1.push("${item1}");
+      </c:forEach>
+      
+      <c:forEach items="${priceList}" var="item3">
+      list3.push("${item3}");
+      </c:forEach>
+      
+      <c:forEach items="${usePriceList}" var="item2">
+      list2.push("${item2}");
+      </c:forEach>
+      
+      //alert(list1);
+      var merchantId = document.getElementById("bCode").innerHTML;
+      
+      for ( var i = 0; i < list1.length; i++) {
+         if (list1[i] == merchantId) {
+            if((parseInt(list3[i]) < parseInt(list2[i])) && limitCheck == 1){
+               alert("설정 한도를 넘어서 결제가 불가능합니다.");
+               location.href = "/payment/goodslist";
+            }else{
+               var priceS = document.getElementById("bPrice").innerHTML;
+               var priceD = priceS.substring(0, priceS.length-3);
+               var price = priceD.split(',');
+               var fPrice = "";
+               
+               for(var i = 0; i < price.length; i++) {
+                  fPrice += price[i];
+               }
+               fPrice = Number(fPrice);
+               requestPay(fPrice)
+            }
+         }
+      } 
+   }
+</script>
 </head>
 <body>
 	<section class="hero is-light">

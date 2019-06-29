@@ -1,27 +1,27 @@
-function verifyAmount() {
-	// DB에서 가져온 한도값 초과하는지 검사(상품코드 정보로 해당 한도 찾기 -> 가격과 DB 테이블값 더한 후 비교 -> 초과하면 alert창 띄우기 아니면 requestPay()함수 타기)
-	// 임시 Default 한도 = 200000;
-	var flag = true;
-	
-	// DB 테이블에서 가져오기
-	var limit = 40000;
-	limit = Number(limit);
-	var priceS = document.getElementById("bPrice").innerHTML;
-	var priceD = priceS.substring(0, priceS.length-3);
-	var price = priceD.split(',');
-	var fPrice = "";
-	
-	for(var i = 0; i < price.length; i++) {
-		fPrice += price[i];
-	}
-	fPrice = Number(fPrice);
-	
-	console.log(limit+fPrice);
-	if(limit + fPrice > 200000) flag = false;
-	
-	if(flag) requestPay(fPrice);
-	else alert("한도를 초과하여 결제할 수 없습니다.")
-}
+//function verifyAmount() {
+//	// DB에서 가져온 한도값 초과하는지 검사(상품코드 정보로 해당 한도 찾기 -> 가격과 DB 테이블값 더한 후 비교 -> 초과하면 alert창 띄우기 아니면 requestPay()함수 타기)
+//	// 임시 Default 한도 = 200000;
+//	var flag = true;
+//	
+//	// DB 테이블에서 가져오기
+//	var limit = 40000;
+//	limit = Number(limit);
+//	var priceS = document.getElementById("bPrice").innerHTML;
+//	var priceD = priceS.substring(0, priceS.length-3);
+//	var price = priceD.split(',');
+//	var fPrice = "";
+//	
+//	for(var i = 0; i < price.length; i++) {
+//		fPrice += price[i];
+//	}
+//	fPrice = Number(fPrice);
+//	
+//	console.log(limit+fPrice);
+//	if(limit + fPrice > 200000) flag = false;
+//	
+//	if(flag) requestPay(fPrice);
+//	else alert("한도를 초과하여 결제할 수 없습니다.")
+//}
 
 function requestPay(price) {
 	

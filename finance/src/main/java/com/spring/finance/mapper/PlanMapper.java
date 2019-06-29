@@ -60,6 +60,7 @@ public interface PlanMapper {
 	int getPlanLimitCheck(HashMap<String, String> hmap);
 
 	void updateChangeLimit(LimitVO limitVO);
-
 	
+	 ArrayList<PlanVO> getPlanDetail(HashMap<String, String> hmap);
+
 }
