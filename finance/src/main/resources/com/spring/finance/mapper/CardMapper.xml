@@ -5,7 +5,7 @@
 
 <mapper namespace="com.spring.finance.mapper.CardMapper">
 	
-	<select id="isRegister" parameterType= "com.spring.finance.domain.CardVO" resultType="String">
+	<select id="isRegister" parameterType= "String" resultType="String">
 		SELECT C_HASH FROM M_CARD WHERE M_ID =#{M_ID}
 	</select>
 	

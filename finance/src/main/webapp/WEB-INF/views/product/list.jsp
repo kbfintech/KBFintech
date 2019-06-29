@@ -79,11 +79,6 @@
 											method="get">
 											<h3 class="card-title panel-heading" id="no">${baseInfo.fin_prdt_nm}</h3>
 											<h4 class="card-subtitle panel-heading text-muted">${baseInfo.best_rate}</h4>
-											<input type="hidden" name="fin_prdt_cd"
-												value='${baseInfo.fin_prdt_cd}'> <input
-												type="hidden" name="fin_prdt_nm" value='$'> <input
-												type="hidden" name="best_rate" value='${baseInfo.best_rate}'>
-
 											<a
 												href="/product/info?fin_prdt_cd=${baseInfo.fin_prdt_cd}&fin_prdt_nm=${baseInfo.fin_prdt_nm}">
 												<button type="button" class="btn btn-outline-info">

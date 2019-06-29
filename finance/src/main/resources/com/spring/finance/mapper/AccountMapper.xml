@@ -5,7 +5,7 @@
 
 <mapper namespace="com.spring.finance.mapper.AccountMapper">
 	
-	<select id="getAccountNum" parameterType="com.spring.finance.domain.AccountVO" resultType="String">
+	<select id="getAccountNum" parameterType="String" resultType="String">
 		SELECT ACCOUNT_NUMBER FROM ACCOUNT WHERE M_ID = #{M_ID}
 	</select>
 	

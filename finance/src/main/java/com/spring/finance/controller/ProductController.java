@@ -2,6 +2,7 @@ package com.spring.finance.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -59,6 +60,15 @@ public class ProductController {
 
 		String M_ID = (String) session.getAttribute("id");
 
+		if (null == M_ID) {
+			response1.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response1.getWriter();
+			out.println("<script>alert('로그인을 먼저 해주시기 바랍니다.'); location.href='/member/login'</script>");
+			out.flush();
+			out.close();
+			return "/member/login";
+		}
+
 		// 카드와 계좌를 등록했을 때만 진입 가능하게
 		AccountMapper accountMapper = sqlsession.getMapper(AccountMapper.class);
 		CardMapper cardMapper = sqlsession.getMapper(CardMapper.class);
@@ -66,14 +76,6 @@ public class ProductController {
 		if (null != accountMapper.getAccountNum(M_ID) && null != cardMapper.isRegister(M_ID)) {
 			ProductMapper mapper = sqlsession.getMapper(ProductMapper.class);
 
-			if (null == M_ID) {
-				response1.setContentType("text/html; charset=UTF-8");
-				PrintWriter out = response1.getWriter();
-				out.println("<script>alert('로그인을 먼저 해주시기 바랍니다.'); location.href='/member/login'</script>");
-				out.flush();
-				out.close();
-				return "/member/login";
-			}
 
 			String prd_nm = mapper.getProduct(M_ID);
 
@@ -215,8 +217,15 @@ public class ProductController {
 
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public String info(@RequestParam("fin_prdt_cd") String fin_prdt_cd, @RequestParam("fin_prdt_nm") String fin_prdt_nm,
+			
 			HttpServletRequest request, Model model) {
 
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		HttpSession session = request.getSession();
 
 		LoginSessionTool.checkOnlyNavBar(session, model);

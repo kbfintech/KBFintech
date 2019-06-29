@@ -204,27 +204,30 @@ table.type09 td {
 		<hr>
 
 		<div align="center">상품 설명</div>
-		<div class="card col-lg-10 col-md-10 panel panel-primary"
-			align="center">
-			<div class="card-body">
-				<div class="row">
-
-					<h3 class="card-title panel-heading">
-						<c:out value='${fin_prdt_nm}' />
-					</h3>
-					<h4 class="card-subtitle panel-heading text-muted">
-						<c:out value='${best_rate}' />
-					</h4>
-
-					<p>
-						<c:forEach var="detailInfo" items='${infoList}'>
-							<c:out value='${detailInfo}' />
-							<br>
-						</c:forEach>
-					</p>
-					
+		<div class="row">
+			<div class="col-lg-2 col-md-2 col-xs-2"></div>
+			<div class="col-lg-8 col-md-8 col-xs-8" align="center">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-xs-12">
+							<h3>
+								${fin_prdt_nm}
+							</h3>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-xs-12">
+							<p>
+								<c:forEach var="detailInfo" items='${infoList}'>
+									${detailInfo}
+									<br>
+								</c:forEach>
+							</p>
+						</div>
+					</div>
 				</div>
 			</div>
+			<div class="col-lg-2 col-md-2 col-xs-2"></div>
 		</div>
 	</div>
 
@@ -295,5 +298,7 @@ table.type09 td {
 			</tr>
 		</table>
 	</div>
+	<br>
+	<%@include file="../includes/footer.jsp"%>
 </body>
 </html>
