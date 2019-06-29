@@ -19,6 +19,7 @@ import com.spring.finance.domain.PaymentVO;
 import com.spring.finance.domain.PlanVO;
 import com.spring.finance.domain.RankTotalVO;
 import com.spring.finance.domain.RankVO;
+import com.spring.finance.mapper.MemberMapper;
 import com.spring.finance.mapper.RankMapper;
 import com.spring.finance.util.LoginSessionTool;
 
@@ -35,10 +36,10 @@ public class RankingController {
 	public SqlSession sqlsession;
 	
 	private static ArrayList<RankClass> arrRealtime = new ArrayList<>();
-	private static ArrayList<RankClass> arrRankTotal = new ArrayList<>();
+	private static ArrayList<RankClass> arrRankTotal = new ArrayList<>(); 
 
 	// 매월 매일 아무요일 0시 0분 0초에 실행
-	@Scheduled(cron = "* 0/5 10 * * ?")
+	@Scheduled(cron = "* * * * * ?")
 	public ArrayList<RankClass> setRealtimeRank() {
 		
 		RankMapper mapper = sqlsession.getMapper(RankMapper.class);
@@ -70,10 +71,12 @@ public class RankingController {
 	}
 
 	// 매월 1일 아무요일 0시 0분 0초에 실행
-	@Scheduled(cron = "0 0 0 1 * ?")
+//	@Scheduled(cron = "0 0 0 1 * ?")
+	@Scheduled(cron = "* 0/2 * * * ?")
 	public ArrayList<RankClass> setTotalRank() {
 		
 		RankMapper mapper = sqlsession.getMapper(RankMapper.class);
+		MemberMapper mMapper = sqlsession.getMapper(MemberMapper.class);
 
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		int month = Calendar.getInstance().get(Calendar.MONTH);
@@ -153,6 +156,7 @@ public class RankingController {
 		}
 		
 		arrRankTotal.clear();
+		ArrayList<MemberVO> arrMember = new ArrayList<>();
 		int curPoint = 5000;
 		ArrayList<RankTotalVO> rankTotalList = mapper.getRankTotal();
 		for(int i = 0 ; i < rankTotalList.size(); i++) {
@@ -161,16 +165,21 @@ public class RankingController {
 			rc.id = rankTotalList.get(i).getM_ID();
 			rc.score = rankTotalList.get(i).getTOTAL_SCORE();
 			mVo.setM_ID(rc.id);
+			int mPoint = mMapper.getMPoint(rc.id);
 			if(curPoint >= 1000) {
-				mVo.setM_POINT(curPoint);
+				mVo.setM_POINT(mPoint+curPoint);
 			} else {
 				mVo.setM_POINT(0);
 			}
 			curPoint -= 2000;
-//			mapper.updateMPoint(mVo);
+			System.out.println("랭킹유저: " + rc.id + " / 현재 포인트: " + mVo.getM_POINT());
 			arrRankTotal.add(rc);
-			
+			arrMember.add(mVo);
 		}
+		
+//		for(int i = 0; i < arrRankTotal.size(); i++) {
+//			mMapper.updatePoint(arrMember.get(i));
+//		}
 		
 		return arrRankTotal;
 

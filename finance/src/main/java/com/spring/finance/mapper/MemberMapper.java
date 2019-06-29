@@ -46,6 +46,8 @@ public interface MemberMapper {
 	CardVO getMCard(String M_ID);
 	
 	String getAccount(String phone);
+	
+	int getMPoint(String M_ID);
 
 	ProductVO getProduct(String M_ID);
 

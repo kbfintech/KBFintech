@@ -275,6 +275,9 @@ public class MemberController {
 
 			// memberVO
 			memberVO = mapper.getMemberObject(M_ID);
+			
+			// productVO
+			productVO = mapper.getProduct(M_ID);
 
 			// cardVO
 //			cardVO = mapper.getMCard(M_ID);
@@ -309,9 +312,6 @@ public class MemberController {
 					return "/payRegister/register";
 				}
 			}
-
-			// productVO
-			productVO = mapper.getProduct(M_ID);
 
 			planVO = mapper.getPlan(param);
 			paymentVO = mapper.getPayment(param);

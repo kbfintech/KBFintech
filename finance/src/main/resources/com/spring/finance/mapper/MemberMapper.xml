@@ -103,6 +103,13 @@
 		FROM PRODUCT
 		WHERE M_ID =#{M_ID}
 	</select>
+	
+	<select id="getMPoint" parameterType="String"
+		resultType="Integer">
+		SELECT M_POINT
+		FROM MEMBER
+		WHERE M_ID = #{M_ID}
+	</select>
 
 	<select id="getPid" parameterType="Map" resultType="String">
 		SELECT PL_ID

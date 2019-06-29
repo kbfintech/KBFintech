@@ -26,10 +26,8 @@ public interface RankMapper {
 	
 	void updateRankTotal(RankVO rVo);
 	
-	double getTransferAmount(PlanVO pVo);
+	int getTransferAmount(PlanVO pVo);
 	
 	ArrayList<Double> getPlanTotal(PlanVO pVo);
-	
-	void updateMPoint(MemberVO mVo);
 
 }

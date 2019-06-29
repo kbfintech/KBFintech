@@ -37,16 +37,12 @@
 		select * from RANK_TOTAL order by TOTAL_SCORE DESC
 	</select>
 	
-	<select id="getTransferAmount" parameterType="com.spring.finance.domain.PlanVO" resultType="Double">
+	<select id="getTransferAmount" parameterType="com.spring.finance.domain.PlanVO" resultType="Integer">
 		select TRANSFER_MONEY from TRANSFER where M_ID = #{M_ID} and TRANSFER_DATE = #{PL_ID}
 	</select>
 	
 	<select id="getPlanTotal" parameterType="String" resultType="Double">
 		select PLD_PRICE from PLAN_DETAIL where M_ID = #{M_ID} and PL_ID = #{PL_ID}
 	</select>
-	
-	<update id="updateMPoint" parameterType="com.spring.finance.domain.MemberVO">
-		update MEMBER set M_POINT = #{M_POINT} where M_ID = #{M_ID}
-	</update>
 
 </mapper>
