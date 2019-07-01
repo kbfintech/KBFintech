@@ -156,7 +156,6 @@ public class RankingController {
 		}
 		
 		arrRankTotal.clear();
-		ArrayList<MemberVO> arrMember = new ArrayList<>();
 		int curPoint = 5000;
 		ArrayList<RankTotalVO> rankTotalList = mapper.getRankTotal();
 		for(int i = 0 ; i < rankTotalList.size(); i++) {
@@ -167,19 +166,15 @@ public class RankingController {
 			mVo.setM_ID(rc.id);
 			int mPoint = mMapper.getMPoint(rc.id);
 			if(curPoint >= 1000) {
-				mVo.setM_POINT(mPoint+curPoint);
+				mVo.setM_POINT(curPoint);
 			} else {
 				mVo.setM_POINT(0);
 			}
 			curPoint -= 2000;
 			System.out.println("랭킹유저: " + rc.id + " / 현재 포인트: " + mVo.getM_POINT());
 			arrRankTotal.add(rc);
-			arrMember.add(mVo);
+			mMapper.updatePoint(mVo);
 		}
-		
-//		for(int i = 0; i < arrRankTotal.size(); i++) {
-//			mMapper.updatePoint(arrMember.get(i));
-//		}
 		
 		return arrRankTotal;
 

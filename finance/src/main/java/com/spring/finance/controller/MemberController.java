@@ -100,22 +100,22 @@ public class MemberController {
 		} else {
 
 			returnUrl = "/member/login";
+			
 			// 로그인 실패(가입인증메일 미인증 계정의 경우)
-			if (mv.getREGISTER_YN().equals("0")) {
-
-				response.setContentType("text/html; charset=UTF-8");
-				PrintWriter out = response.getWriter();
-				out.println(
-						"<script>alert('가입인증이 되지않은 계정입니다. 입력하신 이메일에서 가입인증 완료해주시기 바랍니다.'); location.href='/member/login'</script>");
-				out.flush();
-				out.close();
-
-			} else {
+			if(null == mv || null == mv.getREGISTER_YN() || "".equals(mv.getREGISTER_YN())) {
 				// 로그인 실패(디비에 계정이 없는 경우)
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
 				out.println(
 						"<script>alert('로그인에 실패하셨습니다. 아이디와 비밀번호를 다시 확인해주세요.'); location.href='/member/login'</script>");
+				out.flush();
+				out.close();
+			} else if(mv.getREGISTER_YN().equals("0")) {
+
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println(
+						"<script>alert('가입인증이 되지않은 계정입니다. 입력하신 이메일에서 가입인증 완료해주시기 바랍니다.'); location.href='/member/login'</script>");
 				out.flush();
 				out.close();
 			}
@@ -175,7 +175,7 @@ public class MemberController {
 		mapper.insertMember(mv);
 
 		// 이메일 인증로직 추가하기
-		String fromEmail = "pranne1224@gmail.com";
+		String fromEmail = "hong1234@gmail.com";
 		String title = "월렛버핏 : 가입확인 메일입니다. 인증 후 가입완료해주시기 바랍니다.";
 		String content = "<h1 text-align: center>가입인증메일</h1><br><br>"
 				+ "<p text-align: center>하단 링크를 누르셔서 가입완료 하신 후 로그인 하셔서 서비스 이용하시기 바랍니다.</p><br><br><br>"

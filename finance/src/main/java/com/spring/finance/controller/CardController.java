@@ -56,6 +56,8 @@ public class CardController {
 				mv.setViewName("/member/login");
 				return mv;
 			}
+			
+			LoginSessionTool.checkOnlyNavBar(session, model);
 
 			// M_ID 받아와야 함.
 			String ACCOUNT_NUMBER = AccountMapper.getAccountNum(M_ID);
